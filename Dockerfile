@@ -19,7 +19,7 @@ RUN apt-get update &&\
 RUN pip install --upgrade pip
 
 # copy requirements to the image
-COPY ./requirements.txt /app/requirements.txt
+COPY requirements.txt /app/requirements.txt
 
 RUN pip install -r requirements.txt
 
