@@ -1,5 +1,9 @@
 # SERVIS
 
+🚧 Trabajo en progreso
+
+---
+
 🇪🇸 Sistema de búsqueda y contratación de servicios para particulares.
 
 🇺🇸 System to search and hire services for individuals.
@@ -23,8 +27,7 @@
 - API REST
 - Knox
 - Redux
-
-+ Docker y deploy con Terraform/Ansible
++ Docker y CI/CD con Terraform/Ansible/GitHub Actions
 
 ## Desarrollo
 
@@ -38,7 +41,7 @@
    POSTGRES_HOST=servis-db
    POSTGRES_PORT=5432	
    ```
-3. `docker-compose up -d`
+3. `docker-compose up -d` o `make build`
 4. [http://localhost](http://localhost)
 
 ## Demo
