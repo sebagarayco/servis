@@ -1,0 +1,1442 @@
+[
+{
+  "model": "servis.subcategory",
+  "pk": 1,
+  "fields": {
+    "name": "Instalación",
+    "description": "Instalación",
+    "category": 1
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 2,
+  "fields": {
+    "name": "Reparación",
+    "description": "Reparación",
+    "category": 1
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 3,
+  "fields": {
+    "name": "Aires Acondicionados en General",
+    "description": "Aires Acondicionados en General",
+    "category": 1
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 4,
+  "fields": {
+    "name": "Techos",
+    "description": "Techos",
+    "category": 2
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 5,
+  "fields": {
+    "name": "Muros",
+    "description": "Muros",
+    "category": 2
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 6,
+  "fields": {
+    "name": "Terrazas",
+    "description": "Terrazas",
+    "category": 2
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 7,
+  "fields": {
+    "name": "Escaleras",
+    "description": "Escaleras",
+    "category": 2
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 8,
+  "fields": {
+    "name": "Suelos",
+    "description": "Suelos",
+    "category": 2
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 9,
+  "fields": {
+    "name": "Construccion en seco",
+    "description": "Construccion en seco",
+    "category": 2
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 10,
+  "fields": {
+    "name": "Ceramicos y azulejos",
+    "description": "Ceramicos y azulejos",
+    "category": 2
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 11,
+  "fields": {
+    "name": "Sanitarios",
+    "description": "Sanitarios",
+    "category": 2
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 12,
+  "fields": {
+    "name": "Reformas y  arreglos",
+    "description": "Reformas y  arreglos",
+    "category": 2
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 13,
+  "fields": {
+    "name": "Albañilería general",
+    "description": "Albañilería general",
+    "category": 2
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 14,
+  "fields": {
+    "name": "Impermeabilizaciones",
+    "description": "Impermeabilizaciones",
+    "category": 2
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 15,
+  "fields": {
+    "name": "Planos",
+    "description": "Planos",
+    "category": 3
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 16,
+  "fields": {
+    "name": "Construcción",
+    "description": "Construcción",
+    "category": 3
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 17,
+  "fields": {
+    "name": "Quinchos",
+    "description": "Quinchos",
+    "category": 3
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 18,
+  "fields": {
+    "name": "Arquitectura general",
+    "description": "Arquitectura general",
+    "category": 3
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 19,
+  "fields": {
+    "name": "Limpieza a domicilio",
+    "description": "Limpieza a domicilio",
+    "category": 4
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 20,
+  "fields": {
+    "name": "Cambio de neumáticos domicilio",
+    "description": "Cambio de neumáticos domicilio",
+    "category": 4
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 21,
+  "fields": {
+    "name": "Reparaciones a domicilio",
+    "description": "Reparaciones a domicilio",
+    "category": 4
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 22,
+  "fields": {
+    "name": "Mantenimiento a domicilio",
+    "description": "Mantenimiento a domicilio",
+    "category": 4
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 23,
+  "fields": {
+    "name": "Grúas a domicilio",
+    "description": "Grúas a domicilio",
+    "category": 4
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 24,
+  "fields": {
+    "name": "Manicura en casa",
+    "description": "Manicura en casa",
+    "category": 5
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 25,
+  "fields": {
+    "name": "Pedicura en casa",
+    "description": "Pedicura en casa",
+    "category": 5
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 26,
+  "fields": {
+    "name": "Peluquería en casa",
+    "description": "Peluquería en casa",
+    "category": 5
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 27,
+  "fields": {
+    "name": "Maquillaje en casa",
+    "description": "Maquillaje en casa",
+    "category": 5
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 28,
+  "fields": {
+    "name": "Estética facial en casa",
+    "description": "Estética facial en casa",
+    "category": 5
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 29,
+  "fields": {
+    "name": "Depilación en casa",
+    "description": "Depilación en casa",
+    "category": 5
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 30,
+  "fields": {
+    "name": "Entrenador personal",
+    "description": "Entrenador personal",
+    "category": 6
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 31,
+  "fields": {
+    "name": "Asesor de nutrición",
+    "description": "Asesor de nutrición",
+    "category": 6
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 32,
+  "fields": {
+    "name": "Mindfulness",
+    "description": "Mindfulness",
+    "category": 6
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 33,
+  "fields": {
+    "name": "Ebanistería",
+    "description": "Ebanistería",
+    "category": 7
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 34,
+  "fields": {
+    "name": "Aberturas de aluminio",
+    "description": "Aberturas de aluminio",
+    "category": 7
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 35,
+  "fields": {
+    "name": "Aberturas de madera",
+    "description": "Aberturas de madera",
+    "category": 7
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 36,
+  "fields": {
+    "name": "Muebles",
+    "description": "Muebles",
+    "category": 7
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 37,
+  "fields": {
+    "name": "Machimbre",
+    "description": "Machimbre",
+    "category": 7
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 38,
+  "fields": {
+    "name": "Carpintería general",
+    "description": "Carpintería general",
+    "category": 7
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 39,
+  "fields": {
+    "name": "PVC",
+    "description": "PVC",
+    "category": 7
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 40,
+  "fields": {
+    "name": "Cerraduras",
+    "description": "Cerraduras",
+    "category": 8
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 41,
+  "fields": {
+    "name": "Llaves",
+    "description": "Llaves",
+    "category": 8
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 42,
+  "fields": {
+    "name": "Cerrajería general",
+    "description": "Cerrajería general",
+    "category": 8
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 43,
+  "fields": {
+    "name": "Pulido y plastificado de pisos",
+    "description": "Pulido y plastificado de pisos",
+    "category": 9
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 44,
+  "fields": {
+    "name": "Pisos flotantes",
+    "description": "Pisos flotantes",
+    "category": 9
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 45,
+  "fields": {
+    "name": "Ventiladores de techo",
+    "description": "Ventiladores de techo",
+    "category": 9
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 46,
+  "fields": {
+    "name": "Parquet",
+    "description": "Parquet",
+    "category": 9
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 47,
+  "fields": {
+    "name": "Marmol",
+    "description": "Marmol",
+    "category": 9
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 48,
+  "fields": {
+    "name": "Toldos",
+    "description": "Toldos",
+    "category": 9
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 49,
+  "fields": {
+    "name": "Zinguería",
+    "description": "Zinguería",
+    "category": 9
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 50,
+  "fields": {
+    "name": "Cristales",
+    "description": "Cristales",
+    "category": 9
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 51,
+  "fields": {
+    "name": "Alfombras",
+    "description": "Alfombras",
+    "category": 9
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 52,
+  "fields": {
+    "name": "Ascensores",
+    "description": "Ascensores",
+    "category": 9
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 53,
+  "fields": {
+    "name": "Armado de muebles",
+    "description": "Armado de muebles",
+    "category": 9
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 54,
+  "fields": {
+    "name": "Instalaciones generales",
+    "description": "Instalaciones generales",
+    "category": 9
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 55,
+  "fields": {
+    "name": "Muebles de Cocina",
+    "description": "Muebles de Cocina",
+    "category": 9
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 56,
+  "fields": {
+    "name": "Vidrios y espejos",
+    "description": "Vidrios y espejos",
+    "category": 9
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 57,
+  "fields": {
+    "name": "Pisos en Hormigón",
+    "description": "Pisos en Hormigón",
+    "category": 9
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 58,
+  "fields": {
+    "name": "Instalación de persianas",
+    "description": "Instalación de persianas",
+    "category": 9
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 59,
+  "fields": {
+    "name": "Cuadros",
+    "description": "Cuadros",
+    "category": 9
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 60,
+  "fields": {
+    "name": "Cortinas",
+    "description": "Cortinas",
+    "category": 9
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 61,
+  "fields": {
+    "name": "Plagas de madera",
+    "description": "Plagas de madera",
+    "category": 10
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 62,
+  "fields": {
+    "name": "Control de aves",
+    "description": "Control de aves",
+    "category": 10
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 63,
+  "fields": {
+    "name": "Control de insectos",
+    "description": "Control de insectos",
+    "category": 10
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 64,
+  "fields": {
+    "name": "Control de roedores",
+    "description": "Control de roedores",
+    "category": 10
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 65,
+  "fields": {
+    "name": "Cuidado de personas",
+    "description": "Cuidado de personas",
+    "category": 11
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 66,
+  "fields": {
+    "name": "Niñera",
+    "description": "Niñera",
+    "category": 11
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 67,
+  "fields": {
+    "name": "Niños con necesidades especiales",
+    "description": "Niños con necesidades especiales",
+    "category": 11
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 68,
+  "fields": {
+    "name": "Adultos mayores",
+    "description": "Adultos mayores",
+    "category": 11
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 69,
+  "fields": {
+    "name": "Personas con necesidades especiales",
+    "description": "Personas con necesidades especiales",
+    "category": 11
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 70,
+  "fields": {
+    "name": "Interiores",
+    "description": "Interiores",
+    "category": 12
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 71,
+  "fields": {
+    "name": "Tapicería",
+    "description": "Tapicería",
+    "category": 12
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 72,
+  "fields": {
+    "name": "Exteriores",
+    "description": "Exteriores",
+    "category": 12
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 73,
+  "fields": {
+    "name": "Decoración general",
+    "description": "Decoración general",
+    "category": 12
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 74,
+  "fields": {
+    "name": "Instalaciones",
+    "description": "Instalaciones",
+    "category": 13
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 75,
+  "fields": {
+    "name": "Iluminación",
+    "description": "Iluminación",
+    "category": 13
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 76,
+  "fields": {
+    "name": "Electricidad general",
+    "description": "Electricidad general",
+    "category": 13
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 77,
+  "fields": {
+    "name": "Sonido a domicilio",
+    "description": "Sonido a domicilio",
+    "category": 14
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 78,
+  "fields": {
+    "name": "Magos a domicilio",
+    "description": "Magos a domicilio",
+    "category": 14
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 79,
+  "fields": {
+    "name": "Animadores a domicilio",
+    "description": "Animadores a domicilio",
+    "category": 14
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 80,
+  "fields": {
+    "name": "Payasos a domicilio",
+    "description": "Payasos a domicilio",
+    "category": 14
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 81,
+  "fields": {
+    "name": "Carpas a domicilio",
+    "description": "Carpas a domicilio",
+    "category": 14
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 82,
+  "fields": {
+    "name": "Camareros a domicilio",
+    "description": "Camareros a domicilio",
+    "category": 14
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 83,
+  "fields": {
+    "name": "Mobiliario a domicilio",
+    "description": "Mobiliario a domicilio",
+    "category": 14
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 84,
+  "fields": {
+    "name": "Decoración a domicilio",
+    "description": "Decoración a domicilio",
+    "category": 14
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 85,
+  "fields": {
+    "name": "Papelería a domicilio",
+    "description": "Papelería a domicilio",
+    "category": 14
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 86,
+  "fields": {
+    "name": "Catering a domicilio",
+    "description": "Catering a domicilio",
+    "category": 14
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 87,
+  "fields": {
+    "name": "Repostería a domicilio",
+    "description": "Repostería a domicilio",
+    "category": 14
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 88,
+  "fields": {
+    "name": "Cocinero a domicilio",
+    "description": "Cocinero a domicilio",
+    "category": 14
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 89,
+  "fields": {
+    "name": "Fotógrafo a domicilio",
+    "description": "Fotógrafo a domicilio",
+    "category": 14
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 90,
+  "fields": {
+    "name": "Coctelería a domicilio",
+    "description": "Coctelería a domicilio",
+    "category": 14
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 91,
+  "fields": {
+    "name": "Atracciones infantiles a domicilio",
+    "description": "Atracciones infantiles a domicilio",
+    "category": 14
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 92,
+  "fields": {
+    "name": "Artefactos a gas",
+    "description": "Artefactos a gas",
+    "category": 15
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 93,
+  "fields": {
+    "name": "Tubos y cañerías",
+    "description": "Tubos y cañerías",
+    "category": 15
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 94,
+  "fields": {
+    "name": "Calefacción",
+    "description": "Calefacción",
+    "category": 15
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 95,
+  "fields": {
+    "name": "Instalación de calderas",
+    "description": "Instalación de calderas",
+    "category": 15
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 96,
+  "fields": {
+    "name": "Reparación de calderas",
+    "description": "Reparación de calderas",
+    "category": 15
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 97,
+  "fields": {
+    "name": "Gasista general",
+    "description": "Gasista general",
+    "category": 15
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 98,
+  "fields": {
+    "name": "Soldaduras",
+    "description": "Soldaduras",
+    "category": 16
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 99,
+  "fields": {
+    "name": "Rejas y portones",
+    "description": "Rejas y portones",
+    "category": 16
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 100,
+  "fields": {
+    "name": "Herrería artística",
+    "description": "Herrería artística",
+    "category": 16
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 101,
+  "fields": {
+    "name": "Herrería general",
+    "description": "Herrería general",
+    "category": 16
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 102,
+  "fields": {
+    "name": "Paisajismo",
+    "description": "Paisajismo",
+    "category": 17
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 103,
+  "fields": {
+    "name": "Poda en altura",
+    "description": "Poda en altura",
+    "category": 17
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 104,
+  "fields": {
+    "name": "Mantenimiento",
+    "description": "Mantenimiento",
+    "category": 17
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 105,
+  "fields": {
+    "name": "Poda y extracción de árboles",
+    "description": "Poda y extracción de árboles",
+    "category": 17
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 106,
+  "fields": {
+    "name": "Riego",
+    "description": "Riego",
+    "category": 17
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 107,
+  "fields": {
+    "name": "Jardinería general",
+    "description": "Jardinería general",
+    "category": 17
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 108,
+  "fields": {
+    "name": "Alfombras",
+    "description": "Alfombras",
+    "category": 18
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 109,
+  "fields": {
+    "name": "Limpieza del hogar",
+    "description": "Limpieza del hogar",
+    "category": 18
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 110,
+  "fields": {
+    "name": "Limpieza general",
+    "description": "Limpieza general",
+    "category": 18
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 111,
+  "fields": {
+    "name": "Limpieza en profundidad",
+    "description": "Limpieza en profundidad",
+    "category": 18
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 112,
+  "fields": {
+    "name": "Ventanas",
+    "description": "Ventanas",
+    "category": 18
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 113,
+  "fields": {
+    "name": "Limpieza en altura",
+    "description": "Limpieza en altura",
+    "category": 18
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 114,
+  "fields": {
+    "name": "Exterior",
+    "description": "Exterior",
+    "category": 18
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 115,
+  "fields": {
+    "name": "Cortinas",
+    "description": "Cortinas",
+    "category": 18
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 116,
+  "fields": {
+    "name": "Muebles",
+    "description": "Muebles",
+    "category": 18
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 117,
+  "fields": {
+    "name": "Paseador de perros",
+    "description": "Paseador de perros",
+    "category": 19
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 118,
+  "fields": {
+    "name": "Guardería de día",
+    "description": "Guardería de día",
+    "category": 19
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 119,
+  "fields": {
+    "name": "Alojamiento de mascotas",
+    "description": "Alojamiento de mascotas",
+    "category": 19
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 120,
+  "fields": {
+    "name": "Mascotas general",
+    "description": "Mascotas general",
+    "category": 19
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 121,
+  "fields": {
+    "name": "Mudanzas internacionales",
+    "description": "Mudanzas internacionales",
+    "category": 20
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 122,
+  "fields": {
+    "name": "Mudanzas nacionales",
+    "description": "Mudanzas nacionales",
+    "category": 20
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 123,
+  "fields": {
+    "name": "Mudanzas generales",
+    "description": "Mudanzas generales",
+    "category": 20
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 124,
+  "fields": {
+    "name": "Fletes",
+    "description": "Fletes",
+    "category": 20
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 125,
+  "fields": {
+    "name": "Mini fletes",
+    "description": "Mini fletes",
+    "category": 20
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 126,
+  "fields": {
+    "name": "Construcción",
+    "description": "Construcción",
+    "category": 21
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 127,
+  "fields": {
+    "name": "Mantenimiento",
+    "description": "Mantenimiento",
+    "category": 21
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 128,
+  "fields": {
+    "name": "Limpieza",
+    "description": "Limpieza",
+    "category": 21
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 129,
+  "fields": {
+    "name": "Pintura",
+    "description": "Pintura",
+    "category": 22
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 130,
+  "fields": {
+    "name": "Revestimientos",
+    "description": "Revestimientos",
+    "category": 22
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 131,
+  "fields": {
+    "name": "Humedad",
+    "description": "Humedad",
+    "category": 22
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 132,
+  "fields": {
+    "name": "Otros trabajos",
+    "description": "Otros trabajos",
+    "category": 22
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 133,
+  "fields": {
+    "name": "Filtraciones",
+    "description": "Filtraciones",
+    "category": 23
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 134,
+  "fields": {
+    "name": "Cañerias",
+    "description": "Cañerias",
+    "category": 23
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 135,
+  "fields": {
+    "name": "Sanitarios",
+    "description": "Sanitarios",
+    "category": 23
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 136,
+  "fields": {
+    "name": "Grifería",
+    "description": "Grifería",
+    "category": 23
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 137,
+  "fields": {
+    "name": "Bombas de agua",
+    "description": "Bombas de agua",
+    "category": 23
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 138,
+  "fields": {
+    "name": "Tanques de agua",
+    "description": "Tanques de agua",
+    "category": 23
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 139,
+  "fields": {
+    "name": "Pozos sépticos",
+    "description": "Pozos sépticos",
+    "category": 23
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 140,
+  "fields": {
+    "name": "Calderas",
+    "description": "Calderas",
+    "category": 23
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 141,
+  "fields": {
+    "name": "Plomería general",
+    "description": "Plomería general",
+    "category": 23
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 142,
+  "fields": {
+    "name": "Reformas de baños",
+    "description": "Reformas de baños",
+    "category": 24
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 143,
+  "fields": {
+    "name": "Reforma de cocinas",
+    "description": "Reforma de cocinas",
+    "category": 24
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 144,
+  "fields": {
+    "name": "Reformas integrales",
+    "description": "Reformas integrales",
+    "category": 24
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 145,
+  "fields": {
+    "name": "Reformas parciales",
+    "description": "Reformas parciales",
+    "category": 24
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 146,
+  "fields": {
+    "name": "Reformas en general",
+    "description": "Reformas en general",
+    "category": 24
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 147,
+  "fields": {
+    "name": "Cámaras de vigilancia",
+    "description": "Cámaras de vigilancia",
+    "category": 25
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 148,
+  "fields": {
+    "name": "Cercos eléctricos",
+    "description": "Cercos eléctricos",
+    "category": 25
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 149,
+  "fields": {
+    "name": "Alarmas",
+    "description": "Alarmas",
+    "category": 25
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 150,
+  "fields": {
+    "name": "Seguridad general",
+    "description": "Seguridad general",
+    "category": 25
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 151,
+  "fields": {
+    "name": "Tapicería",
+    "description": "Tapicería",
+    "category": 26
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 152,
+  "fields": {
+    "name": "Computadoras",
+    "description": "Computadoras",
+    "category": 27
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 153,
+  "fields": {
+    "name": "Tablets y celulares",
+    "description": "Tablets y celulares",
+    "category": 27
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 154,
+  "fields": {
+    "name": "Impresoras",
+    "description": "Impresoras",
+    "category": 27
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 155,
+  "fields": {
+    "name": "Electrodomésticos",
+    "description": "Electrodomésticos",
+    "category": 27
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 156,
+  "fields": {
+    "name": "Televisores",
+    "description": "Televisores",
+    "category": 27
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 157,
+  "fields": {
+    "name": "Cámaras",
+    "description": "Cámaras",
+    "category": 27
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 158,
+  "fields": {
+    "name": "Antenas",
+    "description": "Antenas",
+    "category": 27
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 159,
+  "fields": {
+    "name": "Refrigeración",
+    "description": "Refrigeración",
+    "category": 27
+  }
+},
+{
+  "model": "servis.subcategory",
+  "pk": 160,
+  "fields": {
+    "name": "Tecnología general",
+    "description": "Tecnología general",
+    "category": 27
+  }
+}
+]

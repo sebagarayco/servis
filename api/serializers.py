@@ -1,9 +1,10 @@
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 from rest_framework_gis.serializers import GeoFeatureModelSerializer, GeometrySerializerMethodField
-from django.contrib.auth.models import User
+
 from django.contrib.auth import authenticate
-from servis.models import Profile, Category, Subcategory, Service
+from servis.models import Category, Subcategory, Service
+from users.models import ServisUser
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -16,21 +17,21 @@ class RegisterSerializer(serializers.ModelSerializer):
         _type_: _description_
     """
     class Meta:
-        model = User
+        model = ServisUser
         fields = ('id', 'username', 'email',
-                  'password', 'first_name', 'last_name')
+                  'password', 'first_name', 'last_name', 'government_id')
         extra_kwargs = {
             'password': {'write_only': True}
         }
 
     def create(self, validated_data):
         print('Register serializer: ', validated_data)
-        user = User.objects.create_user(username=validated_data['username'],
+        user = ServisUser.objects.create_user(username=validated_data['username'],
                                         email=validated_data['email'],
                                         password=validated_data['password'],
                                         first_name=validated_data['first_name'],
-                                        last_name=validated_data['last_name'])
-
+                                        last_name=validated_data['last_name'],
+                                        government_id=validated_data['government_id'])
         return user
 
 
@@ -55,40 +56,46 @@ class LoginSerializer(serializers.Serializer):
             return user
         raise serializers.ValidationError('Incorrect user and password')
 
-
-class UserProfileSerializer(ModelSerializer):
-    """ User Profile Serializer
-
-    Args:
-        ModelSerializer (_type_): User Profile serializer
-
-    Returns:
-        _type_: _description_
-    """
-    user = SerializerMethodField()
-    first_name = serializers.CharField(source='user.first_name')
-    last_name = serializers.CharField(source='user.last_name')
-    created = serializers.DateTimeField(source='user.date_joined')
-    full_name = SerializerMethodField()
-    email = serializers.CharField(source='user.email')
-    role = SerializerMethodField()
-
+class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Profile
-        fields = ('id', 'user', 'first_name', 'last_name',
-                  'full_name', 'email', 'role', 'created', 'location', 'image')
-
-    def get_full_name(self, obj):
-        if not obj.user.first_name and not obj.user.last_name:
-            return obj.user.username
-        else:
-            return '{} {}'.format(obj.user.first_name, obj.user.last_name)
-
-    def get_user(self, obj):
-        return str(obj.user.username)
-
-    def get_role(self, obj):
-        return obj.get_role_display()
+        model = ServisUser
+        fields = ('id', 'username', 'email', 'first_name', 'last_name', 
+                  'location', 'image', 'role', 'date_joined', 'last_login',
+                  'is_active', 'is_staff', 'is_superuser', 'government_id')
+    
+#class UserProfileSerializer(ModelSerializer):
+#    """ User Profile Serializer
+#
+#    Args:
+#        ModelSerializer (_type_): User Profile serializer
+#
+#    Returns:
+#        _type_: _description_
+#    """
+#    user = SerializerMethodField()
+#    first_name = serializers.CharField(source='user.first_name')
+#    last_name = serializers.CharField(source='user.last_name')
+#    created = serializers.DateTimeField(source='user.date_joined')
+#    full_name = SerializerMethodField()
+#    email = serializers.CharField(source='user.email')
+#    role = SerializerMethodField()
+#
+#    class Meta:
+#        model = Profile
+#        fields = ('id', 'user', 'first_name', 'last_name',
+#                  'full_name', 'email', 'role', 'created', 'location', 'image')
+#
+#    def get_full_name(self, obj):
+#        if not obj.user.first_name and not obj.user.last_name:
+#            return obj.user.username
+#        else:
+#            return '{} {}'.format(obj.user.first_name, obj.user.last_name)
+#
+#    def get_user(self, obj):
+#        return str(obj.user.username)
+#
+#    def get_role(self, obj):
+#        return obj.get_role_display()
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -100,19 +107,10 @@ class UserSerializer(serializers.ModelSerializer):
     Returns:
         _type_: _description_
     """
-    location = GeometrySerializerMethodField()
-    image = SerializerMethodField()
 
     class Meta:
-        model = User
-        fields = ('id', 'username', 'email',
-                  'first_name', 'last_name', 'location', 'image')
-
-    def get_location(self, obj):
-        return obj.profile.location
-
-    def get_image(self, obj):
-        return obj.profile.image.url
+        model = ServisUser
+        fields = ('id', 'username', 'email', 'location', 'first_name', 'last_name', 'government_id') 
 
 
 class SubCategorySerializer(ModelSerializer):

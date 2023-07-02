@@ -11,6 +11,7 @@ export class Register extends Component {
 		email: '',
 		first_name: '',
 		last_name: '',
+		government_id: '',
 		password: '',
 		password2: '',
 	};
@@ -22,7 +23,7 @@ export class Register extends Component {
 
 	onSubmit = (e) => {
 		e.preventDefault();
-		const { username, email, password, password2, first_name, last_name } = this.state;
+		const { username, email, password, password2, first_name, last_name, government_id } = this.state;
 		if (password !== password2) {
 			this.props.createMessage({ passwordNotMatch: 'Passwords do not match' });
 		} else {
@@ -30,6 +31,7 @@ export class Register extends Component {
 				username,
 				first_name,
 				last_name,
+				government_id,
 				password,
 				email,
 			};
@@ -46,7 +48,7 @@ export class Register extends Component {
 			return <Navigate to="/" />;
 		}
 
-		const { username, email, password, password2, first_name, last_name } = this.state;
+		const { username, email, password, password2, first_name, last_name, government_id } = this.state;
 		return (
 			<div className="auth-main">
 				<div className="auth-sub-main">
@@ -66,6 +68,9 @@ export class Register extends Component {
 						</div>
 						<div className="form-group">
 							<input type="text" className="form-control" name="last_name" onChange={this.onChange} value={last_name} placeholder='Last Name' />
+						</div>
+						<div className="form-group">
+							<input type="text" className="form-control" name="government_id" onChange={this.onChange} value={government_id} placeholder='National ID (DNI/SSN)' />
 						</div>
 						<div className="form-group">
 							<input type="password" className="form-control" name="password" onChange={this.onChange} value={password} placeholder='Password' />

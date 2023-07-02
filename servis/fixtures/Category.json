@@ -1,159 +1,167 @@
 [
 {
   "model": "servis.category",
-  "pk": 15,
+  "pk": 1,
+  "fields": {
+    "name": "A/A",
+    "description": "A/A a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 2,
   "fields": {
     "name": "Albañil",
-    "description": "Albañiles a domicilio"
+    "description": "Albañil a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 3,
+  "fields": {
+    "name": "Arquitecto",
+    "description": "Arquitecto a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 4,
+  "fields": {
+    "name": "Autos",
+    "description": "Autos a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 5,
+  "fields": {
+    "name": "Belleza",
+    "description": "Belleza a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 6,
+  "fields": {
+    "name": "Bienestar",
+    "description": "Bienestar a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 7,
+  "fields": {
+    "name": "Carpintero",
+    "description": "Carpintero a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 8,
+  "fields": {
+    "name": "Cerrajero",
+    "description": "Cerrajero a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 9,
+  "fields": {
+    "name": "Colocador",
+    "description": "Colocador a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 10,
+  "fields": {
+    "name": "Control de plagas",
+    "description": "Control de plagas a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 11,
+  "fields": {
+    "name": "Cuidadores",
+    "description": "Cuidadores a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 12,
+  "fields": {
+    "name": "Decorador",
+    "description": "Decorador a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 13,
+  "fields": {
+    "name": "Electricista",
+    "description": "Electricista a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 14,
+  "fields": {
+    "name": "Eventos",
+    "description": "Eventos a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 15,
+  "fields": {
+    "name": "Gasista",
+    "description": "Gasista a domicilio"
   }
 },
 {
   "model": "servis.category",
   "pk": 16,
   "fields": {
-    "name": "Arquitecto",
-    "description": "Arquitectos a domicilio"
+    "name": "Herrero",
+    "description": "Herrero a domicilio"
   }
 },
 {
   "model": "servis.category",
   "pk": 17,
   "fields": {
-    "name": "Autos",
-    "description": "Servicios del automovil"
+    "name": "Jardinero",
+    "description": "Jardinero a domicilio"
   }
 },
 {
   "model": "servis.category",
   "pk": 18,
   "fields": {
-    "name": "Belleza",
-    "description": "Profesionales de belleza a domicilio"
+    "name": "Limpieza",
+    "description": "Limpieza a domicilio"
   }
 },
 {
   "model": "servis.category",
   "pk": 19,
   "fields": {
-    "name": "Bienestar",
-    "description": "Bienestar"
+    "name": "Mascotas",
+    "description": "Mascotas a domicilio"
   }
 },
 {
   "model": "servis.category",
   "pk": 20,
   "fields": {
-    "name": "Carpintero",
-    "description": "Carpinteros a domicilio"
+    "name": "Mudancero",
+    "description": "Mudancero a domicilio"
   }
 },
 {
   "model": "servis.category",
   "pk": 21,
-  "fields": {
-    "name": "Cerrajero",
-    "description": "Cerrajeros a domicilio"
-  }
-},
-{
-  "model": "servis.category",
-  "pk": 22,
-  "fields": {
-    "name": "Colocador",
-    "description": "Colocadores a domicilio"
-  }
-},
-{
-  "model": "servis.category",
-  "pk": 23,
-  "fields": {
-    "name": "Control de plagas",
-    "description": "Empresas de control de plagas a domicilio"
-  }
-},
-{
-  "model": "servis.category",
-  "pk": 24,
-  "fields": {
-    "name": "Cuidadores",
-    "description": "Cuidado de personas a domicilio"
-  }
-},
-{
-  "model": "servis.category",
-  "pk": 25,
-  "fields": {
-    "name": "Decorador",
-    "description": "Decoradores a domicilio"
-  }
-},
-{
-  "model": "servis.category",
-  "pk": 26,
-  "fields": {
-    "name": "Electricista",
-    "description": "Electricistas a domicilio"
-  }
-},
-{
-  "model": "servis.category",
-  "pk": 27,
-  "fields": {
-    "name": "Eventos",
-    "description": "Eventos y fiestas"
-  }
-},
-{
-  "model": "servis.category",
-  "pk": 28,
-  "fields": {
-    "name": "Gasista",
-    "description": "Gasistas a domicilio"
-  }
-},
-{
-  "model": "servis.category",
-  "pk": 29,
-  "fields": {
-    "name": "Herrero",
-    "description": "Herreros a domicilio"
-  }
-},
-{
-  "model": "servis.category",
-  "pk": 30,
-  "fields": {
-    "name": "Jardinero",
-    "description": "Jardineros a domicilio"
-  }
-},
-{
-  "model": "servis.category",
-  "pk": 31,
-  "fields": {
-    "name": "Limpieza",
-    "description": "Limpiezas a domicilio"
-  }
-},
-{
-  "model": "servis.category",
-  "pk": 32,
-  "fields": {
-    "name": "Mascotas",
-    "description": "Cuidadores de mascotas a domicilio"
-  }
-},
-{
-  "model": "servis.category",
-  "pk": 33,
-  "fields": {
-    "name": "Mudancero",
-    "description": "Empresas de mudanzas a domicilio"
-  }
-},
-{
-  "model": "servis.category",
-  "pk": 34,
   "fields": {
     "name": "Piletas",
     "description": "Piletas a domicilio"
@@ -161,50 +169,50 @@
 },
 {
   "model": "servis.category",
-  "pk": 35,
+  "pk": 22,
   "fields": {
     "name": "Pintor",
-    "description": "Pintores a domicilio"
+    "description": "Pintor a domicilio"
   }
 },
 {
   "model": "servis.category",
-  "pk": 36,
+  "pk": 23,
   "fields": {
     "name": "Plomero",
-    "description": "Plomeria a domicilio"
+    "description": "Plomero a domicilio"
   }
 },
 {
   "model": "servis.category",
-  "pk": 37,
+  "pk": 24,
   "fields": {
     "name": "Reformas",
-    "description": "Reformas económicas"
+    "description": "Reformas a domicilio"
   }
 },
 {
   "model": "servis.category",
-  "pk": 38,
+  "pk": 25,
   "fields": {
     "name": "Seguridad",
-    "description": "Empresas de seguridad a domicilio"
+    "description": "Seguridad a domicilio"
   }
 },
 {
   "model": "servis.category",
-  "pk": 39,
+  "pk": 26,
   "fields": {
     "name": "Tapicero",
-    "description": "Tapiceros a domicilio"
+    "description": "Tapicero a domicilio"
   }
 },
 {
   "model": "servis.category",
-  "pk": 40,
+  "pk": 27,
   "fields": {
     "name": "Técnico",
-    "description": "Servicio técnico a domicilio"
+    "description": "Técnico a domicilio"
   }
 }
 ]

@@ -1,0 +1,83 @@
+[
+{
+  "model": "users.servisuser",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$600000$cbx4KiFDBDjAcbTPo1vRtr$q6W6Bo3zzNi4jJO9sDnYOX833ebFKv2xj2y7O5af44Y=",
+    "last_login": null,
+    "is_superuser": true,
+    "username": "admin",
+    "email": "admin@servis.com",
+    "first_name": "Administrador",
+    "last_name": "Servis",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2023-07-02T19:03:56.213Z",
+    "government_id": "12345678",
+    "role": "Consumer",
+    "image": "images/default.jpg",
+    "location": "SRID=4326;POINT (-71.01343771155254 -41.93630194589863)",
+    "phone": "+54-11-5781353",
+    "cc_number": "4716368848012082",
+    "cc_expiry": "2030-01-31",
+    "cc_code": "154",
+    "bank_account": "8583988766972695421199",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.servisuser",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$600000$cTpAL5WwD6JuwmZj09AuM0$X4UgIg9M9EsaT/rUDiuYn/UAG2pU5ANbs1jy72VN4hY=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "seba",
+    "email": "sebagarayco@gmail.com",
+    "first_name": "Sebastian",
+    "last_name": "Garaycoechea",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2023-07-02T19:24:22.779Z",
+    "government_id": "35322726",
+    "role": "Consumer",
+    "image": "images/default.jpg",
+    "location": "SRID=4326;POINT (-71.46175103737266 -41.15739664200839)",
+    "phone": "+54-11-6138689",
+    "cc_number": "4556752680718117",
+    "cc_expiry": "2025-06-30",
+    "cc_code": "371",
+    "bank_account": "8282466202072128820794",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.servisuser",
+  "pk": 5,
+  "fields": {
+    "password": "pbkdf2_sha256$600000$TKsflsfvY0F9CdcLt6VHat$byFs0CW+zN3IU4LYlyG+4ePiZPmHbz9SAI0vYnnIm4Q=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "itziar",
+    "email": "itziar@gmail.com",
+    "first_name": "Itziar",
+    "last_name": "Sebedio",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2023-07-02T19:27:23.494Z",
+    "government_id": "22323451",
+    "role": "Consumer",
+    "image": "images/default.jpg",
+    "location": "SRID=4326;POINT (-71.39095466235665 -42.20328379348725)",
+    "phone": "+54-11-742042",
+    "cc_number": "4780063620513404",
+    "cc_expiry": "2030-08-31",
+    "cc_code": "326",
+    "bank_account": "8111659203728074241126",
+    "groups": [],
+    "user_permissions": []
+  }
+}
+]

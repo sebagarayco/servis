@@ -5,7 +5,6 @@ from .api import RegisterAPI, LoginAPI, UserAPI, UserProfileView, CategoryView, 
 
 router = routers.DefaultRouter()
 router.register('categories', CategoryView, 'categories')
-# router.register('subcategories', SubcategoryView, 'subcategories')
 router.register('users', UserProfileView, 'users')
 router.register('services', ServiceView, 'services')
 

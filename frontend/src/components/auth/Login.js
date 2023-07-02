@@ -23,7 +23,8 @@ export class Login extends Component {
 	onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
 	render() {
-		if (this.props.isAuthenticated) {
+		const { isAuthenticated } = this.props.auth;
+		if (isAuthenticated) {
 			return <Navigate to="/" />;
 		}
 		const { username, password } = this.state;
@@ -54,7 +55,7 @@ export class Login extends Component {
 }
 
 const mapStateToProps = (state) => ({
-	isAuthenticated: state.auth.isAuthenticated,
+	auth: state.auth,
 });
 
 export default connect(mapStateToProps, { login })(Login);
