@@ -17,11 +17,14 @@ jobs:
       matrix:
         include:
           - dockerfile: ./nginx/Dockerfile
-            image: ghcr.io/sebagarayco/servis/servis_nginx
+            context: ./nginx
+            image: ghcr.io/sebagarayco/servis/servis-nginx
           - dockerfile: ./frontend/Dockerfile
-            image: ghcr.io/sebagarayco/servis/servis_frontend
-          - dockerfile: ./Dockerfile
-            image: ghcr.io/sebagarayco/servis/servis_backend
+            context: ./frontend
+            image: ghcr.io/sebagarayco/servis/servis-front
+          - dockerfile: Dockerfile
+            context: .
+            image: ghcr.io/sebagarayco/servis/servis-back
     permissions:
       contents: read
       packages: write
@@ -45,14 +48,15 @@ jobs:
           tags: |
             type=ref,event=branch
             type=ref,event=tag
+            type=ref,event=pr
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
-            type=sha,prefix={{branch}}-
+            type=sha
 
       - name: Build and push Docker image 
         uses: docker/build-push-action@v4
         with:
-          context: .
+          context: ${{ matrix.context }}
           file: ${{ matrix.dockerfile }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
