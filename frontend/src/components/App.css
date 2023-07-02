@@ -1,0 +1,278 @@
+/* DEBUG */
+/* * {
+	outline: 1px solid red;
+} */
+
+.Toastify {
+	font-size: 1.5rem;
+}
+
+/* Nav */
+.logo {
+	float: left;
+	padding: 10px;
+	margin-left: 10px;
+}
+
+.nav-ul li {
+	display: inline-block;
+	padding-right: 20px;
+	padding: 10px;
+	margin: 10px;
+}
+
+.nav-ul li a {
+	font-size: 1.5rem;
+	color: darkslategrey;
+	text-decoration: none;
+	padding: 10px;
+	margin: 0px;
+}
+
+.nav-ul .logged {
+	font-size: 1.5rem;
+	justify-content: center;
+	color: darkslategrey;
+	text-decoration: none;
+	float: right;
+}
+
+.nav-ul .logged .btn {
+	font-size: 1.5rem;
+}
+
+/* Home */
+@import url("react-toastify/dist/ReactToastify.css");
+
+.home-container .home-row {
+	position: relative;
+	margin-bottom: 20px;
+	padding: 30px;
+	border-top: 1px solid #f2f2f2;
+	border-radius: 20px;
+	box-shadow: 0px 7px 20px rgba(203, 200, 200, 0.656);
+}
+
+.home-row h1 {
+	color: black !important;
+}
+
+.home-container h1 {
+	text-align: center;
+	margin-bottom: 1.5rem;
+	color: darkgrey
+}
+
+.home-container .mb-3 {
+	height: 5rem;
+}
+
+.home-container .mb-3 .pac-target-input {
+	border: 1px solid lightgrey;
+}
+
+.home-container .btn {
+	border-radius: 20px;
+	height: 5rem;
+}
+
+.home-container .btn-search {
+	width: 8rem;
+}
+
+.home-container img {
+	width: 100%;
+}
+
+.home-container-tab {
+	position: absolute;
+	top: -35px;
+	right: 35px;
+	z-index: 100;
+	width: 210px;
+	height: 35px;
+	font-size: 18px;
+	background-color: #e5f22a;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 25px 25px 0 0;
+	cursor: pointer;
+}
+
+.home-container-tab p {
+	justify-content: justify;
+}
+
+.home-subcontainer .g-7 {
+	margin-top: 2rem;
+	padding: 30px;
+	border: 2px solid #f2f2f2;
+	border-radius: 20px;
+}
+
+.home-carousel {
+	margin-bottom: 20px;
+}
+
+.home-carousel .carousel-item {
+	height: 500px;
+}
+
+.home-carousel .carousel-item img {
+	border-radius: 20px;
+	height: 100%;
+	width: 100%;
+}
+
+/* HomeMap */
+@import url("leaflet/dist/leaflet.css");
+
+.leaflet-container {
+	border-radius: 20px;
+	width: auto;
+	height: 400px;
+}
+
+/* Login & Register*/
+.auth-main {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url('../../static/login-bg.jpeg');
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.auth-sub-main {
+	width: 420px;
+	padding: 60px;
+	margin: 0 auto;
+	border-radius: 40px;
+	box-shadow: 0px 7px 20px rgba(203, 200, 200, 0.656);
+	background-color: #ffe188
+}
+
+.auth-sub-main h1 {
+	text-align: center;
+}
+
+.auth-sub-main .form-control {
+	border-radius: 20px;
+	height: 4rem;
+	font-size: 1.25rem;
+	padding-left: 20px;
+}
+
+.auth-sub-main .form-group {
+	margin-top: 2rem;
+}
+
+.auth-sub-main .form-group .btn {
+	border-radius: 20px;
+	height: 4rem;
+	width: 100%;
+	font-size: 1.5rem;
+	margin-bottom: 0.5rem;
+}
+
+.auth-logo {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 2rem;
+}
+
+/* Profile */
+.profile div {
+	margin-bottom: 3rem;
+}
+
+.profile-image img {
+	padding: 1rem;
+	width: 250px;
+	height: 250px;
+	border-radius: 50%;
+	display: flex;
+	margin: 0 auto;
+	box-shadow: 10px 9px 20px rgba(203, 200, 200, 0.656);
+}
+
+/* HomeMap */
+.homemap-container {
+	display: flex;
+	height: 100vh;
+}
+
+.homemap-controls {
+	color: #fff;
+}
+
+.homemap-controls input {
+	border: none;
+}
+
+.map-container {
+	width: 100%;
+	height: 100vh;
+}
+
+.map {
+	width: 80%;
+	height: 100vh;
+}
+
+.highlight {
+	font-size: 1.25rem;
+	font-weight: bold;
+}
+
+.combobox-input {
+	width: 100%;
+	padding: 0.5rem;
+}
+
+/* Footer */
+.footer {
+	background-color: #f2f2f2;
+	border-radius: 10px;
+	padding: 10px;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 120px;
+	z-index: 10;
+	overflow: hidden;
+}
+
+.footer ul {
+	margin: 5px;
+	list-style-type: none;
+	text-align: center;
+}
+
+.footer ul li a {
+	text-decoration: none;
+	color: darkslategrey;
+}
+
+.footer div div {
+	text-align: left;
+}
+
+.footer i {
+	font-size: 25px;
+	color: darkslategrey;
+}
+
+.footer .floating-whatsapp-button {
+	right: 30px;
+	bottom: 210px;
+}
+
+.footer .floating-whatsapp-chatbox {
+	right: 40px;
+	bottom: 230px;
+}

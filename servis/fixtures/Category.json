@@ -1,0 +1,210 @@
+[
+{
+  "model": "servis.category",
+  "pk": 15,
+  "fields": {
+    "name": "Albañil",
+    "description": "Albañiles a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 16,
+  "fields": {
+    "name": "Arquitecto",
+    "description": "Arquitectos a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 17,
+  "fields": {
+    "name": "Autos",
+    "description": "Servicios del automovil"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 18,
+  "fields": {
+    "name": "Belleza",
+    "description": "Profesionales de belleza a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 19,
+  "fields": {
+    "name": "Bienestar",
+    "description": "Bienestar"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 20,
+  "fields": {
+    "name": "Carpintero",
+    "description": "Carpinteros a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 21,
+  "fields": {
+    "name": "Cerrajero",
+    "description": "Cerrajeros a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 22,
+  "fields": {
+    "name": "Colocador",
+    "description": "Colocadores a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 23,
+  "fields": {
+    "name": "Control de plagas",
+    "description": "Empresas de control de plagas a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 24,
+  "fields": {
+    "name": "Cuidadores",
+    "description": "Cuidado de personas a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 25,
+  "fields": {
+    "name": "Decorador",
+    "description": "Decoradores a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 26,
+  "fields": {
+    "name": "Electricista",
+    "description": "Electricistas a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 27,
+  "fields": {
+    "name": "Eventos",
+    "description": "Eventos y fiestas"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 28,
+  "fields": {
+    "name": "Gasista",
+    "description": "Gasistas a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 29,
+  "fields": {
+    "name": "Herrero",
+    "description": "Herreros a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 30,
+  "fields": {
+    "name": "Jardinero",
+    "description": "Jardineros a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 31,
+  "fields": {
+    "name": "Limpieza",
+    "description": "Limpiezas a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 32,
+  "fields": {
+    "name": "Mascotas",
+    "description": "Cuidadores de mascotas a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 33,
+  "fields": {
+    "name": "Mudancero",
+    "description": "Empresas de mudanzas a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 34,
+  "fields": {
+    "name": "Piletas",
+    "description": "Piletas a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 35,
+  "fields": {
+    "name": "Pintor",
+    "description": "Pintores a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 36,
+  "fields": {
+    "name": "Plomero",
+    "description": "Plomeria a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 37,
+  "fields": {
+    "name": "Reformas",
+    "description": "Reformas económicas"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 38,
+  "fields": {
+    "name": "Seguridad",
+    "description": "Empresas de seguridad a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 39,
+  "fields": {
+    "name": "Tapicero",
+    "description": "Tapiceros a domicilio"
+  }
+},
+{
+  "model": "servis.category",
+  "pk": 40,
+  "fields": {
+    "name": "Técnico",
+    "description": "Servicio técnico a domicilio"
+  }
+}
+]

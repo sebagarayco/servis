@@ -1,0 +1,72 @@
+version: '3.9'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: servis-back
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    restart: "on-failure"
+    depends_on:
+      - postgres-db
+    networks:
+      - servis
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: servis-front
+    volumes:
+      - /app/node_modules
+      - ./frontend:/app
+    depends_on:
+      - backend
+    networks:
+      - servis
+
+  nginx:
+    restart: always
+    container_name: servis-nginx
+    depends_on:
+      - backend
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    networks:
+      - servis
+
+  postgres-db:
+    image: postgis/postgis:15-master
+    container_name: servis-db
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - RUN_AS_ROOT=true
+      - POSTGRES_MULTIPLE_EXTENSIONS=postgis,hstore,postgis_topology,postgis_raster,pgrouting
+    restart: "on-failure"
+    healthcheck:
+      test: "pg_isready -h 127.0.0.1 -U ${POSTGRES_USER} -d ${POSTGRES_DB}"
+      interval: 20s
+      timeout: 5s
+      retries: 3
+    networks:
+      - servis
+
+networks:
+  servis:
+    driver: bridge
+
+volumes:
+  postgres_data:
