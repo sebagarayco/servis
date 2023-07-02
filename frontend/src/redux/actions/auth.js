@@ -54,6 +54,7 @@ export const login = (username, password) => (dispatch) => {
 				type: LOGIN_SUCCESS,
 				payload: res.data,
 			});
+			console.log('Pase por ACTION login SUCCESS', res.data)
 			toast.success("Succesfully logged in. Welcome " + username + "!");
 		})
 		.catch((err) => {
@@ -66,7 +67,7 @@ export const login = (username, password) => (dispatch) => {
 };
 
 // USER REGISTRATION
-export const register = ({ username, password, email, first_name, last_name }) => (dispatch) => {
+export const register = ({ username, password, email, first_name, last_name, government_id }) => (dispatch) => {
 	// Headers
 	const config = {
 		headers: {
@@ -74,7 +75,7 @@ export const register = ({ username, password, email, first_name, last_name }) =
 		},
 	};
 
-	const body = JSON.stringify({ username, email, password, first_name, last_name });
+	const body = JSON.stringify({ username, email, password, first_name, last_name, government_id });
 
 	axios
 		.post('/api/auth/register', body, config)

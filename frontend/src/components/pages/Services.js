@@ -7,7 +7,7 @@ export class Services extends Component {
 		return (
 			<div>
 				<Nav />
-				{/* <Footer /> */}
+				<h1>Services</h1>
 			</div>
 		)
 	}

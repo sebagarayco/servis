@@ -13,7 +13,10 @@ up:
 down:
 	docker-compose down
 
-shell:
+loadcategories:
+	docker compose exec backend python manage.py shell_plus < scripts/LoadCategorias.txt
+
+shellplus:
 	docker compose exec backend python3 manage.py shell_plus
 
 migrate:

@@ -26,4 +26,4 @@ RUN pip install -r requirements.txt
 HEALTHCHECK --interval=1m --timeout=5s --retries=2 --start-period=10s \
 	CMD wget -qO- http://localhost:8000/health/ || exit 1
 
-CMD [ "python", "./manage.py", "runserver", "0.0.0.0:8000" ]
+ENTRYPOINT ["/app/servis/entrypoint.sh"]

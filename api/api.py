@@ -1,9 +1,10 @@
-from servis.models import Category, Subcategory, Profile, Service
+from servis.models import Category, Subcategory, Service
 from rest_framework import viewsets, generics, permissions, mixins
 from rest_framework.response import Response
+from django.conf import settings
 from knox.models import AuthToken
-from django.contrib.auth.models import User
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, UserProfileSerializer, CategorySerializer, SubCategorySerializer, ServiceSerializer
+from users.models import ServisUser
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, CategorySerializer, SubCategorySerializer, ServiceSerializer, UserProfileSerializer
 
 
 class RegisterAPI(generics.GenericAPIView):
@@ -34,6 +35,7 @@ class LoginAPI(generics.GenericAPIView):
 
 class UserAPI(generics.RetrieveAPIView):
     serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_object(self):
         return self.request.user
@@ -45,7 +47,7 @@ class UserAPI(generics.RetrieveAPIView):
 class UserProfileView(viewsets.ModelViewSet):
     serializer_class = UserProfileSerializer
     permission_classes = [permissions.IsAuthenticated]
-    queryset = Profile.objects.all()
+    queryset = ServisUser.objects.all()
 
 
 class CategoryView(viewsets.ModelViewSet):

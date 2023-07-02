@@ -33,6 +33,9 @@ ALLOWED_HOSTS = env('ALLOWED_HOSTS').split(' ')
 # Application definition
 
 INSTALLED_APPS = [
+    # Custom user model
+    'users.apps.UsersConfig',
+    # Django
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -55,6 +58,9 @@ INSTALLED_APPS = [
     'servis',
     'frontend',
 ]
+
+# Override default user model
+AUTH_USER_MODEL = "users.ServisUser"
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
