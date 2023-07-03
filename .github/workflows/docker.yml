@@ -1,4 +1,4 @@
-name: Build & publish 
+name: Docker
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
       - main    
 
 jobs:
-  build-and-push-image:
+  docker:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
