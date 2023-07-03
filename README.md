@@ -4,9 +4,7 @@
 
 ---
 
-🇪🇸 Sistema de búsqueda y contratación de servicios para particulares.
-
-🇺🇸 System to search and hire services for individuals.
+Sistema de búsqueda y contratación de servicios para particulares.
 
 ## Funcionalidades
 
