@@ -17,10 +17,7 @@ jobs:
           - dockerfile: ./nginx/Dockerfile
             context: ./nginx
             image: ghcr.io/sebagarayco/servis/servis-nginx
-          - dockerfile: ./frontend/Dockerfile
-            context: ./frontend
-            image: ghcr.io/sebagarayco/servis/servis-front
-          - dockerfile: Dockerfile
+          - dockerfile: Dockerfile.release
             context: .
             image: ghcr.io/sebagarayco/servis/servis-back
     permissions:

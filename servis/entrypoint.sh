@@ -1,8 +1,8 @@
 #!/bin/sh
 
-while ! nc -z postgres-db 5432; do
+while ! nc -z $POSTGRES_HOST 5432 2> /dev/null; do
 	echo "Waiting for postgres..."
-	sleep 0.1
+	sleep 2
 done
 
 # Apply database migrations
