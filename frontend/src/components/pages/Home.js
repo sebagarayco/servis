@@ -24,7 +24,6 @@ export class Home extends Component {
 				<Nav />
 				<HomeSearch />
 				<HomeCards />
-				{/* <Footer /> */}
 			</div >
 		)
 	}

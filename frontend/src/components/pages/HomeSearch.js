@@ -111,7 +111,9 @@ export class HomeSearch extends Component {
 							/>
 						</Col>
 					</Row>
-					<HomeStats categories={this.props.categories.categories.length} users={this.props.userdata.length} services="3" />
+					<HomeStats categories={this.props.categories.categories.length}
+						users={this.props.userdata.length}
+						services={this.props.services ? this.props.services.length : 0} />
 					<Row className="home-row">
 						<h1>¿Qué servicio estás buscando?</h1>
 						<div className='home-container-tab'>

@@ -21,8 +21,8 @@ export class Nav extends Component {
 				<img className='logo' src="static/handshake56.png" />
 				<ul className='nav-ul'>
 					<li><Link to="/">Home</Link></li>
-					<li><Link to="/servicesoffer">Ofrecer</Link></li>
-					<li><Link to="/serviceshire">Contratar</Link></li>
+					<li><Link to="/offer">Ofrecer</Link></li>
+					<li><Link to="/hire">Contratar</Link></li>
 					<li><Link to="/services">Servicios</Link></li>
 					{isAuthenticated ?
 						<li className='logged'>
