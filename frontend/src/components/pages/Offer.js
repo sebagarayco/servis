@@ -5,8 +5,9 @@ import { Footer } from '../layout/Footer';
 import { connect } from 'react-redux';
 // Actions
 import { getCategories } from '../../redux/actions/categories';
+import { createService } from '../../redux/actions/services';
 // Bootstrap
-import { Container, Row, Col, Form, InputGroup, Button } from 'react-bootstrap';
+import { Container, Row, Col, Form, InputGroup, Button, Table } from 'react-bootstrap';
 // Icons
 import { MdHomeRepairService } from "react-icons/md";
 import { MdOutlineCleaningServices } from "react-icons/md";
@@ -18,6 +19,10 @@ export class Offer extends Component {
 		this.state = {
 			category: '',
 			subcategory: '',
+			description: '',
+			hourly_price: '',
+			full_day_price: '',
+			provider: '',
 		}
 	};
 
@@ -28,15 +33,22 @@ export class Offer extends Component {
 		console.log('Selected ' + e.target.name + ' value: ' + e.target.value);
 	}
 
+	onSubmit = (e) => {
+		e.preventDefault();
+		const { category, subcategory, description, hourly_price, full_day_price, provider } = this.state;
+		const service = { category, subcategory, description, hourly_price, full_day_price, provider };
+		this.props.createService(service);
+	};
+
 	render() {
 		return (
 			<div>
 				<Nav />
 				<Container className='offer-container'>
-					<Form className='offer-form'>
+					<Form className='offer-form' onSubmit={this.onSubmit}>
 						<Row>
 							<Col sm={15}>
-								<h1>Time to offer!</h1>
+								<h1>Offer service</h1>
 							</Col>
 						</Row>
 						<Row className='offer-toprow'>
@@ -74,10 +86,17 @@ export class Offer extends Component {
 									</Form.Select>
 								</InputGroup>
 							</Col>
-							<Col xs lg={4}>
+							<Col xs lg={2}>
 								<Form.Label htmlFor="basic-url">Hourly Rate</Form.Label>
-								<InputGroup size="lg" >
+								<InputGroup name="hourly_price" size="lg" >
 									<InputGroup.Text id="basic-addon1">$</InputGroup.Text>
+									<Form.Control type='number' />
+								</InputGroup>
+							</Col>
+							<Col xs lg={2}>
+								<Form.Label htmlFor="basic-url">Full Day Rate</Form.Label>
+								<InputGroup name="full_day_price" size="lg" >
+									<InputGroup.Text id="basic-addon1" >$</InputGroup.Text>
 									<Form.Control type='number' />
 								</InputGroup>
 							</Col>
@@ -115,8 +134,42 @@ export class Offer extends Component {
 							</Button>
 						</Row>
 					</Form>
-					<Row>
-						<h1>Ble</h1>
+					<Row className='offer-services'>
+						<h1>My services</h1>
+						<Table>
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>First Name</th>
+									<th>Last Name</th>
+									<th>Username</th>
+									<th>Ver</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>1</td>
+									<td>Mark</td>
+									<td>Otto</td>
+									<td>@mdo</td>
+									<td><Button variant='outline-warning'>Ver</Button></td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>Jacob</td>
+									<td>Thornton</td>
+									<td>@fat</td>
+									<td><Button variant='outline-warning'>Ver</Button></td>
+								</tr>
+								<tr>
+									<td>3</td>
+									<td>Pipe</td>
+									<td>Sebedio</td>
+									<td>@twitter</td>
+									<td><Button variant='outline-warning'>Ver</Button></td>
+								</tr>
+							</tbody>
+						</Table>
 					</Row>
 				</Container>
 			</div>
@@ -132,4 +185,4 @@ const mapStateToProps = state => {
 	}
 }
 
-export default connect(mapStateToProps, {})(Offer);
+export default connect(mapStateToProps, { createService })(Offer);
