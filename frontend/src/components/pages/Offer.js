@@ -4,14 +4,14 @@ import { Footer } from '../layout/Footer';
 // Redux
 import { connect } from 'react-redux';
 // Actions
-import { getCategories } from '../../redux/actions/categories';
-import { createService } from '../../redux/actions/services';
+import { createService, getServices } from '../../redux/actions/services';
 // Bootstrap
 import { Container, Row, Col, Form, InputGroup, Button, Table } from 'react-bootstrap';
 // Icons
 import { MdHomeRepairService } from "react-icons/md";
 import { MdOutlineCleaningServices } from "react-icons/md";
 import { MdOutlineDescription } from "react-icons/md";
+import { FaPencilAlt } from "react-icons/fa";
 
 export class Offer extends Component {
 	constructor(props) {
@@ -22,9 +22,12 @@ export class Offer extends Component {
 			description: '',
 			hourly_price: '',
 			full_day_price: '',
-			provider: '',
 		}
 	};
+
+	componentDidMount() {
+		this.props.getServices();
+	}
 
 	handleInputChange = (e) => {
 		this.setState({
@@ -35,8 +38,10 @@ export class Offer extends Component {
 
 	onSubmit = (e) => {
 		e.preventDefault();
-		const { category, subcategory, description, hourly_price, full_day_price, provider } = this.state;
-		const service = { category, subcategory, description, hourly_price, full_day_price, provider };
+		const { subcategory, description, hourly_price, full_day_price } = this.state;
+		const provider = this.props.auth.user.id;
+		const service = { subcategory, description, hourly_price, full_day_price, provider };
+		console.log('Service to be created: ', service)
 		this.props.createService(service);
 	};
 
@@ -56,7 +61,7 @@ export class Offer extends Component {
 								<Form.Label htmlFor="basic-url">Category</Form.Label>
 								<InputGroup size="lg" >
 									<InputGroup.Text id="basic-addon1"><MdHomeRepairService /></InputGroup.Text>
-									<Form.Select name='category' defaultValue={'default'} onChange={this.handleInputChange}>
+									<Form.Select name='category' required='required' defaultValue={'default'} onChange={this.handleInputChange}>
 										<option value="default" disabled>--- Select category ---</option>
 										{this.props.categories.categories.map((category, id) => (
 											<option
@@ -72,7 +77,7 @@ export class Offer extends Component {
 								<Form.Label htmlFor="basic-url">Subcategory</Form.Label>
 								<InputGroup size="lg" >
 									<InputGroup.Text id="basic-addon1"><MdOutlineCleaningServices /></InputGroup.Text>
-									<Form.Select name='subcategory' defaultValue={'default'} onChange={this.handleInputChange}>
+									<Form.Select name='subcategory' required='required' defaultValue={'default'} onChange={this.handleInputChange}>
 										<option value="default" disabled>--- Select category ---</option>
 										{this.props.categories.categories.filter(category => category.name === this.state.category).map((category, id) => (
 											category.subcategories.map((subcategory, id) => (
@@ -89,15 +94,15 @@ export class Offer extends Component {
 							<Col xs lg={2}>
 								<Form.Label htmlFor="basic-url">Hourly Rate</Form.Label>
 								<InputGroup name="hourly_price" size="lg" >
-									<InputGroup.Text id="basic-addon1">$</InputGroup.Text>
-									<Form.Control type='number' />
+									<InputGroup.Text>$</InputGroup.Text>
+									<Form.Control name="hourly_price" required='required' type='number' onChange={this.handleInputChange} />
 								</InputGroup>
 							</Col>
 							<Col xs lg={2}>
 								<Form.Label htmlFor="basic-url">Full Day Rate</Form.Label>
 								<InputGroup name="full_day_price" size="lg" >
-									<InputGroup.Text id="basic-addon1" >$</InputGroup.Text>
-									<Form.Control type='number' />
+									<InputGroup.Text>$</InputGroup.Text>
+									<Form.Control name="full_day_price" required='required' type='number' onChange={this.handleInputChange} />
 								</InputGroup>
 							</Col>
 						</Row>
@@ -106,7 +111,7 @@ export class Offer extends Component {
 								<Form.Label htmlFor="basic-url">Description</Form.Label>
 								<InputGroup size="lg" >
 									<InputGroup.Text id="basic-addon1" >< MdOutlineDescription /></InputGroup.Text>
-									<Form.Control as="textarea" name='description' rows={5} placeholder='Describe your service ...' />
+									<Form.Control as="textarea" name='description' required='required' rows={5} placeholder='Describe your service ...' onChange={this.handleInputChange} />
 								</InputGroup>
 							</Col>
 							<Col xs lg={3}>
@@ -140,34 +145,29 @@ export class Offer extends Component {
 							<thead>
 								<tr>
 									<th>#</th>
-									<th>First Name</th>
-									<th>Last Name</th>
-									<th>Username</th>
-									<th>Ver</th>
+									<th>Category</th>
+									<th>Description</th>
+									<th>Hour ($)</th>
+									<th>Full Day ($)</th>
+									<th>Created at</th>
+									<th>Actions</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>1</td>
-									<td>Mark</td>
-									<td>Otto</td>
-									<td>@mdo</td>
-									<td><Button variant='outline-warning'>Ver</Button></td>
-								</tr>
-								<tr>
-									<td>2</td>
-									<td>Jacob</td>
-									<td>Thornton</td>
-									<td>@fat</td>
-									<td><Button variant='outline-warning'>Ver</Button></td>
-								</tr>
-								<tr>
-									<td>3</td>
-									<td>Pipe</td>
-									<td>Sebedio</td>
-									<td>@twitter</td>
-									<td><Button variant='outline-warning'>Ver</Button></td>
-								</tr>
+								{this.props.services.services.filter(service => service.provider == this.props.auth.user.id).map((service, id) => (
+									<tr key={id}>
+										<td>{service.id}</td>
+										<td>{service.subcategory}</td>
+										<td>{service.description}</td>
+										<td>{service.hourly_price}</td>
+										<td>{service.full_day_price}</td>
+										<td>{service.created}</td>
+										<td>
+											<Button variant='outline-warning'><FaPencilAlt /></Button>
+											<Button variant='outline-danger'>X</Button>
+										</td>
+									</tr>
+								))}
 							</tbody>
 						</Table>
 					</Row>
@@ -179,10 +179,11 @@ export class Offer extends Component {
 
 const mapStateToProps = state => {
 	return {
+		auth: state.auth,
 		categories: state.categories,
 		userdata: state.userdata.users,
 		services: state.services,
 	}
 }
 
-export default connect(mapStateToProps, { createService })(Offer);
+export default connect(mapStateToProps, { createService, getServices })(Offer);

@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { returnErrors } from './messages';
 import { tokenConfig } from './auth';
-import { GET_SERVICES, CREATE_SERVICE, DELETE_SERVICE, UPDATE_SERVICE } from './types';
+import { toast } from "react-toastify";
+import { GET_SERVICES, CREATE_SERVICE, CREATE_SERVICE_FAILURE, DELETE_SERVICE, UPDATE_SERVICE } from './types';
 
 // GET SERVICES
 export const getServices = () => (dispatch, getState) => {
@@ -18,18 +19,25 @@ export const getServices = () => (dispatch, getState) => {
 };
 
 // CREATE SERVICE
-export const createService = (category, subcategory, description, hourly_price, full_day_price, provider) => (dispatch) => {
+export const createService = (payload) => (dispatch) => {
 
-	const body = JSON.stringify({ category, subcategory, description, hourly_price, full_day_price, provider });
+	console.log('Body createService: ', payload)
 
 	axios
-		.post('/api/services/', body)
+		.post('/api/services/', payload)
 		.then((res) => {
 			console.log('Pase por createServices.js', res.data)
 			dispatch({
 				type: CREATE_SERVICE,
 				payload: res.data,
 			});
+			toast.success("Service created!", { autoClose: 2000 });
 		})
-		.catch((err) => dispatch(returnErrors(err.response.data, err.response.status)));
+		.catch((err) => {
+			dispatch(returnErrors(err.response.data, err.response.status));
+			dispatch({
+				type: CREATE_SERVICE_FAILURE,
+			});
+			toast.error("Unable to create service: " + JSON.stringify(err.response.data), { autoClose: 2000 });
+		});
 };
