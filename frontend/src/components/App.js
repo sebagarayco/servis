@@ -9,6 +9,7 @@ import store from '../redux/store';
 // Pages
 import ProtectedRoutes from './auth/ProtectedRoutes';
 import Home from './pages/Home';
+import Offer from './pages/Offer';
 import Services from './pages/Services';
 import Profile from './pages/Profile';
 import Login from './auth/Login';
@@ -30,6 +31,7 @@ class App extends Component {
 							<Route element={<ProtectedRoutes />}>
 								<Route path='/' element={<Home />} />
 								<Route path='/services' element={<Services />} />
+								<Route path='/offer' element={<Offer />} />
 								<Route path='/profile' element={<Profile />} />
 							</Route>
 							<Route path="/logout" element={<Login />} />

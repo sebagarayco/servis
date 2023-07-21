@@ -8,6 +8,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Container from 'react-bootstrap/Container';
 // Actions
 import { getCategories } from '../../redux/actions/categories';
+import { getServices } from '../../redux/actions/services';
 // Redux
 import { connect } from 'react-redux';
 // Pages
@@ -47,6 +48,7 @@ export class HomeSearch extends Component {
 
 	componentDidMount() {
 		this.props.getCategories();
+		this.props.getServices();
 	}
 
 	onChange = (e) => {
@@ -111,7 +113,9 @@ export class HomeSearch extends Component {
 							/>
 						</Col>
 					</Row>
-					<HomeStats categories={this.props.categories.categories.length} users={this.props.userdata.length} services="3" />
+					<HomeStats categories={this.props.categories.categories.length}
+						users={this.props.userdata.length}
+						services={this.props.services && this.props.services.services.length} />
 					<Row className="home-row">
 						<h1>¿Qué servicio estás buscando?</h1>
 						<div className='home-container-tab'>
@@ -189,4 +193,4 @@ const mapStateToProps = state => {
 	}
 }
 
-export default connect(mapStateToProps, { getCategories })(HomeSearch)
+export default connect(mapStateToProps, { getCategories, getServices })(HomeSearch)
