@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import Nav from '../layout/Nav';
-import { Footer } from '../layout/Footer';
 // Redux
 import { connect } from 'react-redux';
 // Actions
-import { createService, getServices } from '../../redux/actions/services';
+import { createService, deleteService, getServices } from '../../redux/actions/services';
 // Bootstrap
 import { Container, Row, Col, Form, InputGroup, Button, Table } from 'react-bootstrap';
 // Icons
@@ -29,6 +28,16 @@ export class Offer extends Component {
 		this.props.getServices();
 	}
 
+	async handleOnClick(service) {
+		console.log("hoge!");
+		if (await confirm("Are your sure?")) {
+			console.log('Deleting service with ID: ', service)
+			this.props.deleteService(service);
+		} else {
+			this.setState({ message: "No!" });
+		}
+	}
+
 	handleInputChange = (e) => {
 		this.setState({
 			[e.target.name]: e.target.value,
@@ -38,9 +47,9 @@ export class Offer extends Component {
 
 	onSubmit = (e) => {
 		e.preventDefault();
-		const { subcategory, description, hourly_price, full_day_price } = this.state;
+		const { category, subcategory, description, hourly_price, full_day_price } = this.state;
 		const provider = this.props.auth.user.id;
-		const service = { subcategory, description, hourly_price, full_day_price, provider };
+		const service = { category, subcategory, description, hourly_price, full_day_price, provider };
 		console.log('Service to be created: ', service)
 		this.props.createService(service);
 	};
@@ -157,14 +166,14 @@ export class Offer extends Component {
 								{this.props.services.services.filter(service => service.provider == this.props.auth.user.id).map((service, id) => (
 									<tr key={id}>
 										<td>{service.id}</td>
-										<td>{service.subcategory}</td>
+										<td>{service.subcategory.name}</td>
 										<td>{service.description}</td>
 										<td>{service.hourly_price}</td>
 										<td>{service.full_day_price}</td>
 										<td>{service.created}</td>
 										<td>
 											<Button variant='outline-warning'><FaPencilAlt /></Button>
-											<Button variant='outline-danger'>X</Button>
+											<Button variant='outline-danger' onClick={() => this.handleOnClick(service.id)}>X</Button>
 										</td>
 									</tr>
 								))}
@@ -186,4 +195,4 @@ const mapStateToProps = state => {
 	}
 }
 
-export default connect(mapStateToProps, { createService, getServices })(Offer);
+export default connect(mapStateToProps, { createService, getServices, deleteService })(Offer);

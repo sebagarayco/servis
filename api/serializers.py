@@ -114,10 +114,9 @@ class ServiceSerializer(ModelSerializer):
     Args:
         ModelSerializer (_type_): Service serializer
     """
-    subcategory = serializers.SlugRelatedField(slug_field='name', queryset=Subcategory.objects.all())
+    subcategory = SubCategorySerializer(read_only=True)
     
     class Meta:
         model = Service
         fields = ('id', 'description', 'provider', 'subcategory',
                   'hourly_price', 'full_day_price', 'created', 'updated')
-    

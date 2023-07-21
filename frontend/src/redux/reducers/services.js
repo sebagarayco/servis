@@ -14,7 +14,7 @@ export default function (state = initialState, action) {
 		case CREATE_SERVICE:
 			return {
 				...state,
-				...action.payload,
+				services: [...state.services, action.payload],
 			};
 		case UPDATE_SERVICE:
 			return {
@@ -22,9 +22,10 @@ export default function (state = initialState, action) {
 				...action.payload,
 			};
 		case DELETE_SERVICE:
+			console.log('Pase por deleteService.js', action.payload)
 			return {
 				...state,
-				...action.payload,
+				services: state.services.filter((service) => service.id !== action.payload),
 			};
 		default:
 			return state;

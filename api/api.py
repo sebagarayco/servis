@@ -1,7 +1,7 @@
 from servis.models import Category, Subcategory, Service
 from rest_framework import viewsets, generics, permissions, mixins
 from rest_framework.response import Response
-from django.conf import settings
+from rest_framework import status
 from knox.models import AuthToken
 from users.models import ServisUser
 from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, CategorySerializer, SubCategorySerializer, ServiceSerializer, UserProfileSerializer
@@ -65,3 +65,11 @@ class SubcategoryView(viewsets.ModelViewSet):
 class ServiceView(viewsets.ModelViewSet):
     serializer_class = ServiceSerializer
     queryset = Service.objects.all()
+    
+    def create(self, request, *args, **kwargs):
+        print('ServiceView create: ', request.data)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        subcategory = Subcategory.objects.get(category__name=request.data['category'],name=request.data['subcategory'])
+        serializer.save(subcategory=subcategory)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
