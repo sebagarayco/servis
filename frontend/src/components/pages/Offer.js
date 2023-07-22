@@ -4,6 +4,8 @@ import Nav from '../layout/Nav';
 import { connect } from 'react-redux';
 // Actions
 import { createService, deleteService, getServices } from '../../redux/actions/services';
+// Utils
+import TimestampConverter from '../utils/TimestampConverter';
 // Bootstrap
 import { Container, Row, Col, Form, InputGroup, Button, Table } from 'react-bootstrap';
 // Icons
@@ -29,12 +31,9 @@ export class Offer extends Component {
 	}
 
 	async handleOnClick(service) {
-		console.log("hoge!");
 		if (await confirm("Are your sure?")) {
 			console.log('Deleting service with ID: ', service)
 			this.props.deleteService(service);
-		} else {
-			this.setState({ message: "No!" });
 		}
 	}
 
@@ -137,7 +136,7 @@ export class Offer extends Component {
 									<Form.Check type="switch" id="weekdays" label="Weekdays (8AM/6PM)" defaultChecked="true" />
 									<Form.Check type="switch" id="weekends" label="Weekends (8AM/6PM)" />
 									<Form.Check type="switch" id="holidays" label="Public Holidays" />
-									<Form.Check type="switch" id="materials" label="Include materials" />
+									<Form.Check type="switch" id="materials" label="Buy of materials" />
 								</InputGroup>
 							</Col>
 
@@ -150,15 +149,15 @@ export class Offer extends Component {
 					</Form>
 					<Row className='offer-services'>
 						<h1>My services</h1>
-						<Table>
+						<Table className='offer-services-table'>
 							<thead>
 								<tr>
 									<th>#</th>
-									<th>Category</th>
+									<th>Type</th>
 									<th>Description</th>
-									<th>Hour ($)</th>
+									<th>Price per hour ($)</th>
 									<th>Full Day ($)</th>
-									<th>Created at</th>
+									<th>Last update</th>
 									<th>Actions</th>
 								</tr>
 							</thead>
@@ -166,13 +165,13 @@ export class Offer extends Component {
 								{this.props.services.services.filter(service => service.provider == this.props.auth.user.id).map((service, id) => (
 									<tr key={id}>
 										<td>{service.id}</td>
-										<td>{service.subcategory.name}</td>
+										<td>{service.subcategory.name} ({service.subcategory.category})</td>
 										<td>{service.description}</td>
-										<td>{service.hourly_price}</td>
-										<td>{service.full_day_price}</td>
-										<td>{service.created}</td>
+										<td>$ {service.hourly_price}</td>
+										<td>$ {service.full_day_price}</td>
+										<td><TimestampConverter timestamp={service.updated} /></td>
 										<td>
-											<Button variant='outline-warning'><FaPencilAlt /></Button>
+											<Button variant='outline-secondary'><FaPencilAlt /></Button>
 											<Button variant='outline-danger' onClick={() => this.handleOnClick(service.id)}>X</Button>
 										</td>
 									</tr>
