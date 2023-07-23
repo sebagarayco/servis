@@ -166,6 +166,9 @@
 	margin-bottom: 20px;
 }
 
+.offer-services-table {
+	font-size: 1.25rem;
+}
 
 /* Login & Register*/
 .auth-main {

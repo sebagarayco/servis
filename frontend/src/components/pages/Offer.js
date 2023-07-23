@@ -4,6 +4,9 @@ import Nav from '../layout/Nav';
 import { connect } from 'react-redux';
 // Actions
 import { createService, deleteService, getServices } from '../../redux/actions/services';
+// Utils
+import TimestampConverter from '../utils/TimestampConverter';
+import DeleteConfirmationModal from '../utils/DeleteConfirmationModal';
 // Bootstrap
 import { Container, Row, Col, Form, InputGroup, Button, Table } from 'react-bootstrap';
 // Icons
@@ -21,6 +24,8 @@ export class Offer extends Component {
 			description: '',
 			hourly_price: '',
 			full_day_price: '',
+			showModal: false,
+			setShowModal: false,
 		}
 	};
 
@@ -28,15 +33,12 @@ export class Offer extends Component {
 		this.props.getServices();
 	}
 
-	async handleOnClick(service) {
-		console.log("hoge!");
-		if (await confirm("Are your sure?")) {
-			console.log('Deleting service with ID: ', service)
-			this.props.deleteService(service);
-		} else {
-			this.setState({ message: "No!" });
-		}
+	handleDeleteClick = (service) => {
+		console.log('Deleting service with ID: ', service)
+		this.props.deleteService(service);
+		this.setState({ showModal: false });
 	}
+
 
 	handleInputChange = (e) => {
 		this.setState({
@@ -67,7 +69,7 @@ export class Offer extends Component {
 						</Row>
 						<Row className='offer-toprow'>
 							<Col xs lg={4}>
-								<Form.Label htmlFor="basic-url">Category</Form.Label>
+								<Form.Label htmlFor="basic-url">Category (required)</Form.Label>
 								<InputGroup size="lg" >
 									<InputGroup.Text id="basic-addon1"><MdHomeRepairService /></InputGroup.Text>
 									<Form.Select name='category' required='required' defaultValue={'default'} onChange={this.handleInputChange}>
@@ -83,7 +85,7 @@ export class Offer extends Component {
 								</InputGroup>
 							</Col>
 							<Col xs lg={4} >
-								<Form.Label htmlFor="basic-url">Subcategory</Form.Label>
+								<Form.Label htmlFor="basic-url">Subcategory (required)</Form.Label>
 								<InputGroup size="lg" >
 									<InputGroup.Text id="basic-addon1"><MdOutlineCleaningServices /></InputGroup.Text>
 									<Form.Select name='subcategory' required='required' defaultValue={'default'} onChange={this.handleInputChange}>
@@ -101,14 +103,14 @@ export class Offer extends Component {
 								</InputGroup>
 							</Col>
 							<Col xs lg={2}>
-								<Form.Label htmlFor="basic-url">Hourly Rate</Form.Label>
+								<Form.Label htmlFor="basic-url">Hourly Rate (required)</Form.Label>
 								<InputGroup name="hourly_price" size="lg" >
 									<InputGroup.Text>$</InputGroup.Text>
 									<Form.Control name="hourly_price" required='required' type='number' onChange={this.handleInputChange} />
 								</InputGroup>
 							</Col>
 							<Col xs lg={2}>
-								<Form.Label htmlFor="basic-url">Full Day Rate</Form.Label>
+								<Form.Label htmlFor="basic-url">Full Day Rate (required)</Form.Label>
 								<InputGroup name="full_day_price" size="lg" >
 									<InputGroup.Text>$</InputGroup.Text>
 									<Form.Control name="full_day_price" required='required' type='number' onChange={this.handleInputChange} />
@@ -117,7 +119,7 @@ export class Offer extends Component {
 						</Row>
 						<Row className='offer-secondrow'>
 							<Col xs lg={9}>
-								<Form.Label htmlFor="basic-url">Description</Form.Label>
+								<Form.Label htmlFor="basic-url">Description (required)</Form.Label>
 								<InputGroup size="lg" >
 									<InputGroup.Text id="basic-addon1" >< MdOutlineDescription /></InputGroup.Text>
 									<Form.Control as="textarea" name='description' required='required' rows={5} placeholder='Describe your service ...' onChange={this.handleInputChange} />
@@ -137,7 +139,7 @@ export class Offer extends Component {
 									<Form.Check type="switch" id="weekdays" label="Weekdays (8AM/6PM)" defaultChecked="true" />
 									<Form.Check type="switch" id="weekends" label="Weekends (8AM/6PM)" />
 									<Form.Check type="switch" id="holidays" label="Public Holidays" />
-									<Form.Check type="switch" id="materials" label="Include materials" />
+									<Form.Check type="switch" id="materials" label="Buy of materials" />
 								</InputGroup>
 							</Col>
 
@@ -150,15 +152,15 @@ export class Offer extends Component {
 					</Form>
 					<Row className='offer-services'>
 						<h1>My services</h1>
-						<Table>
+						<Table className='offer-services-table'>
 							<thead>
 								<tr>
 									<th>#</th>
-									<th>Category</th>
+									<th>Type</th>
 									<th>Description</th>
-									<th>Hour ($)</th>
+									<th>Price per hour ($)</th>
 									<th>Full Day ($)</th>
-									<th>Created at</th>
+									<th>Last update</th>
 									<th>Actions</th>
 								</tr>
 							</thead>
@@ -166,14 +168,24 @@ export class Offer extends Component {
 								{this.props.services.services.filter(service => service.provider == this.props.auth.user.id).map((service, id) => (
 									<tr key={id}>
 										<td>{service.id}</td>
-										<td>{service.subcategory.name}</td>
+										<td>{service.subcategory.name} ({service.subcategory.category})</td>
 										<td>{service.description}</td>
-										<td>{service.hourly_price}</td>
-										<td>{service.full_day_price}</td>
-										<td>{service.created}</td>
+										<td>$ {service.hourly_price}</td>
+										<td>$ {service.full_day_price}</td>
+										<td><TimestampConverter timestamp={service.updated} /></td>
 										<td>
-											<Button variant='outline-warning'><FaPencilAlt /></Button>
-											<Button variant='outline-danger' onClick={() => this.handleOnClick(service.id)}>X</Button>
+											<Button variant='outline-secondary'><FaPencilAlt /></Button>
+											<Button variant='outline-danger' onClick={() => this.setState({ showModal: !this.state.showModal })}>X</Button>
+											<DeleteConfirmationModal
+												show={this.state.showModal}
+												onHide={() => this.setState({ showModal: !this.state.showModal })}
+												onDelete={() => this.handleDeleteClick(service.id)}
+												toBeDeleted={[
+													{ name: 'Service ID', value: service.id },
+													{ name: 'Type', value: service.subcategory['name'] + ' (' + service.subcategory['category'] + ')' },
+													{ name: 'Description', value: service.description },
+												]}
+											/>
 										</td>
 									</tr>
 								))}
