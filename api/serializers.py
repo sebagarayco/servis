@@ -57,11 +57,25 @@ class LoginSerializer(serializers.Serializer):
         raise serializers.ValidationError('Incorrect user and password')
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    """ User Profile Serializer
+
+    Args:
+        serializers (): User Profile serializer
+
+    Returns:
+        _type_: _description_
+    """
+    services = SerializerMethodField()
+    
     class Meta:
         model = ServisUser
         fields = ('id', 'username', 'email', 'first_name', 'last_name', 
-                  'location', 'image', 'role', 'date_joined', 'last_login',
-                  'is_active', 'is_staff', 'is_superuser', 'government_id')
+                'location', 'image', 'role', 'date_joined', 'last_login',
+                'is_active', 'is_staff', 'is_superuser', 'government_id', 'services')
+    
+    def get_services(self, obj):
+        services = Service.objects.filter(provider=obj)
+        return ServiceSerializer(services, many=True).data    
     
 
 class UserSerializer(serializers.ModelSerializer):
@@ -77,7 +91,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = ServisUser
         fields = ('id', 'username', 'email', 'location', 
-                  'first_name', 'last_name', 'government_id') 
+                'first_name', 'last_name', 'government_id') 
 
 
 class SubCategorySerializer(ModelSerializer):
@@ -119,4 +133,4 @@ class ServiceSerializer(ModelSerializer):
     class Meta:
         model = Service
         fields = ('id', 'description', 'provider', 'subcategory',
-                  'hourly_price', 'full_day_price', 'created', 'updated')
+                'hourly_price', 'full_day_price', 'created', 'updated')

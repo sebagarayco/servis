@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { createService, deleteService, getServices } from '../../redux/actions/services';
 // Utils
 import TimestampConverter from '../utils/TimestampConverter';
+import DeleteConfirmationModal from '../utils/DeleteConfirmationModal';
 // Bootstrap
 import { Container, Row, Col, Form, InputGroup, Button, Table } from 'react-bootstrap';
 // Icons
@@ -23,6 +24,8 @@ export class Offer extends Component {
 			description: '',
 			hourly_price: '',
 			full_day_price: '',
+			showModal: false,
+			setShowModal: false,
 		}
 	};
 
@@ -30,12 +33,12 @@ export class Offer extends Component {
 		this.props.getServices();
 	}
 
-	async handleOnClick(service) {
-		if (await confirm("Are your sure?")) {
-			console.log('Deleting service with ID: ', service)
-			this.props.deleteService(service);
-		}
+	handleDeleteClick = (service) => {
+		console.log('Deleting service with ID: ', service)
+		this.props.deleteService(service);
+		this.setState({ showModal: false });
 	}
+
 
 	handleInputChange = (e) => {
 		this.setState({
@@ -66,7 +69,7 @@ export class Offer extends Component {
 						</Row>
 						<Row className='offer-toprow'>
 							<Col xs lg={4}>
-								<Form.Label htmlFor="basic-url">Category</Form.Label>
+								<Form.Label htmlFor="basic-url">Category (required)</Form.Label>
 								<InputGroup size="lg" >
 									<InputGroup.Text id="basic-addon1"><MdHomeRepairService /></InputGroup.Text>
 									<Form.Select name='category' required='required' defaultValue={'default'} onChange={this.handleInputChange}>
@@ -82,7 +85,7 @@ export class Offer extends Component {
 								</InputGroup>
 							</Col>
 							<Col xs lg={4} >
-								<Form.Label htmlFor="basic-url">Subcategory</Form.Label>
+								<Form.Label htmlFor="basic-url">Subcategory (required)</Form.Label>
 								<InputGroup size="lg" >
 									<InputGroup.Text id="basic-addon1"><MdOutlineCleaningServices /></InputGroup.Text>
 									<Form.Select name='subcategory' required='required' defaultValue={'default'} onChange={this.handleInputChange}>
@@ -100,14 +103,14 @@ export class Offer extends Component {
 								</InputGroup>
 							</Col>
 							<Col xs lg={2}>
-								<Form.Label htmlFor="basic-url">Hourly Rate</Form.Label>
+								<Form.Label htmlFor="basic-url">Hourly Rate (required)</Form.Label>
 								<InputGroup name="hourly_price" size="lg" >
 									<InputGroup.Text>$</InputGroup.Text>
 									<Form.Control name="hourly_price" required='required' type='number' onChange={this.handleInputChange} />
 								</InputGroup>
 							</Col>
 							<Col xs lg={2}>
-								<Form.Label htmlFor="basic-url">Full Day Rate</Form.Label>
+								<Form.Label htmlFor="basic-url">Full Day Rate (required)</Form.Label>
 								<InputGroup name="full_day_price" size="lg" >
 									<InputGroup.Text>$</InputGroup.Text>
 									<Form.Control name="full_day_price" required='required' type='number' onChange={this.handleInputChange} />
@@ -116,7 +119,7 @@ export class Offer extends Component {
 						</Row>
 						<Row className='offer-secondrow'>
 							<Col xs lg={9}>
-								<Form.Label htmlFor="basic-url">Description</Form.Label>
+								<Form.Label htmlFor="basic-url">Description (required)</Form.Label>
 								<InputGroup size="lg" >
 									<InputGroup.Text id="basic-addon1" >< MdOutlineDescription /></InputGroup.Text>
 									<Form.Control as="textarea" name='description' required='required' rows={5} placeholder='Describe your service ...' onChange={this.handleInputChange} />
@@ -172,7 +175,17 @@ export class Offer extends Component {
 										<td><TimestampConverter timestamp={service.updated} /></td>
 										<td>
 											<Button variant='outline-secondary'><FaPencilAlt /></Button>
-											<Button variant='outline-danger' onClick={() => this.handleOnClick(service.id)}>X</Button>
+											<Button variant='outline-danger' onClick={() => this.setState({ showModal: !this.state.showModal })}>X</Button>
+											<DeleteConfirmationModal
+												show={this.state.showModal}
+												onHide={() => this.setState({ showModal: !this.state.showModal })}
+												onDelete={() => this.handleDeleteClick(service.id)}
+												toBeDeleted={[
+													{ name: 'Service ID', value: service.id },
+													{ name: 'Type', value: service.subcategory['name'] + ' (' + service.subcategory['category'] + ')' },
+													{ name: 'Description', value: service.description },
+												]}
+											/>
 										</td>
 									</tr>
 								))}

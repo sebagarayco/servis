@@ -73,7 +73,7 @@ export class HomeSearch extends Component {
 
 	submitHandler(e) {
 		e.preventDefault();
-		console.log('SUBMIT HANDLER - Address es: ', this.state.address);
+		console.log('SUBMIT HANDLER: ', e);
 
 		let url = `https://nominatim.openstreetmap.org/search?
 		street=${this.state.address.street}
@@ -148,7 +148,7 @@ export class HomeSearch extends Component {
 											<option
 												key={id}
 												value={subcategory.name}
-											>{subcategory.name}
+											>{subcategory.name} ({category.name})
 											</option>
 										))
 									))}
