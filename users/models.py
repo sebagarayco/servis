@@ -45,6 +45,15 @@ class ServisUser(AbstractBaseUser, PermissionsMixin):
     
 @receiver(post_save, sender=ServisUser)
 def populate_user(sender, instance, created, **kwargs):
+    """ Populate user with random data if not provided.
+    
+    This is used for testing purposes.
+
+    Args:
+        sender (_type_): _description_
+        instance (_type_): _description_
+        created (_type_): _description_
+    """
     if created:
         if not instance.location:
             instance.location = Point(random.uniform(-71, -71.5), random.uniform(-41, -42.5))

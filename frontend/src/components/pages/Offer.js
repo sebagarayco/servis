@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Nav from '../layout/Nav';
 // Redux
+import axios from 'axios';
 import { connect } from 'react-redux';
 // Actions
 import { createService, deleteService, getServices } from '../../redux/actions/services';
@@ -13,6 +14,7 @@ import { Container, Row, Col, Form, InputGroup, Button, Table } from 'react-boot
 import { MdHomeRepairService } from "react-icons/md";
 import { MdOutlineCleaningServices } from "react-icons/md";
 import { MdOutlineDescription } from "react-icons/md";
+import { MdLocationPin } from "react-icons/md";
 import { FaPencilAlt } from "react-icons/fa";
 
 export class Offer extends Component {
@@ -26,11 +28,14 @@ export class Offer extends Component {
 			full_day_price: '',
 			showModal: false,
 			setShowModal: false,
+			city: '',
 		}
 	};
 
 	componentDidMount() {
 		this.props.getServices();
+		// Set current city name based on user's location
+		this.getCurrentCityName(this.props.auth.user.location.coordinates);
 	}
 
 	handleDeleteClick = (service) => {
@@ -39,7 +44,6 @@ export class Offer extends Component {
 		this.setState({ showModal: false });
 	}
 
-
 	handleInputChange = (e) => {
 		this.setState({
 			[e.target.name]: e.target.value,
@@ -47,11 +51,26 @@ export class Offer extends Component {
 		console.log('Selected ' + e.target.name + ' value: ' + e.target.value);
 	}
 
+	getCurrentCityName(position) {
+		let url = "https://nominatim.openstreetmap.org/reverse?format=jsonv2" +
+			"&lat=" + position[0] + "&lon=" + position[1];
+
+		axios.get(url)
+			.then((res) => { this.setState({ city: res.json().data.display_name }); })
+			.catch((err) => {
+				this.setState({
+					city: [position[0].toFixed(2),
+					position[1].toFixed(2)]
+				});
+			});
+	}
+
 	onSubmit = (e) => {
 		e.preventDefault();
 		const { category, subcategory, description, hourly_price, full_day_price } = this.state;
 		const provider = this.props.auth.user.id;
-		const service = { category, subcategory, description, hourly_price, full_day_price, provider };
+		const location = this.props.auth.user.location;
+		const service = { category, subcategory, description, hourly_price, full_day_price, provider, location };
 		console.log('Service to be created: ', service)
 		this.props.createService(service);
 	};
@@ -126,6 +145,11 @@ export class Offer extends Component {
 								</InputGroup>
 							</Col>
 							<Col xs lg={3}>
+								<Form.Label htmlFor="basic-url">Location</Form.Label>
+								<InputGroup size="lg">
+									<InputGroup.Text id="basic-addon1"><MdLocationPin /></InputGroup.Text>
+									<Form.Control type='text' value={this.state.city} disabled />
+								</InputGroup>
 								<Form.Group controlId="metodoPago">
 									<Form.Label>Payment Method</Form.Label>
 									<Form.Control as="select" >
@@ -152,7 +176,7 @@ export class Offer extends Component {
 					</Form>
 					<Row className='offer-services'>
 						<h1>My services</h1>
-						<Table className='offer-services-table'>
+						<Table className='offer-services-table table-hover'>
 							<thead>
 								<tr>
 									<th>#</th>

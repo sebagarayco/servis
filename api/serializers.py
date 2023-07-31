@@ -133,4 +133,4 @@ class ServiceSerializer(ModelSerializer):
     class Meta:
         model = Service
         fields = ('id', 'description', 'provider', 'subcategory',
-                'hourly_price', 'full_day_price', 'created', 'updated')
+                'hourly_price', 'full_day_price', 'created', 'updated', 'location')
