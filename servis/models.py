@@ -86,7 +86,6 @@ class Service(models.Model):
         Subcategory, on_delete=models.CASCADE, related_name='service_subcategory')
     provider = models.ForeignKey(
         ServisUser, default=None, on_delete=models.CASCADE, related_name='offer_provider')
-    location = models.PointField(geography=True, null=True, blank=True)
 
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)

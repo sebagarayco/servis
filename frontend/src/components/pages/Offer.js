@@ -6,10 +6,11 @@ import { connect } from 'react-redux';
 // Actions
 import { createService, deleteService, getServices } from '../../redux/actions/services';
 // Utils
+import { toast } from 'react-toastify';
 import TimestampConverter from '../utils/TimestampConverter';
 import DeleteConfirmationModal from '../utils/DeleteConfirmationModal';
 // Bootstrap
-import { Container, Row, Col, Form, InputGroup, Button, Table } from 'react-bootstrap';
+import { Container, Row, Col, Form, InputGroup, Button, Table, Tooltip, OverlayTrigger } from 'react-bootstrap';
 // Icons
 import { MdHomeRepairService } from "react-icons/md";
 import { MdOutlineCleaningServices } from "react-icons/md";
@@ -53,14 +54,14 @@ export class Offer extends Component {
 
 	getCurrentCityName(position) {
 		let url = "https://nominatim.openstreetmap.org/reverse?format=jsonv2" +
-			"&lat=" + position[0] + "&lon=" + position[1];
+			"&lat=" + position[1] + "&lon=" + position[0];
 
 		axios.get(url)
-			.then((res) => { this.setState({ city: res.json().data.display_name }); })
+			.then((res) => { this.setState({ city: res.data.display_name }); })
 			.catch((err) => {
+				toast.error('Error getting current city name: ' + err + '. Using coordinates instead.');
 				this.setState({
-					city: [position[0].toFixed(2),
-					position[1].toFixed(2)]
+					city: [position[0].toFixed(2), position[1].toFixed(2)]
 				});
 			});
 	}
@@ -76,6 +77,10 @@ export class Offer extends Component {
 	};
 
 	render() {
+		const tooltip = (
+			<Tooltip id="tooltip">Default user location is used.</Tooltip>
+		);
+
 		return (
 			<div>
 				<Nav />
@@ -137,19 +142,21 @@ export class Offer extends Component {
 							</Col>
 						</Row>
 						<Row className='offer-secondrow'>
-							<Col xs lg={9}>
+							<Col xs lg={8}>
 								<Form.Label htmlFor="basic-url">Description (required)</Form.Label>
 								<InputGroup size="lg" >
 									<InputGroup.Text id="basic-addon1" >< MdOutlineDescription /></InputGroup.Text>
 									<Form.Control as="textarea" name='description' required='required' rows={5} placeholder='Describe your service ...' onChange={this.handleInputChange} />
 								</InputGroup>
 							</Col>
-							<Col xs lg={3}>
+							<Col xs lg={4}>
 								<Form.Label htmlFor="basic-url">Location</Form.Label>
-								<InputGroup size="lg">
-									<InputGroup.Text id="basic-addon1"><MdLocationPin /></InputGroup.Text>
-									<Form.Control type='text' value={this.state.city} disabled />
-								</InputGroup>
+								<OverlayTrigger placement="bottom" overlay={tooltip}>
+									<InputGroup size="md">
+										<InputGroup.Text id="basic-addon1"><MdLocationPin /></InputGroup.Text>
+										<Form.Control type='text' value={this.state.city} disabled />
+									</InputGroup>
+								</OverlayTrigger>
 								<Form.Group controlId="metodoPago">
 									<Form.Label>Payment Method</Form.Label>
 									<Form.Control as="select" >

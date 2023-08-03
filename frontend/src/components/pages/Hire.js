@@ -5,14 +5,20 @@ import Nav from '../layout/Nav';
 import { connect } from 'react-redux';
 // Pages
 import Map from './Map';
+import HireServiceList from './HireServiceList';
+// Utils
+import TimestampConverter from '../utils/TimestampConverter';
+import DeleteConfirmationModal from '../utils/DeleteConfirmationModal';
 // Actions
 import { getCategories } from '../../redux/actions/categories';
+import { getServices } from '../../redux/actions/services';
 // Bootstrap
 import { Container, Row, Col, Form, InputGroup, Button, Table } from 'react-bootstrap';
 // Icons
 import { MdHomeRepairService } from "react-icons/md";
 import { MdOutlineCleaningServices } from "react-icons/md";
 import { MdLocationPin } from "react-icons/md";
+import { FaPencilAlt } from "react-icons/fa";
 
 export class Hire extends Component {
 	constructor(props) {
@@ -159,8 +165,12 @@ export class Hire extends Component {
 								</Button>
 							</Col>
 						</Row>
+						<Map coords={this.state.coords} category={this.state.category} />
+						<Row className='hire-services'>
+							<h1>Available services</h1>
+							<HireServiceList services={this.props.services.services} />
+						</Row>
 					</Form>
-					<Map coords={this.state.coords} />
 				</Container >
 			</div>
 		)
@@ -170,7 +180,9 @@ export class Hire extends Component {
 const mapStateToProps = state => {
 	return {
 		categories: state.categories,
+		services: state.services,
+		userdata: state.userdata
 	}
 }
 
-export default connect(mapStateToProps, { getCategories })(Hire);
+export default connect(mapStateToProps, { getCategories, getServices })(Hire);

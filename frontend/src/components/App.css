@@ -134,6 +134,29 @@
 	height: 400px;
 }
 
+.leaflet-tooltip-pane {
+	font-size: 1.25rem;
+	border-radius: 10px;
+}
+
+.leaflet-tooltip {
+	border-radius: 10px;
+}
+
+.leaflet-popup-pane {
+	font-size: 1.25rem;
+	border-radius: 10px;
+}
+
+.leaflet-popup-content .btn {
+	border-radius: 20px;
+	width: 100%;
+	border-color: #ffc107;
+	background-color: #ffc107;
+	height: 2.5rem;
+	color: #000;
+}
+
 /* Offer */
 
 .offer-container .offer-form {
@@ -169,6 +192,35 @@
 .offer-services-table {
 	font-size: 1.25rem;
 }
+
+/* Hire */
+.service-list {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.service-row {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	border: 1px solid #ccc;
+	padding: 10px;
+	border-radius: 8px;
+}
+
+.service-user-photo {
+	width: 100px;
+	height: 100px;
+	object-fit: cover;
+	border-radius: 50%;
+}
+
+.service-card p {
+	margin: 0;
+	color: #666;
+}
+
 
 /* Login & Register*/
 .auth-main {

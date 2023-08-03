@@ -9,10 +9,10 @@ class ServisUserAdmin(UserAdmin):
     add_form = ServisUserCreationForm
     form = ServisUserChangeForm
     model = ServisUser
-    list_display = ("email", "username", "is_staff", "is_active",)
-    list_filter = ("email", "username", "is_staff", "is_active",)
+    list_display = ("email", "username", "is_staff", "is_active")
+    list_filter = ("email", "username", "is_staff", "is_active")
     fieldsets = (
-        (None, {"fields": ("username","email", "password")}),
+        (None, {"fields": ("username","email", "password", "image")}),
         ("Servis", {"fields": ("location", "role","first_name", "last_name" )}),
     )
     add_fieldsets = (

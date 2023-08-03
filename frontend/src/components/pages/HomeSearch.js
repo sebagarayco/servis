@@ -179,7 +179,7 @@ export class HomeSearch extends Component {
 						</Col>
 					</Row>
 				</Form>
-				<Map coords={this.state.coords} />
+				<Map coords={this.state.coords} category={this.state.category} />
 			</Container >
 		)
 	}
@@ -187,6 +187,7 @@ export class HomeSearch extends Component {
 
 const mapStateToProps = state => {
 	return {
+		auth: state.auth,
 		categories: state.categories,
 		userdata: state.userdata.users,
 		services: state.services,
