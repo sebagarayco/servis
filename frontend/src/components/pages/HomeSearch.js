@@ -58,19 +58,6 @@ export class HomeSearch extends Component {
 		this.setState({ address });
 	};
 
-	getCurrentCityName(position) {
-		this.setState({ coords: [data[0].lat, data[0].lon] });
-
-		let url = "https://nominatim.openstreetmap.org/reverse?format=jsonv2" +
-			"&lat=" + this.state.coords[0] + "&lon=" + this.state.coords[1];
-
-		fetch(url, {
-			method: "GET",
-		})
-			.then((response) => response.json())
-			.then((data) => this.setState({ name: data.display_name }));
-	}
-
 	submitHandler(e) {
 		e.preventDefault();
 		console.log('SUBMIT HANDLER: ', e);

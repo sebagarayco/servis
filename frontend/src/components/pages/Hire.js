@@ -25,6 +25,7 @@ export class Hire extends Component {
 		super(props);
 		this.state = {
 			showModal: false,
+			showAll: true,
 			category: '',
 			subcategory: '',
 			name: "",
@@ -40,9 +41,15 @@ export class Hire extends Component {
 	};
 
 	handleInputChange = (e) => {
-		this.setState({
-			[e.target.name]: e.target.value,
-		});
+		if (e.target.value === 'showAll') {
+			this.setState({ showAll: true });
+			this.setState({
+				[e.target.name]: e.target.value,
+			});
+		} else {
+			this.setState({ showAll: false });
+			this.setState({ [e.target.name]: e.target.value, });
+		}
 		console.log('Selected ' + e.target.name + ' value: ' + e.target.value);
 	}
 
@@ -114,6 +121,7 @@ export class Hire extends Component {
 									<InputGroup.Text id="basic-addon1"><MdHomeRepairService /></InputGroup.Text>
 									<Form.Select name='category' defaultValue={'default'} onChange={this.handleInputChange}>
 										<option value="default" disabled>--- Select category ---</option>
+										<option value="showAll">Show all</option>
 										{this.props.categories.categories.map((category, id) => (
 											<option
 												key={id}
@@ -165,12 +173,13 @@ export class Hire extends Component {
 								</Button>
 							</Col>
 						</Row>
-						<Map coords={this.state.coords} category={this.state.category} />
-						<Row className='hire-services'>
-							<h1>Available services</h1>
-							<HireServiceList services={this.props.services.services} />
-						</Row>
 					</Form>
+					<Map coords={this.state.coords} category={this.state.category} />
+					<Row className='hire-services'>
+						<h1>Available services</h1>
+						<h5>{this.props.services.services.length} services available. Refine your search.</h5>
+						<HireServiceList services={this.state.showAll ? this.props.services.services : this.props.services.services.filter(service => service.subcategory.category === this.state.category)} />
+					</Row>
 				</Container >
 			</div>
 		)

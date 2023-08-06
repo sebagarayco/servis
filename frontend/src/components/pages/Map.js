@@ -7,6 +7,8 @@ import { icon } from 'leaflet';
 import { MapContainer, TileLayer, Marker, Popup, useMap, Tooltip } from "react-leaflet";
 // Bootstrap
 import { Button } from 'react-bootstrap';
+// Icons
+import { FaFileContract } from "react-icons/fa";
 
 export function Map({ coords, category }) {
 	const { userdata, services } = useSelector(state => state);
@@ -20,7 +22,7 @@ export function Map({ coords, category }) {
 	}
 
 	return (
-		<MapContainer center={coords} zoom={12} scrollWheelZoom={true} >
+		<MapContainer center={coords} zoom={10} scrollWheelZoom={true} >
 			<TileLayer
 				attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -50,7 +52,9 @@ export function Map({ coords, category }) {
 							</div>
 						))}
 						<br />
-						<Button>Contratar</Button>
+						<Button className="btn btn-warning">
+							<FaFileContract /> Hire
+						</Button>
 					</Popup>
 				</Marker>
 			))}
