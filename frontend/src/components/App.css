@@ -1,7 +1,7 @@
 /* DEBUG */
-/* * {
+* {
 	outline: 1px solid red;
-} */
+}
 
 .Toastify {
 	font-size: 1.5rem;
@@ -134,6 +134,29 @@
 	height: 400px;
 }
 
+.leaflet-tooltip-pane {
+	font-size: 1.25rem;
+	border-radius: 10px;
+}
+
+.leaflet-tooltip {
+	border-radius: 10px;
+}
+
+.leaflet-popup-pane {
+	font-size: 1.25rem;
+	border-radius: 10px;
+}
+
+.leaflet-popup-content .btn {
+	border-radius: 20px;
+	width: 100%;
+	border-color: #ffc107;
+	background-color: #ffc107;
+	height: 2.5rem;
+	color: #000;
+}
+
 /* Offer */
 
 .offer-container .offer-form {
@@ -169,6 +192,66 @@
 .offer-services-table {
 	font-size: 1.25rem;
 }
+
+/* Hire */
+.service-list {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.service-row {
+	display: flex;
+	margin-top: 10px;
+	align-items: center;
+	gap: 20px;
+	border: 1px solid #ccc;
+	padding: 10px;
+	border-radius: 8px;
+}
+
+.service-row .btn {
+	width: 100%;
+}
+
+.service-user-photo {
+	width: 120px;
+	height: 120px;
+	object-fit: cover;
+	border-radius: 50%;
+}
+
+.service-card p {
+	margin: 0;
+	color: #666;
+}
+
+.service-card-img {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+
+.hire-row {
+	position: relative;
+	margin-bottom: 20px;
+	padding: 30px;
+	border-top: 1px solid #f2f2f2;
+	border-radius: 20px;
+	box-shadow: 0px 7px 20px rgba(203, 200, 200, 0.656);
+}
+
+.hire-services {
+	position: relative;
+	margin-top: 20px;
+	padding: 30px;
+	border-top: 1px solid #f2f2f2;
+	border-radius: 20px;
+	box-shadow: 0px 7px 20px rgba(203, 200, 200, 0.656);
+}
+
 
 /* Login & Register*/
 .auth-main {

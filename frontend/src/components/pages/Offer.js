@@ -1,18 +1,21 @@
 import React, { Component } from 'react'
 import Nav from '../layout/Nav';
 // Redux
+import axios from 'axios';
 import { connect } from 'react-redux';
 // Actions
 import { createService, deleteService, getServices } from '../../redux/actions/services';
 // Utils
+import { toast } from 'react-toastify';
 import TimestampConverter from '../utils/TimestampConverter';
 import DeleteConfirmationModal from '../utils/DeleteConfirmationModal';
 // Bootstrap
-import { Container, Row, Col, Form, InputGroup, Button, Table } from 'react-bootstrap';
+import { Container, Row, Col, Form, InputGroup, Button, Table, Tooltip, OverlayTrigger } from 'react-bootstrap';
 // Icons
 import { MdHomeRepairService } from "react-icons/md";
 import { MdOutlineCleaningServices } from "react-icons/md";
 import { MdOutlineDescription } from "react-icons/md";
+import { MdLocationPin } from "react-icons/md";
 import { FaPencilAlt } from "react-icons/fa";
 
 export class Offer extends Component {
@@ -26,11 +29,14 @@ export class Offer extends Component {
 			full_day_price: '',
 			showModal: false,
 			setShowModal: false,
+			city: '',
 		}
 	};
 
 	componentDidMount() {
 		this.props.getServices();
+		// Set current city name based on user's location
+		this.getCurrentCityName(this.props.auth.user.location.coordinates);
 	}
 
 	handleDeleteClick = (service) => {
@@ -39,7 +45,6 @@ export class Offer extends Component {
 		this.setState({ showModal: false });
 	}
 
-
 	handleInputChange = (e) => {
 		this.setState({
 			[e.target.name]: e.target.value,
@@ -47,16 +52,35 @@ export class Offer extends Component {
 		console.log('Selected ' + e.target.name + ' value: ' + e.target.value);
 	}
 
+	getCurrentCityName(position) {
+		let url = "https://nominatim.openstreetmap.org/reverse?format=jsonv2" +
+			"&lat=" + position[1] + "&lon=" + position[0];
+
+		axios.get(url)
+			.then((res) => { this.setState({ city: res.data.display_name }); })
+			.catch((err) => {
+				toast.error('Error getting current city name: ' + err + '. Using coordinates instead.');
+				this.setState({
+					city: [position[0].toFixed(2), position[1].toFixed(2)]
+				});
+			});
+	}
+
 	onSubmit = (e) => {
 		e.preventDefault();
 		const { category, subcategory, description, hourly_price, full_day_price } = this.state;
 		const provider = this.props.auth.user.id;
-		const service = { category, subcategory, description, hourly_price, full_day_price, provider };
+		const location = this.props.auth.user.location;
+		const service = { category, subcategory, description, hourly_price, full_day_price, provider, location };
 		console.log('Service to be created: ', service)
 		this.props.createService(service);
 	};
 
 	render() {
+		const tooltip = (
+			<Tooltip id="tooltip">Default user location is used.</Tooltip>
+		);
+
 		return (
 			<div>
 				<Nav />
@@ -118,14 +142,21 @@ export class Offer extends Component {
 							</Col>
 						</Row>
 						<Row className='offer-secondrow'>
-							<Col xs lg={9}>
+							<Col xs lg={8}>
 								<Form.Label htmlFor="basic-url">Description (required)</Form.Label>
 								<InputGroup size="lg" >
 									<InputGroup.Text id="basic-addon1" >< MdOutlineDescription /></InputGroup.Text>
 									<Form.Control as="textarea" name='description' required='required' rows={5} placeholder='Describe your service ...' onChange={this.handleInputChange} />
 								</InputGroup>
 							</Col>
-							<Col xs lg={3}>
+							<Col xs lg={4}>
+								<Form.Label htmlFor="basic-url">Location</Form.Label>
+								<OverlayTrigger placement="bottom" overlay={tooltip}>
+									<InputGroup size="md">
+										<InputGroup.Text id="basic-addon1"><MdLocationPin /></InputGroup.Text>
+										<Form.Control type='text' value={this.state.city} disabled />
+									</InputGroup>
+								</OverlayTrigger>
 								<Form.Group controlId="metodoPago">
 									<Form.Label>Payment Method</Form.Label>
 									<Form.Control as="select" >
@@ -152,7 +183,7 @@ export class Offer extends Component {
 					</Form>
 					<Row className='offer-services'>
 						<h1>My services</h1>
-						<Table className='offer-services-table'>
+						<Table className='offer-services-table table-hover'>
 							<thead>
 								<tr>
 									<th>#</th>

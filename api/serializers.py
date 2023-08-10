@@ -75,7 +75,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     
     def get_services(self, obj):
         services = Service.objects.filter(provider=obj)
-        return ServiceSerializer(services, many=True).data    
+        return ServiceSerializer(services, many=True).data
     
 
 class UserSerializer(serializers.ModelSerializer):
@@ -90,9 +90,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ServisUser
-        fields = ('id', 'username', 'email', 'location', 
-                'first_name', 'last_name', 'government_id') 
-
+        fields = ('id', 'username', 'email', 'location', 'phone',
+                'first_name', 'last_name', 'government_id', 'image', 'role')
 
 class SubCategorySerializer(ModelSerializer):
     """ Subcategory Serializer
@@ -129,8 +128,13 @@ class ServiceSerializer(ModelSerializer):
         ModelSerializer (_type_): Service serializer
     """
     subcategory = SubCategorySerializer(read_only=True)
+    user = SerializerMethodField()
     
     class Meta:
         model = Service
-        fields = ('id', 'description', 'provider', 'subcategory',
+        fields = ('id', 'description', 'provider', 'user', 'subcategory',
                 'hourly_price', 'full_day_price', 'created', 'updated')
+        
+    def get_user(self, obj):
+        user = ServisUser.objects.get(id=obj.provider.id)
+        return UserSerializer(user).data

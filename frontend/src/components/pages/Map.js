@@ -5,41 +5,56 @@ import { connect, useSelector } from 'react-redux';
 // Leaflet
 import { icon } from 'leaflet';
 import { MapContainer, TileLayer, Marker, Popup, useMap, Tooltip } from "react-leaflet";
+// Bootstrap
+import { Button } from 'react-bootstrap';
+// Icons
+import { FaFileContract } from "react-icons/fa";
 
-export function Map({ coords, display_name, props }) {
-
-	const { categories, userdata } = useSelector(state => state);
-
+export function Map({ coords, category }) {
+	const { userdata, services } = useSelector(state => state);
 	const ICON = icon({ iconUrl: 'static/location-pin.png', iconSize: [32, 32], });
 	const ICON_SELF = icon({ iconUrl: 'static/marker-icon.png' });
 
 	function MapView() {
 		let map = useMap();
 		map.setView(coords, map.getZoom());
-
 		return null;
 	}
 
 	return (
-		<MapContainer center={coords} zoom={12} scrollWheelZoom={true} >
+		<MapContainer center={coords} zoom={10} scrollWheelZoom={true} >
 			<TileLayer
 				attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 			/>
 			<Marker icon={ICON_SELF} position={coords}> </Marker>
-			{userdata.users.map((user, id) => (
-				<Marker key={id} icon={ICON} position={user.location.coordinates.reverse()}>
+			{services.services.filter(service => service.subcategory.category == category).map((service, id) => (
+				<Marker key={id} icon={ICON} position={service.user.location.coordinates.reverse()}>
 					<Tooltip>
-						Username: {user.username}<br />
-						Name: {user.full_name}<br />
-						E-mail: {user.email}<br />
-						Location: {user.location.coordinates.reverse()}<br />
+						{userdata.users.filter(user => user.id == service.provider).map((user, id) => (
+							<div key={id}>
+								Username: {user.username}<br />
+								Name: {user.first_name} {user.last_name}<br />
+								E-mail: {user.email}<br />
+								Services: {user.services.length}<br />
+							</div>
+						))}
+						<br />
+						<strong>Click to hire!</strong>
 					</Tooltip>
-					<Popup key={id} >
-						Username: {user.username}<br />
-						Name: {user.full_name}<br />
-						E-mail: {user.email}<br />
-						Location: {user.location.coordinates.reverse()}<br />
+					<Popup key={id}>
+						{userdata.users.filter(user => user.id == service.provider).map((user, id) => (
+							<div key={id}>
+								Username: {user.username}<br />
+								Name: {user.first_name} {user.last_name}<br />
+								E-mail: {user.email}<br />
+								Services: {user.services.length}<br />
+							</div>
+						))}
+						<br />
+						<Button className="btn btn-warning">
+							<FaFileContract /> Hire
+						</Button>
 					</Popup>
 				</Marker>
 			))}
@@ -50,7 +65,7 @@ export function Map({ coords, display_name, props }) {
 
 const mapStateToProps = function (state) {
 	return {
-		categories: state.categories,
+		services: state.services,
 		userdata: state.userdata,
 	}
 }
