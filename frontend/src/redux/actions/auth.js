@@ -67,7 +67,7 @@ export const login = (username, password) => (dispatch) => {
 };
 
 // USER REGISTRATION
-export const register = ({ username, password, email, first_name, last_name, government_id }) => (dispatch) => {
+export const register = ({ username, password, email, first_name, last_name, government_id, location }) => (dispatch) => {
 	// Headers
 	const config = {
 		headers: {
@@ -75,7 +75,7 @@ export const register = ({ username, password, email, first_name, last_name, gov
 		},
 	};
 
-	const body = JSON.stringify({ username, email, password, first_name, last_name, government_id });
+	const body = JSON.stringify({ username, email, password, first_name, last_name, government_id, location });
 
 	axios
 		.post('/api/auth/register', body, config)
@@ -91,7 +91,7 @@ export const register = ({ username, password, email, first_name, last_name, gov
 			dispatch({
 				type: REGISTER_FAIL,
 			});
-			toast.error("Register error. Contact support.");
+			toast.error("Register error. Contact support." + JSON.stringify(err.response.data));
 		});
 };
 

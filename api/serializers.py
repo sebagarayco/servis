@@ -1,10 +1,11 @@
+from .utils import get_latitude_longitude
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 from rest_framework_gis.serializers import GeoFeatureModelSerializer, GeometrySerializerMethodField
-
+from django.contrib.gis.geos import Point
 from django.contrib.auth import authenticate
 from servis.models import Category, Subcategory, Service
-from users.models import ServisUser
+from users.models import ServisUser, Location
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -16,22 +17,24 @@ class RegisterSerializer(serializers.ModelSerializer):
     Returns:
         _type_: _description_
     """
+    
     class Meta:
         model = ServisUser
-        fields = ('id', 'username', 'email',
-                  'password', 'first_name', 'last_name', 'government_id')
+        fields = ('id', 'username', 'email', 'location', 'phone',
+                    'password', 'first_name', 'last_name', 'government_id')
         extra_kwargs = {
             'password': {'write_only': True}
         }
 
     def create(self, validated_data):
-        print('Register serializer: ', validated_data)
+        print('RegisterSerializer: ', validated_data)
         user = ServisUser.objects.create_user(username=validated_data['username'],
                                         email=validated_data['email'],
                                         password=validated_data['password'],
                                         first_name=validated_data['first_name'],
                                         last_name=validated_data['last_name'],
-                                        government_id=validated_data['government_id'])
+                                        government_id=validated_data['government_id'],
+                                        location=validated_data['location'])
         return user
 
 
@@ -77,6 +80,13 @@ class UserProfileSerializer(serializers.ModelSerializer):
         services = Service.objects.filter(provider=obj)
         return ServiceSerializer(services, many=True).data
     
+class LocationSerializer(GeoFeatureModelSerializer):
+    
+    class Meta:
+        model = Location
+        geo_field = 'coordinates'
+        fields = ('id', 'address', 'coordinates', 'created', 'updated',
+                'city', 'province', 'country', 'zip_code')
 
 class UserSerializer(serializers.ModelSerializer):
     """ User Serializer
@@ -87,11 +97,17 @@ class UserSerializer(serializers.ModelSerializer):
     Returns:
         _type_: _description_
     """
+    #location = serializers.SerializerMethodField()
 
     class Meta:
         model = ServisUser
         fields = ('id', 'username', 'email', 'location', 'phone',
                 'first_name', 'last_name', 'government_id', 'image', 'role')
+        
+    #def get_location(self, obj):
+    #    location = Location.objects.get(id=obj.location.id)
+    #    return LocationSerializer(location).data
+        
 
 class SubCategorySerializer(ModelSerializer):
     """ Subcategory Serializer

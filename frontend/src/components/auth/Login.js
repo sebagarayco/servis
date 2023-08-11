@@ -30,7 +30,7 @@ export class Login extends Component {
 		const { username, password } = this.state;
 		return (
 			<div className='auth-main'>
-				<div className='auth-sub-main' >
+				<div className='auth-login-sub-main' >
 					<div>
 						<img className='auth-logo' src="static/handshake.png" />
 					</div>

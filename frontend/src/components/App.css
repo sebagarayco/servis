@@ -264,8 +264,9 @@
 	background-size: cover;
 }
 
-.auth-sub-main {
-	width: 420px;
+.auth-register-sub-main,
+.auth-login-sub-main {
+	width: 720px;
 	padding: 60px;
 	margin: 0 auto;
 	border-radius: 40px;
@@ -273,22 +274,29 @@
 	background-color: #ffe188
 }
 
-.auth-sub-main h1 {
+.auth-login-sub-main {
+	width: 420px !important;
+}
+
+.auth-main h1 {
 	text-align: center;
 }
 
-.auth-sub-main .form-control {
+.auth-login-sub-main .form-control,
+.auth-register-sub-main .form-control {
 	border-radius: 20px;
 	height: 4rem;
 	font-size: 1.25rem;
 	padding-left: 20px;
 }
 
-.auth-sub-main .form-group {
+.auth-login-sub-main .form-group,
+.auth-register-sub-main .form-group {
 	margin-top: 2rem;
 }
 
-.auth-sub-main .form-group .btn {
+.auth-login-sub-main .form-group .btn,
+.auth-register-sub-main .form-group .btn {
 	border-radius: 20px;
 	height: 4rem;
 	width: 100%;
@@ -301,6 +309,26 @@
 	margin-left: auto;
 	margin-right: auto;
 	margin-bottom: 2rem;
+}
+
+.auth-form {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+
+.auth-sub-main-right,
+.auth-sub-main-left {
+	flex: 1;
+	width: 100%;
+	margin-bottom: 15px;
+}
+
+.auth-separator {
+	width: 2px;
+	background-color: #29282829;
+	margin: 20px;
+	align-self: stretch;
 }
 
 /* Profile */
