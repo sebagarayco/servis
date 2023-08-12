@@ -29,7 +29,7 @@ export function Map({ coords, category }) {
 			/>
 			<Marker icon={ICON_SELF} position={coords}> </Marker>
 			{services.services.filter(service => service.subcategory.category == category).map((service, id) => (
-				<Marker key={id} icon={ICON} position={service.user.location.coordinates.reverse()}>
+				<Marker key={id} icon={ICON} position={service.user.location.geometry.coordinates.reverse()}>
 					<Tooltip>
 						{userdata.users.filter(user => user.id == service.provider).map((user, id) => (
 							<div key={id}>

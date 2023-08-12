@@ -9,6 +9,7 @@ export const getUserData = () => (dispatch, getState) => {
 	axios
 		.get('/api/auth/user/', tokenConfig(getState))
 		.then((res) => {
+			// TODO: Handle comments
 			console.log('Pase por userdata.js', res.data)
 			dispatch({
 				type: GET_USERDATA,

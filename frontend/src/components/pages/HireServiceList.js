@@ -13,6 +13,7 @@ const HireServiceList = ({ services }) => {
 
 	const onSubmit = (e) => {
 		e.preventDefault();
+		// TODO: Handle comments
 		console.log('HireServiceList onSubmit: ', e);
 	};
 

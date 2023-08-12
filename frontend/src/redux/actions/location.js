@@ -7,11 +7,13 @@ import { toast } from 'react-toastify';
 // CREATE LOCATION
 export const createLocation = (payload) => (dispatch) => {
 
+	// TODO: Handle comments
 	console.log('Body createLocation: ', payload)
 
 	axios
 		.post('/api/create_location/', payload)
 		.then((res) => {
+			// TODO: Handle comments
 			console.log('Pase por location.js', res.data)
 			dispatch({
 				type: CREATE_LOCATION,

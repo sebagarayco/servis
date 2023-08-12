@@ -27,6 +27,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
+        # TODO: Handle comments
         print('RegisterSerializer: ', validated_data)
         user = ServisUser.objects.create_user(username=validated_data['username'],
                                         email=validated_data['email'],
@@ -97,16 +98,16 @@ class UserSerializer(serializers.ModelSerializer):
     Returns:
         _type_: _description_
     """
-    #location = serializers.SerializerMethodField()
+    location = serializers.SerializerMethodField()
 
     class Meta:
         model = ServisUser
         fields = ('id', 'username', 'email', 'location', 'phone',
                 'first_name', 'last_name', 'government_id', 'image', 'role')
         
-    #def get_location(self, obj):
-    #    location = Location.objects.get(id=obj.location.id)
-    #    return LocationSerializer(location).data
+    def get_location(self, obj):
+        location = Location.objects.get(id=obj.location.id)
+        return LocationSerializer(location).data
         
 
 class SubCategorySerializer(ModelSerializer):

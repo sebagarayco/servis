@@ -99,6 +99,7 @@ class ServiceView(viewsets.ModelViewSet):
     queryset = Service.objects.all()
     
     def create(self, request, *args, **kwargs):
+        # TODO: Handle comments
         print('ServiceView create: ', request.data)
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)

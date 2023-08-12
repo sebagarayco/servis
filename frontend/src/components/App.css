@@ -1,7 +1,7 @@
 /* DEBUG */
-* {
+/* * {
 	outline: 1px solid red;
-}
+} */
 
 .Toastify {
 	font-size: 1.5rem;
@@ -78,6 +78,7 @@
 
 .home-container .btn-search {
 	width: 8rem;
+	font-size: 1.25rem;
 }
 
 .home-container img {
@@ -149,11 +150,12 @@
 }
 
 .leaflet-popup-content .btn {
-	border-radius: 20px;
+	border-radius: 15px;
 	width: 100%;
+	font-size: 1.25rem;
 	border-color: #ffc107;
 	background-color: #ffc107;
-	height: 2.5rem;
+	height: 3rem;
 	color: #000;
 }
 
@@ -170,6 +172,8 @@
 
 .offer-form .btn {
 	margin-top: 2rem;
+	height: 4rem;
+	font-size: 1.5rem;
 }
 
 .offer-services {
@@ -252,6 +256,16 @@
 	box-shadow: 0px 7px 20px rgba(203, 200, 200, 0.656);
 }
 
+.hire-row .btn {
+	height: 5rem;
+	width: 100%;
+	border-radius: 20px;
+	font-size: 1.25rem;
+}
+
+.hire-row .mb-3 {
+	height: 4rem;
+}
 
 /* Login & Register*/
 .auth-main {

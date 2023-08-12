@@ -50,6 +50,7 @@ export class Hire extends Component {
 			this.setState({ showAll: false });
 			this.setState({ [e.target.name]: e.target.value, });
 		}
+		// TODO: Handle comments
 		console.log('Selected ' + e.target.name + ' value: ' + e.target.value);
 	}
 
@@ -60,6 +61,7 @@ export class Hire extends Component {
 	onChange = (e) => {
 		const { address } = this.state;
 		address[e.target.name] = e.target.value;
+		// TODO: Handle comments
 		console.log(address)
 		this.setState({ address });
 	};
@@ -79,6 +81,7 @@ export class Hire extends Component {
 
 	submitHandler(e) {
 		e.preventDefault();
+		// TODO: Handle comments
 		console.log('SUBMIT HANDLER: ', e);
 
 		let url = `https://nominatim.openstreetmap.org/search?

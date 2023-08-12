@@ -43,6 +43,7 @@ export class HomeSearch extends Component {
 		this.setState({
 			[e.target.name]: e.target.value,
 		});
+		// TODO: Handle comments
 		console.log('Selected ' + e.target.name + ' value: ' + e.target.value);
 	}
 
@@ -54,12 +55,14 @@ export class HomeSearch extends Component {
 	onChange = (e) => {
 		const { address } = this.state;
 		address[e.target.name] = e.target.value;
+		// TODO: Handle comments
 		console.log(address)
 		this.setState({ address });
 	};
 
 	submitHandler(e) {
 		e.preventDefault();
+		// TODO: Handle comments
 		console.log('SUBMIT HANDLER: ', e);
 
 		let url = `https://nominatim.openstreetmap.org/search?

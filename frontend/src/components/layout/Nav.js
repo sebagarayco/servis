@@ -9,6 +9,7 @@ import { getUserData } from '../../redux/actions/userdata';
 export class Nav extends Component {
 
 	render() {
+		// TODO: Handle comments
 		console.log('Pase por Nav.js')
 		const { isAuthenticated } = this.props.auth;
 

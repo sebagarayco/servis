@@ -8,6 +8,7 @@ export const getCategories = () => (dispatch, getState) => {
 	axios
 		.get('/api/categories/', tokenConfig(getState))
 		.then((res) => {
+			// TODO: Handle comments
 			console.log('Pase por categories.js', res.data)
 			dispatch({
 				type: GET_CATEGORIES,

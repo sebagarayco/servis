@@ -44,6 +44,8 @@ export class Register extends Component {
 				email
 			};
 
+			/* Create Location w/axios
+			not ideal but couldn't handle async await with redux. */
 			axios.post('http://localhost/api/create_location/', {
 				address: address,
 				city: city,
@@ -65,6 +67,7 @@ export class Register extends Component {
 	onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
 	render() {
+		// TODO: Handle comments
 		console.log('Pase por Register: ', this.state);
 
 		if (this.props.isAuthenticated) {

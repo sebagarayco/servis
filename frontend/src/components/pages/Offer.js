@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 // Actions
 import { createService, deleteService, getServices } from '../../redux/actions/services';
 // Utils
-import { toast } from 'react-toastify';
 import TimestampConverter from '../utils/TimestampConverter';
 import DeleteConfirmationModal from '../utils/DeleteConfirmationModal';
 // Bootstrap
@@ -17,6 +16,7 @@ import { MdOutlineCleaningServices } from "react-icons/md";
 import { MdOutlineDescription } from "react-icons/md";
 import { MdLocationPin } from "react-icons/md";
 import { FaPencilAlt } from "react-icons/fa";
+import { MdAttachMoney } from "react-icons/md";
 
 export class Offer extends Component {
 	constructor(props) {
@@ -27,51 +27,51 @@ export class Offer extends Component {
 			description: '',
 			hourly_price: '',
 			full_day_price: '',
-			showModal: false,
-			setShowModal: false,
-			city: '',
+			modalVisibility: {}
 		}
 	};
 
 	componentDidMount() {
 		this.props.getServices();
-		// Set current city name based on user's location
-		this.getCurrentCityName(this.props.auth.user.location.coordinates);
 	}
 
 	handleDeleteClick = (service) => {
-		console.log('Deleting service with ID: ', service)
-		this.props.deleteService(service);
-		this.setState({ showModal: false });
-	}
+		// TODO: Handle comments
+		console.log('Deleting service with ID: ', service);
+		this.setState(prevState => ({
+			modalVisibility: {
+				...prevState.modalVisibility,
+				[service.id]: true, // Set modal visibility for the clicked row's service ID to true
+			},
+		}));
+	};
+
+	onDelete = (serviceId) => {
+		// TODO: Handle comments
+		console.log('Deleting service with ID: ', serviceId);
+		this.props.deleteService(serviceId);
+		this.setState(prevState => ({
+			modalVisibility: {
+				...prevState.modalVisibility,
+				[serviceId]: false, // Set modal visibility for the deleted row's service ID to false
+			},
+		}));
+	};
 
 	handleInputChange = (e) => {
 		this.setState({
 			[e.target.name]: e.target.value,
 		});
+		// TODO: Handle comments
 		console.log('Selected ' + e.target.name + ' value: ' + e.target.value);
-	}
-
-	getCurrentCityName(position) {
-		let url = "https://nominatim.openstreetmap.org/reverse?format=jsonv2" +
-			"&lat=" + position[1] + "&lon=" + position[0];
-
-		axios.get(url)
-			.then((res) => { this.setState({ city: res.data.display_name }); })
-			.catch((err) => {
-				toast.error('Error getting current city name: ' + err + '. Using coordinates instead.');
-				this.setState({
-					city: [position[0].toFixed(2), position[1].toFixed(2)]
-				});
-			});
 	}
 
 	onSubmit = (e) => {
 		e.preventDefault();
 		const { category, subcategory, description, hourly_price, full_day_price } = this.state;
 		const provider = this.props.auth.user.id;
-		const location = this.props.auth.user.location;
-		const service = { category, subcategory, description, hourly_price, full_day_price, provider, location };
+		const service = { category, subcategory, description, hourly_price, full_day_price, provider };
+		// TODO: Handle comments
 		console.log('Service to be created: ', service)
 		this.props.createService(service);
 	};
@@ -81,6 +81,7 @@ export class Offer extends Component {
 			<Tooltip id="tooltip">Default user location is used.</Tooltip>
 		);
 
+		const location = this.props.auth.user.location.properties.city + ' (' + this.props.auth.user.location.properties.province + ', ' + this.props.auth.user.location.properties.country + ')';
 		return (
 			<div>
 				<Nav />
@@ -129,14 +130,14 @@ export class Offer extends Component {
 							<Col xs lg={2}>
 								<Form.Label htmlFor="basic-url">Hourly Rate (required)</Form.Label>
 								<InputGroup name="hourly_price" size="lg" >
-									<InputGroup.Text>$</InputGroup.Text>
+									<InputGroup.Text><MdAttachMoney /></InputGroup.Text>
 									<Form.Control name="hourly_price" required='required' type='number' onChange={this.handleInputChange} />
 								</InputGroup>
 							</Col>
 							<Col xs lg={2}>
 								<Form.Label htmlFor="basic-url">Full Day Rate (required)</Form.Label>
 								<InputGroup name="full_day_price" size="lg" >
-									<InputGroup.Text>$</InputGroup.Text>
+									<InputGroup.Text><MdAttachMoney /></InputGroup.Text>
 									<Form.Control name="full_day_price" required='required' type='number' onChange={this.handleInputChange} />
 								</InputGroup>
 							</Col>
@@ -146,7 +147,7 @@ export class Offer extends Component {
 								<Form.Label htmlFor="basic-url">Description (required)</Form.Label>
 								<InputGroup size="lg" >
 									<InputGroup.Text id="basic-addon1" >< MdOutlineDescription /></InputGroup.Text>
-									<Form.Control as="textarea" name='description' required='required' rows={5} placeholder='Describe your service ...' onChange={this.handleInputChange} />
+									<Form.Control as="textarea" name='description' required='required' rows={7} placeholder='Describe your service ...' onChange={this.handleInputChange} />
 								</InputGroup>
 							</Col>
 							<Col xs lg={4}>
@@ -154,7 +155,7 @@ export class Offer extends Component {
 								<OverlayTrigger placement="bottom" overlay={tooltip}>
 									<InputGroup size="md">
 										<InputGroup.Text id="basic-addon1"><MdLocationPin /></InputGroup.Text>
-										<Form.Control type='text' value={this.state.city} disabled />
+										<Form.Control type='text' disabled value={this.props.auth ? location : 'N/A'} />
 									</InputGroup>
 								</OverlayTrigger>
 								<Form.Group controlId="metodoPago">
@@ -173,7 +174,6 @@ export class Offer extends Component {
 									<Form.Check type="switch" id="materials" label="Buy of materials" />
 								</InputGroup>
 							</Col>
-
 						</Row>
 						<Row>
 							<Button variant="warning" size="lg" type="submit">
@@ -186,7 +186,6 @@ export class Offer extends Component {
 						<Table className='offer-services-table table-hover'>
 							<thead>
 								<tr>
-									<th>#</th>
 									<th>Type</th>
 									<th>Description</th>
 									<th>Price per hour ($)</th>
@@ -198,7 +197,6 @@ export class Offer extends Component {
 							<tbody>
 								{this.props.services.services.filter(service => service.provider == this.props.auth.user.id).map((service, id) => (
 									<tr key={id}>
-										<td>{service.id}</td>
 										<td>{service.subcategory.name} ({service.subcategory.category})</td>
 										<td>{service.description}</td>
 										<td>$ {service.hourly_price}</td>
@@ -206,11 +204,16 @@ export class Offer extends Component {
 										<td><TimestampConverter timestamp={service.updated} /></td>
 										<td>
 											<Button variant='outline-secondary'><FaPencilAlt /></Button>
-											<Button variant='outline-danger' onClick={() => this.setState({ showModal: !this.state.showModal })}>X</Button>
+											<Button variant='outline-danger' onClick={() => this.handleDeleteClick(service)}>X</Button>
 											<DeleteConfirmationModal
-												show={this.state.showModal}
-												onHide={() => this.setState({ showModal: !this.state.showModal })}
-												onDelete={() => this.handleDeleteClick(service.id)}
+												show={this.state.modalVisibility[service.id] || false}
+												onHide={() => this.setState(prevState => ({
+													modalVisibility: {
+														...prevState.modalVisibility,
+														[service.id]: false,
+													},
+												}))}
+												onDelete={() => this.onDelete(service.id)}
 												toBeDeleted={[
 													{ name: 'Service ID', value: service.id },
 													{ name: 'Type', value: service.subcategory['name'] + ' (' + service.subcategory['category'] + ')' },

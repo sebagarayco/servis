@@ -9,6 +9,7 @@ export const getServices = () => (dispatch, getState) => {
 	axios
 		.get('/api/services/', tokenConfig(getState))
 		.then((res) => {
+			// TODO: Handle comments
 			console.log('Pase por services.js', res.data)
 			dispatch({
 				type: GET_SERVICES,
@@ -21,11 +22,13 @@ export const getServices = () => (dispatch, getState) => {
 // CREATE SERVICE
 export const createService = (payload) => (dispatch) => {
 
+	// TODO: Handle comments
 	console.log('Body createService: ', payload)
 
 	axios
 		.post('/api/services/', payload)
 		.then((res) => {
+			// TODO: Handle comments
 			console.log('Pase por createServices.js', res.data)
 			dispatch({
 				type: CREATE_SERVICE,
