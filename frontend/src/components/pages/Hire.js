@@ -26,10 +26,9 @@ export class Hire extends Component {
 		this.state = {
 			showModal: false,
 			showAll: true,
-			category: '',
+			category: 'showAll',
 			subcategory: '',
 			name: "",
-			coords: [-41.13, -71.3],
 			address: {
 				street: "",
 				city: "",
@@ -38,6 +37,15 @@ export class Hire extends Component {
 				postalcode: ""
 			}
 		};
+	};
+
+	handleInputChange = (e) => {
+		if (e.target.value === "showAll") {
+			this.setState({ showAll: true, category: "showAll" });
+		} else {
+			this.setState({ showAll: false, [e.target.name]: e.target.value });
+		}
+		console.log("Selected " + e.target.name + " value: " + e.target.value);
 	};
 
 	handleInputChange = (e) => {
@@ -177,7 +185,7 @@ export class Hire extends Component {
 							</Col>
 						</Row>
 					</Form>
-					<Map coords={this.state.coords} category={this.state.category} />
+					<Map category={this.state.category} />
 					<Row className='hire-services'>
 						<h1>Available services</h1>
 						<h5>{this.props.services.services.length} services available. Refine your search.</h5>

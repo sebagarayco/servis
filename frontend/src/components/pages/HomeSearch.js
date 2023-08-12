@@ -25,7 +25,7 @@ export class HomeSearch extends Component {
 		super(props);
 		this.state = {
 			showModal: false,
-			category: '',
+			category: 'showAll',
 			subcategory: '',
 			name: "",
 			coords: [-41.13, -71.3],
@@ -169,7 +169,7 @@ export class HomeSearch extends Component {
 						</Col>
 					</Row>
 				</Form>
-				<Map coords={this.state.coords} category={this.state.category} />
+				<Map category={this.state.category} />
 			</Container >
 		)
 	}
