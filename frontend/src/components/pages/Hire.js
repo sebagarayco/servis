@@ -130,9 +130,8 @@ export class Hire extends Component {
 								<Form.Label htmlFor="basic-url">Category</Form.Label>
 								<InputGroup size="lg" className="mb-3">
 									<InputGroup.Text id="basic-addon1"><MdHomeRepairService /></InputGroup.Text>
-									<Form.Select name='category' defaultValue={'default'} onChange={this.handleInputChange}>
-										<option value="default" disabled>--- Select category ---</option>
-										<option value="showAll">Show all</option>
+									<Form.Select name='category' defaultValue={'showAll'} onChange={this.handleInputChange}>
+										<option value="showAll">All categories</option>
 										{this.props.categories.categories.map((category, id) => (
 											<option
 												key={id}

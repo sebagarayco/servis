@@ -11,6 +11,7 @@ from django.utils.translation import gettext_lazy as _
 from multiselectfield import MultiSelectField
 from creditcards.models import CardNumberField, CardExpiryField, SecurityCodeField
 from .managers import CustomUserManager
+from api.utils import get_latitude_longitude
 
 class Location(models.Model):
     """
@@ -25,6 +26,20 @@ class Location(models.Model):
 
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True) 
+
+    def __str__(self):
+        return "%s, %s" % (self.address, self.city)
+    
+    def save(self, *args, **kwargs):
+        # Check if address-related fields have changed
+        if any([self.address, self.city, self.province, self.zip_code, self.country]):
+            geolocation = get_latitude_longitude(self.address, self.city, self.province, self.zip_code, self.country)
+
+            if geolocation:
+                print('Geolocation: ', geolocation)
+                self.coordinates = f'POINT({geolocation[0]} {geolocation[1]})'
+
+        super(Location, self).save(*args, **kwargs)
     
 class ServisUser(AbstractBaseUser, PermissionsMixin):
     roles = [ ('Provider', 'Provider'), ('Consumer', 'Consumer'), ]

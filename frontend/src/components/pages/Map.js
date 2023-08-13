@@ -15,9 +15,8 @@ export function Map({ category }) {
 	const ICON = icon({ iconUrl: 'static/location-pin.png', iconSize: [32, 32], });
 	const ICON_SELF = icon({ iconUrl: 'static/marker-icon.png' });
 
-	/* Setting the coordinates to the user's location 
-	Switching values for Leaflet */
-	const coords = [auth.user.location.geometry.coordinates[1], auth.user.location.geometry.coordinates[0]]
+	// Setting the coordinates to the user's location 
+	const coords = [auth.user.location.geometry.coordinates[0], auth.user.location.geometry.coordinates[1]]
 
 	function MapView() {
 		let map = useMap();
@@ -35,71 +34,62 @@ export function Map({ category }) {
 			/>
 			<Marker icon={ICON_SELF} position={coords}> </Marker>
 			{category === "showAll" ? (
-				services.services.map((service, id) => (
-					<Marker key={id} icon={ICON} position={[service.user.location.geometry.coordinates[1], service.user.location.geometry.coordinates[0]]}>
-						{userdata.users.filter(user => user.id !== auth.user.id).map((user, id) => (
-							<Tooltip key={id} >
+				services.services
+					.filter((service) => service.user.id !== auth.user.id) // Filter out the user's own services
+					.map((service, id) => (
+						<Marker key={service.user.id} icon={ICON} position={[service.user.location.geometry.coordinates[0], service.user.location.geometry.coordinates[1]]}>
+							<Tooltip >
 								<div key={id}>
-									Username: {user.username}<br />
-									Name: {user.first_name} {user.last_name}<br />
-									E-mail: {user.email}<br />
-									Services: {user.services.length}<br />
+									Username: {service.user.username}<br />
+									Name: {service.user.first_name} {service.user.last_name}<br />
+									E-mail: {service.user.email}<br />
 								</div>
 							</Tooltip>
-						))}
-						<br />
-						<strong>Click to hire!</strong>
-						{userdata.users.filter(user => user.id !== auth.user.id).map((user, id) => (
-							<Popup key={id} >
+							< br />
+							<strong>Click to hire!</strong>
+							<Popup >
 								<div key={id}>
-									Username: {user.username}<br />
-									Name: {user.first_name} {user.last_name}<br />
-									E-mail: {user.email}<br />
-									Services: {user.services.length}<br />
+									Username: {service.user.username}<br />
+									Name: {service.user.first_name} {service.user.last_name}<br />
+									E-mail: {service.user.email}<br />
 								</div>
 								<br />
 								<Button className="btn btn-warning">
 									<FaFileContract /> Hire
 								</Button>
 							</Popup>
-						))}
-					</Marker>
-				))
+						</Marker>
+					))
 			) : (
 				services.services
-					.filter((service) => service.subcategory.category === category)
+					.filter((service) => service.subcategory.category === category && service.user.id !== auth.user.id) // Filter out the user's own services and selecting category
 					.map((service, id) => (
-						<Marker key={id} icon={ICON} position={[service.user.location.geometry.coordinates[1], service.user.location.geometry.coordinates[0]]}>
-							{userdata.users.filter(user => user.id == service.provider).map((user, id) => (
-								<Tooltip key={id}>
-									<div key={id}>
-										Username: {user.username}<br />
-										Name: {user.first_name} {user.last_name}<br />
-										E-mail: {user.email}<br />
-										Services: {user.services.length}<br />
-									</div>
-									<br />
-									<strong>Click to hire!</strong>
-								</Tooltip>
-							))}
-							{userdata.users.filter(user => user.id == service.provider).map((user, id) => (
-								<Popup key={id}>
-									<div key={id}>
-										Username: {user.username}<br />
-										Name: {user.first_name} {user.last_name}<br />
-										E-mail: {user.email}<br />
-										Services: {user.services.length}<br />
-									</div>
-									<br />
-									<Button className="btn btn-warning">
-										<FaFileContract /> Hire
-									</Button>
-								</Popup>
-							))}
+						<Marker key={service.user.id} icon={ICON} position={[service.user.location.geometry.coordinates[0], service.user.location.geometry.coordinates[1]]}>
+							<Tooltip key={id}>
+								<div key={id}>
+									Username: {service.user.username}<br />
+									Name: {service.user.first_name} {service.user.last_name}<br />
+									E-mail: {service.user.email}<br />
+								</div>
+								<br />
+								<strong>Click to hire!</strong>
+							</Tooltip>
+							<Popup key={id}>
+								<div key={id}>
+									Username: {service.user.username}<br />
+									Name: {service.user.first_name} {service.user.last_name}<br />
+									E-mail: {service.user.email}<br />
+								</div>
+								<br />
+								<Button className="btn btn-warning">
+									<FaFileContract /> Hire
+								</Button>
+							</Popup>
 						</Marker>
-					)))}
+					)))
+			}
 			< MapView />
-		</MapContainer>
+		</MapContainer >
 	);
 }
 
