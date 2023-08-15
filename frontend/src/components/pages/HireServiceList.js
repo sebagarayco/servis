@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // Redux
 import { useSelector } from 'react-redux';
 // Bootstrap
@@ -7,19 +7,34 @@ import { Row, Col, Button, Form } from "react-bootstrap";
 import { FaFileContract } from "react-icons/fa";
 // Utils
 import TimestampConverter from '../utils/TimestampConverter';
+// Pages
+import HireModal from './HireModal';
 
 const HireServiceList = ({ services }) => {
 	const { auth } = useSelector(state => state);
+	const [selectedService, setSelectedService] = useState(null);
+	const [showModal, setShowModal] = useState(false);
 
-	const onSubmit = (e) => {
-		e.preventDefault();
-		// TODO: Handle comments
-		console.log('HireServiceList onSubmit: ', e);
+	const handleOpenModal = (service) => {
+		setSelectedService(service);
+		setShowModal(true);
 	};
+
+	const handleCloseModal = () => {
+		setSelectedService(null);
+		setShowModal(false);
+	};
+
+	const handleHireSubmit = (comments) => {
+		// Perform the hiring logic here, using the selectedService and comments
+		console.log('Hiring:', selectedService, 'Comments:', comments);
+		handleCloseModal();
+	};
+
 
 	return (
 		<div className='service-list'>
-			<Form onSubmit={onSubmit}>
+			<Form>
 				{services.filter(service => service.provider !== auth.user.id).map((service, id) => (
 					<Row key={id} className='service-row'>
 						<Col md={2}>
@@ -50,13 +65,20 @@ const HireServiceList = ({ services }) => {
 							</div>
 						</Col>
 						<Col md={1}>
-							<Button className="btn btn-warning" size='lg' type="submit">
+							<Button className="btn btn-warning" size='lg' onClick={() => handleOpenModal(service)}>
 								<FaFileContract /> Hire
 							</Button>
 						</Col>
 					</Row>
 				))}
 			</Form>
+			{showModal && (
+				<HireModal
+					service={selectedService}
+					onHide={handleCloseModal}
+					onSubmit={handleHireSubmit}
+				/>
+			)}
 		</div>
 	);
 };

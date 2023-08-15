@@ -267,6 +267,14 @@
 	height: 4rem;
 }
 
+.hire-modal .form-label {
+	font-size: 1.25rem;
+}
+
+.hire-modal .form-control {
+	font-size: 1.25rem;
+}
+
 /* Login & Register*/
 .auth-main {
 	display: flex;
