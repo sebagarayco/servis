@@ -10,13 +10,25 @@ import { Button } from 'react-bootstrap';
 // Icons
 import { FaFileContract } from "react-icons/fa";
 
-export function Map({ category }) {
+export function Map({ category, coordinates }) {
 	const { auth, userdata, services } = useSelector(state => state);
 	const ICON = icon({ iconUrl: 'static/location-pin.png', iconSize: [32, 32], });
 	const ICON_SELF = icon({ iconUrl: 'static/marker-icon.png' });
 
-	// Setting the coordinates to the user's location 
-	const coords = [auth.user.location.geometry.coordinates[0], auth.user.location.geometry.coordinates[1]]
+	// Set the initial coordinates based on props or user's location
+	let coords;
+
+	if (coordinates && coordinates.length === 2) {
+		coords = [coordinates[0], coordinates[1]]; // Assuming coordinates is an array [longitude, latitude]
+	} else if (auth.user.location.geometry.coordinates) {
+		coords = [
+			auth.user.location.geometry.coordinates[0],
+			auth.user.location.geometry.coordinates[1]
+		];
+	} else {
+		// Default coordinates if neither props nor user's location is available
+		coords = [0, 0];
+	}
 
 	function MapView() {
 		let map = useMap();

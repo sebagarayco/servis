@@ -37,7 +37,7 @@ export class Login extends Component {
 					<h1>Welcome to Servis!</h1>
 					<form onSubmit={this.onSubmit}>
 						<div className="form-group">
-							<input type="text" className="form-control" name="username" onChange={this.onChange} value={username} placeholder='Username' />
+							<input type="text" className="form-control" name="username" onChange={this.onChange} value={username} placeholder='Username' autoFocus />
 						</div>
 						<div className="form-group">
 							<input type="password" className="form-control" name="password" onChange={this.onChange} value={password} placeholder='Password' />
