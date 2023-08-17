@@ -3,11 +3,11 @@ import { Button, Spinner } from 'react-bootstrap';
 
 export default function ServisSpinner() {
 	return (
-		<div>
-			<Button variant="warning" >
+		<div className='loading-container'>
+			<Button variant="outline-warning" >
 				<Spinner
 					as="span"
-					animation="border"
+					animation="grow"
 					size="lg"
 					role="status"
 					aria-hidden="true"

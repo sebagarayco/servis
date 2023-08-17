@@ -3,6 +3,19 @@
 	outline: 1px solid red;
 } */
 
+/* Utils */
+.loading-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+}
+
+.loading-container h4 {
+	color: black
+}
+
 .Toastify {
 	font-size: 1.5rem;
 }

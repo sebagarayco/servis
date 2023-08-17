@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 // Actions
 import { createService, deleteService, getServices } from '../../redux/actions/services';
 // Utils
+import ServisSpinner from '../utils/ServisSpinner';
 import TimestampConverter from '../utils/TimestampConverter';
 import DeleteConfirmationModal from '../utils/DeleteConfirmationModal';
 // Bootstrap
@@ -22,6 +23,7 @@ export class Offer extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			loading: false,
 			category: '',
 			subcategory: '',
 			description: '',
@@ -32,7 +34,7 @@ export class Offer extends Component {
 	};
 
 	componentDidMount() {
-		this.props.getServices();
+		this.props.getServices()
 	}
 
 	handleDeleteClick = (service) => {
@@ -49,6 +51,7 @@ export class Offer extends Component {
 	onDelete = (serviceId) => {
 		// TODO: Handle comments
 		console.log('Deleting service with ID: ', serviceId);
+		this.setState({ loading: true });
 		this.props.deleteService(serviceId);
 		this.setState(prevState => ({
 			modalVisibility: {
@@ -56,6 +59,7 @@ export class Offer extends Component {
 				[serviceId]: false, // Set modal visibility for the deleted row's service ID to false
 			},
 		}));
+		setTimeout(() => { this.setState({ loading: false }) }, 500); // Loading timeout
 	};
 
 	handleInputChange = (e) => {
@@ -68,12 +72,14 @@ export class Offer extends Component {
 
 	onSubmit = (e) => {
 		e.preventDefault();
+		this.setState({ loading: true });
 		const { category, subcategory, description, hourly_price, full_day_price } = this.state;
 		const provider = this.props.auth.user.id;
 		const service = { category, subcategory, description, hourly_price, full_day_price, provider };
 		// TODO: Handle comments
 		console.log('Service to be created: ', service)
 		this.props.createService(service);
+		setTimeout(() => { this.setState({ loading: false }) }, 1500); // Loading timeout
 	};
 
 	render() {
@@ -183,48 +189,51 @@ export class Offer extends Component {
 					</Form>
 					<Row className='offer-services'>
 						<h1>My services</h1>
-						<Table className='offer-services-table table-hover'>
-							<thead>
-								<tr>
-									<th>Type</th>
-									<th>Description</th>
-									<th>Price per hour ($)</th>
-									<th>Full Day ($)</th>
-									<th>Last update</th>
-									<th>Actions</th>
-								</tr>
-							</thead>
-							<tbody>
-								{this.props.services.services.filter(service => service.provider == this.props.auth.user.id).map((service, id) => (
-									<tr key={id}>
-										<td>{service.subcategory.name} ({service.subcategory.category})</td>
-										<td>{service.description}</td>
-										<td>$ {service.hourly_price}</td>
-										<td>$ {service.full_day_price}</td>
-										<td><TimestampConverter timestamp={service.updated} /></td>
-										<td>
-											<Button variant='outline-secondary'><FaPencilAlt /></Button>
-											<Button variant='outline-danger' onClick={() => this.handleDeleteClick(service)}>X</Button>
-											<DeleteConfirmationModal
-												show={this.state.modalVisibility[service.id] || false}
-												onHide={() => this.setState(prevState => ({
-													modalVisibility: {
-														...prevState.modalVisibility,
-														[service.id]: false,
-													},
-												}))}
-												onDelete={() => this.onDelete(service.id)}
-												toBeDeleted={[
-													{ name: 'Service ID', value: service.id },
-													{ name: 'Type', value: service.subcategory['name'] + ' (' + service.subcategory['category'] + ')' },
-													{ name: 'Description', value: service.description },
-												]}
-											/>
-										</td>
-									</tr>
-								))}
-							</tbody>
-						</Table>
+						{this.state.loading ?
+							<ServisSpinner /> : (
+								<Table className='offer-services-table table-hover'>
+									<thead>
+										<tr>
+											<th>Type</th>
+											<th>Description</th>
+											<th>Price per hour ($)</th>
+											<th>Full Day ($)</th>
+											<th>Last update</th>
+											<th>Actions</th>
+										</tr>
+									</thead>
+									<tbody>
+										{this.props.services.services.filter(service => service.provider == this.props.auth.user.id).map((service, id) => (
+											<tr key={id}>
+												<td>{service.subcategory.name} ({service.subcategory.category})</td>
+												<td>{service.description}</td>
+												<td>$ {service.hourly_price}</td>
+												<td>$ {service.full_day_price}</td>
+												<td><TimestampConverter timestamp={service.updated} /></td>
+												<td>
+													<Button variant='outline-secondary'><FaPencilAlt /></Button>
+													<Button variant='outline-danger' onClick={() => this.handleDeleteClick(service)}>X</Button>
+													<DeleteConfirmationModal
+														show={this.state.modalVisibility[service.id] || false}
+														onHide={() => this.setState(prevState => ({
+															modalVisibility: {
+																...prevState.modalVisibility,
+																[service.id]: false,
+															},
+														}))}
+														onDelete={() => this.onDelete(service.id)}
+														toBeDeleted={[
+															{ name: 'Service ID', value: service.id },
+															{ name: 'Type', value: service.subcategory['name'] + ' (' + service.subcategory['category'] + ')' },
+															{ name: 'Description', value: service.description },
+														]}
+													/>
+												</td>
+											</tr>
+										))}
+									</tbody>
+								</Table>
+							)}
 					</Row>
 				</Container>
 			</div>
