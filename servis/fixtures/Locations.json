@@ -96,5 +96,117 @@
     "updated": "2023-08-13T00:50:26.487Z",
     "created": "2023-08-13T00:50:26.487Z"
   }
+},
+{
+  "model": "users.location",
+  "pk": 64,
+  "fields": {
+    "address": "9 de Julio 500",
+    "city": "Buenos Aires",
+    "province": "Ciudad Autónoma de Buenos Aires",
+    "country": "Argentina",
+    "zip_code": "1403",
+    "coordinates": "SRID=4326;POINT (-34.5897291 -58.382325)",
+    "updated": "2023-08-14T21:15:24.271Z",
+    "created": "2023-08-14T21:14:08.733Z"
+  }
+},
+{
+  "model": "users.location",
+  "pk": 66,
+  "fields": {
+    "address": "Lavalle 527",
+    "city": "Quilmes",
+    "province": "Buenos Aires",
+    "country": "Argentina",
+    "zip_code": null,
+    "coordinates": "SRID=4326;POINT (-34.72099375 -58.258235541666664)",
+    "updated": "2023-08-15T01:22:04.707Z",
+    "created": "2023-08-15T01:22:04.707Z"
+  }
+},
+{
+  "model": "users.location",
+  "pk": 67,
+  "fields": {
+    "address": "Elflein 150",
+    "city": "San Carlos de Bariloche",
+    "province": "Río Negro",
+    "country": "Argentina",
+    "zip_code": null,
+    "coordinates": "SRID=4326;POINT (-41.135818475510206 -71.30798397142857)",
+    "updated": "2023-08-16T21:40:04.986Z",
+    "created": "2023-08-16T21:40:04.986Z"
+  }
+},
+{
+  "model": "users.location",
+  "pk": 68,
+  "fields": {
+    "address": "Rolando 200",
+    "city": "San Carlos de Bariloche",
+    "province": "Río Negro",
+    "country": "Argentina",
+    "zip_code": null,
+    "coordinates": "SRID=4326;POINT (-41.1341047 -71.3054405)",
+    "updated": "2023-08-16T21:41:50.254Z",
+    "created": "2023-08-16T21:41:50.254Z"
+  }
+},
+{
+  "model": "users.location",
+  "pk": 69,
+  "fields": {
+    "address": "25 de Mayo 300",
+    "city": "San Carlos de Bariloche",
+    "province": "Río Negro",
+    "country": "Argentina",
+    "zip_code": null,
+    "coordinates": "SRID=4326;POINT (-41.1423989 -71.3068888)",
+    "updated": "2023-08-16T21:48:57.201Z",
+    "created": "2023-08-16T21:48:57.201Z"
+  }
+},
+{
+  "model": "users.location",
+  "pk": 70,
+  "fields": {
+    "address": "Austria 250",
+    "city": "Bariloche",
+    "province": "Río Negro",
+    "country": "Argentina",
+    "zip_code": "8400",
+    "coordinates": "SRID=4326;POINT (-41.1394809 -71.322463)",
+    "updated": "2023-08-16T21:51:59.950Z",
+    "created": "2023-08-16T21:50:18.000Z"
+  }
+},
+{
+  "model": "users.location",
+  "pk": 71,
+  "fields": {
+    "address": "Santa Fe 1200",
+    "city": "Buenos Aires",
+    "province": "Ciudad Autónoma de Buenos Aires",
+    "country": "Argentina",
+    "zip_code": null,
+    "coordinates": "SRID=4326;POINT (-34.5949813 -58.3732836)",
+    "updated": "2023-08-16T22:13:58.635Z",
+    "created": "2023-08-16T22:13:58.635Z"
+  }
+},
+{
+  "model": "users.location",
+  "pk": 72,
+  "fields": {
+    "address": "Villegas 510",
+    "city": "San Carlos de Bariloche",
+    "province": "Río Negro",
+    "country": "Argentina",
+    "zip_code": null,
+    "coordinates": "SRID=4326;POINT (-41.137242593877545 -71.30741563673469)",
+    "updated": "2023-08-17T12:25:59.123Z",
+    "created": "2023-08-17T12:25:59.123Z"
+  }
 }
 ]
