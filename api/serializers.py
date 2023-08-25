@@ -4,9 +4,9 @@ from rest_framework.serializers import ModelSerializer, SerializerMethodField
 from rest_framework_gis.serializers import GeoFeatureModelSerializer, GeometrySerializerMethodField
 from django.contrib.gis.geos import Point
 from django.contrib.auth import authenticate
-from servis.models import Category, Subcategory, Service
+# Models
+from servis.models import Category, Subcategory, Service, Contract
 from users.models import ServisUser, Location
-
 
 class RegisterSerializer(serializers.ModelSerializer):
     """ Register Serializer
@@ -155,3 +155,14 @@ class ServiceSerializer(ModelSerializer):
     def get_user(self, obj):
         user = ServisUser.objects.get(id=obj.provider.id)
         return UserSerializer(user).data
+    
+class ContractSerializer(ModelSerializer):
+    """Contract Serializer
+
+    Args:
+        ModelSerializer (_type_): Contract Serializer
+    """
+    
+    class Meta:
+        model = Contract
+        fields = '__all__'

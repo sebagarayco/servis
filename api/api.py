@@ -1,12 +1,14 @@
 from .utils import get_latitude_longitude, get_coordinate_details
 from django.contrib.gis.geos import Point
-from servis.models import Category, Subcategory, Service
 from rest_framework import viewsets, generics, permissions, mixins
 from rest_framework.response import Response
 from rest_framework import status
 from knox.models import AuthToken
-from users.models import ServisUser, Location
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, CategorySerializer, SubCategorySerializer, ServiceSerializer, UserProfileSerializer, LocationSerializer
+# Models
+from users.models import ServisUser
+from servis.models import Category, Subcategory, Service, Contract
+# Serializers
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, CategorySerializer, SubCategorySerializer, ServiceSerializer, UserProfileSerializer, LocationSerializer, ContractSerializer
 
 
 class RegisterAPI(generics.GenericAPIView):
@@ -106,3 +108,7 @@ class ServiceView(viewsets.ModelViewSet):
         subcategory = Subcategory.objects.get(category__name=request.data['category'],name=request.data['subcategory'])
         serializer.save(subcategory=subcategory)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+class ContractView(viewsets.ModelViewSet):
+    serializer_class = ContractSerializer
+    queryset = Contract.objects.all()

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 // Redux
 import { useSelector } from 'react-redux';
+import { createContract } from '../../redux/actions/contracts';
 // Bootstrap
 import { Row, Col, Button, Form } from "react-bootstrap";
 // Icons
@@ -25,9 +26,9 @@ const HireServiceList = ({ services }) => {
 		setShowModal(false);
 	};
 
-	const handleHireSubmit = (comments) => {
-		// Perform the hiring logic here, using the selectedService and comments
-		console.log('Hiring:', selectedService, 'Comments:', comments);
+	const handleHireSubmit = (hireData) => {
+		// Perform the hiring logic here, using the selectedService and hire data
+		console.log('Hiring:', selectedService, 'Hire Data:', hireData);
 		handleCloseModal();
 	};
 
@@ -60,7 +61,7 @@ const HireServiceList = ({ services }) => {
 								<h5>{service.user.first_name} {service.user.last_name}</h5>
 								<p>{service.user.email}</p>
 								<p>{service.user.phone}</p>
-								<p>{service.user.location.coordinates}</p>
+								<p>{service.user.location.properties.city + ', ' + service.user.location.properties.province}</p>
 								<p>Rating:</p>
 							</div>
 						</Col>

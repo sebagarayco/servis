@@ -153,7 +153,7 @@ export class Offer extends Component {
 								<Form.Label htmlFor="basic-url">Description (required)</Form.Label>
 								<InputGroup size="lg" >
 									<InputGroup.Text id="basic-addon1" >< MdOutlineDescription /></InputGroup.Text>
-									<Form.Control as="textarea" name='description' required='required' rows={7} placeholder='Describe your service ...' onChange={this.handleInputChange} />
+									<Form.Control as="textarea" name='description' required='required' rows={7} placeholder="Describe the services you offer, including key features and benefits." onChange={this.handleInputChange} />
 								</InputGroup>
 							</Col>
 							<Col xs lg={4}>

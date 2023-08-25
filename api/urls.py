@@ -1,12 +1,13 @@
 from django.urls import include, path
 from rest_framework import routers
 from knox import views as knox_views
-from .api import RegisterAPI, LoginAPI, UserAPI, UserProfileView, CategoryView, SubcategoryView, ServiceView, LocationCreateView
+from .api import RegisterAPI, LoginAPI, UserAPI, UserProfileView, CategoryView, ContractView, ServiceView, LocationCreateView
 
 router = routers.DefaultRouter()
 router.register('categories', CategoryView, 'categories')
 router.register('users', UserProfileView, 'users')
 router.register('services', ServiceView, 'services')
+router.register('contracts', ContractView, 'contracts')
 router.register('create_location', LocationCreateView, 'create_location')
 
 urlpatterns = [
