@@ -18,7 +18,7 @@ export class Nav extends Component {
 		}
 
 		return (
-			<div >
+			<div>
 				<img className='logo' src="static/handshake56.png" />
 				<ul className='nav-ul'>
 					<li><Link to="/">Home</Link></li>

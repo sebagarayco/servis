@@ -41,8 +41,8 @@ class Contract(models.Model):
         ('Completed', 'Completed'),
         ('Rejected', 'Rejected'),
     ]
-    delivery_date = models.DateField()
-    description = models.CharField(max_length=255)
+    is_active = models.BooleanField(default=True)
+    comments = models.CharField(max_length=500, default=None)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     status = models.CharField(
@@ -53,12 +53,13 @@ class Contract(models.Model):
     provider = models.ForeignKey(
         ServisUser, default=None, on_delete=models.CASCADE, related_name='hire_provider')
 
+    start_date = models.DateField()
+    end_date = models.DateField()
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.name
-
+        return f"{self.consumer} - {self.provider} Contract"
 
 class Transaction(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)

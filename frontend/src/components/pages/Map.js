@@ -49,7 +49,7 @@ export function Map({ category, coordinates }) {
 				services.services
 					.filter((service) => service.user.id !== auth.user.id) // Filter out the user's own services
 					.map((service, id) => (
-						<Marker key={service.user.id} icon={ICON} position={[service.user.location.geometry.coordinates[0], service.user.location.geometry.coordinates[1]]}>
+						<Marker key={service.id} icon={ICON} position={[service.user.location.geometry.coordinates[0], service.user.location.geometry.coordinates[1]]}>
 							<Tooltip >
 								<div key={id}>
 									Username: {service.user.username}<br />
@@ -60,7 +60,7 @@ export function Map({ category, coordinates }) {
 							< br />
 							<strong>Click to hire!</strong>
 							<Popup >
-								<div key={id}>
+								<div key={service.id}>
 									Username: {service.user.username}<br />
 									Name: {service.user.first_name} {service.user.last_name}<br />
 									E-mail: {service.user.email}<br />

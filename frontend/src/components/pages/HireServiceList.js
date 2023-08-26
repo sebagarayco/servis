@@ -37,10 +37,10 @@ const HireServiceList = ({ services }) => {
 		<div className='service-list'>
 			<Form>
 				{services.filter(service => service.provider !== auth.user.id).map((service, id) => (
-					<Row key={id} className='service-row'>
+					<Row key={service.id} className='service-row'>
 						<Col md={2}>
 							<div className="service-card-img">
-								<img src={service.user.image} alt={`Service ${id}`} className="service-user-photo" />
+								<img src={service.user.image} alt={`Service ${service.id}`} className="service-user-photo" />
 							</div>
 						</Col>
 						<Col md={5}>

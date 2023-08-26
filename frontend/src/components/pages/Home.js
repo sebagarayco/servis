@@ -6,14 +6,25 @@ import { getUserData, getAllUsers } from '../../redux/actions/userdata';
 import Spinner from 'react-bootstrap/Spinner';
 // Pages
 import Nav from '../layout/Nav';
-import { Footer } from '../layout/Footer';
 import HomeCards from './HomeCards';
 import HomeSearch from './HomeSearch';
-
+import ServisSpinner from '../utils/ServisSpinner';
+import HomeServices from './HomeServices';
 
 export class Home extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			loading: true,
+		};
+	}
 
 	componentDidMount() {
+		// Simulate loading for 1.5 seconds
+		setTimeout(() => {
+			this.setState({ loading: false });
+		}, 1500);
+
 		this.props.getUserData();
 		this.props.getAllUsers();
 	}
@@ -21,9 +32,17 @@ export class Home extends Component {
 	render() {
 		return (
 			<div>
-				<Nav />
-				<HomeSearch />
-				<HomeCards />
+				{this.state.loading ? (
+					<ServisSpinner />
+				) : (
+					<>
+						<Nav />
+						<HomeSearch />
+						<HomeServices />
+						<HomeCards />
+					</>
+				)
+				}
 			</div >
 		)
 	}
@@ -37,7 +56,3 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, { getUserData, getAllUsers })(Home);
-
-
-
-

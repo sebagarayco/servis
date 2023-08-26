@@ -6,10 +6,9 @@
 /* Utils */
 .loading-container {
 	display: flex;
-	flex-direction: column;
-	align-items: center;
 	justify-content: center;
-	height: 100%;
+	align-items: center;
+	height: 100vh;
 }
 
 .loading-container h4 {
@@ -123,6 +122,26 @@
 	padding: 30px;
 	border: 2px solid #f2f2f2;
 	border-radius: 20px;
+}
+
+.homeservices-subcontainer .g-4 {
+	margin-top: 1.25rem;
+}
+
+.homeservices-image-container {
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	border-radius: 20px;
+	box-shadow: 0px 7px 20px rgba(203, 200, 200, 0.656);
+}
+
+.homeservices-link {
+	text-decoration: none;
+	color: inherit;
 }
 
 .home-carousel {
