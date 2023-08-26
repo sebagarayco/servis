@@ -14,7 +14,19 @@ import { MdOutlineAttachMoney } from 'react-icons/md';
 const HireModal = ({ service, onHide, onSubmit }) => {
 	const { auth } = useSelector(state => state);
 	const [comments, setComments] = useState('');
-	const [budget, setBudget] = useState(0);
+	const [budget, setBudget] = useState('');
+	const [startDate, setStartDate] = useState('');
+	const [endDate, setEndDate] = useState('');
+
+	// Check if all required fields are filled
+	const isFormValid = () => {
+		return (
+			comments.trim() !== '' &&
+			budget > 0 &&
+			startDate !== '' &&
+			endDate !== ''
+		);
+	};
 
 	const handleCommentsChange = (e) => {
 		setComments(e.target.value);
@@ -29,15 +41,29 @@ const HireModal = ({ service, onHide, onSubmit }) => {
 		setPhoto(selectedPhoto);
 	};
 
+	const handleStartDateChange = (e) => {
+		setStartDate(e.target.value);
+	};
+
+	const handleEndDateChange = (e) => {
+		setEndDate(e.target.value);
+	};
+
 	const handleFormSubmit = (e) => {
 		e.preventDefault();
+
+		if (!isFormValid()) {
+			return; // Don't submit if the form is not valid
+		}
 
 		// Prepare the hire data
 		const hireData = {
 			consumer: auth.user,
 			provider: service.user,
 			budget,
-			comments
+			comments,
+			startDate,
+			endDate,
 		};
 		// Call the onSubmit prop and pass the hireData
 		onSubmit(hireData);
@@ -56,7 +82,7 @@ const HireModal = ({ service, onHide, onSubmit }) => {
 			</Modal.Header>
 			<Modal.Body>
 				<Modal.Title>Service Details</Modal.Title>
-				<Form onSubmit={handleFormSubmit}>
+				<Form noValidate validated={true} onSubmit={handleFormSubmit}>
 					<Row>
 						<Col>
 							<Form.Group controlId="service">
@@ -177,7 +203,6 @@ const HireModal = ({ service, onHide, onSubmit }) => {
 									<InputGroup.Text> <MdOutlineAttachMoney /> </InputGroup.Text>
 									<Form.Control
 										type="number"
-										value={budget}
 										onChange={handleBudgetChange}
 										required
 									/>
@@ -197,6 +222,7 @@ const HireModal = ({ service, onHide, onSubmit }) => {
 								<Form.Label>Request Start Date</Form.Label>
 								<Form.Control
 									type="date"
+									onChange={handleStartDateChange}
 									required
 								/>
 							</Form.Group>
@@ -204,6 +230,7 @@ const HireModal = ({ service, onHide, onSubmit }) => {
 								<Form.Label>Request End Date</Form.Label>
 								<Form.Control
 									type="date"
+									onChange={handleEndDateChange}
 									required
 								/>
 							</Form.Group>
@@ -218,8 +245,13 @@ const HireModal = ({ service, onHide, onSubmit }) => {
 							value={comments}
 							onChange={handleCommentsChange}
 							placeholder='Full description of the service you need'
+							required
+							isInvalid={!comments.trim()}
 							autoFocus
 						/>
+						<Form.Control.Feedback type="invalid">
+							Please provide comments.
+						</Form.Control.Feedback>
 					</Form.Group>
 				</Form>
 			</Modal.Body>
@@ -227,7 +259,11 @@ const HireModal = ({ service, onHide, onSubmit }) => {
 				<Button variant="secondary" onClick={onHide}>
 					Cancel
 				</Button>
-				<Button variant="warning" onClick={handleFormSubmit}>
+				<Button
+					variant="warning"
+					onClick={handleFormSubmit}
+					disabled={!isFormValid} // Disable the button if the form is not valid
+				>
 					<FaFileContract /> Hire
 				</Button>
 			</Modal.Footer>
