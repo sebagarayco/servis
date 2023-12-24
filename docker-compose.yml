@@ -31,7 +31,7 @@ services:
       - servis
 
   nginx:
-    restart: always
+    restart: "on-failure"
     container_name: servis-nginx
     depends_on:
       - backend

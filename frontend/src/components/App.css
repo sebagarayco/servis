@@ -144,6 +144,14 @@
 	color: inherit;
 }
 
+.homeservices-link:hover {
+	text-decoration: none;
+}
+
+.homeservices-image-container:hover {
+	background-color: #ffc107;
+}
+
 .home-carousel {
 	margin-bottom: 20px;
 }

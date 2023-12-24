@@ -100,7 +100,7 @@ export class Hire extends Component {
 		&postalcode=${this.state.address.postalcode}&format=json`;
 
 		fetch(url, {
-			method: "POST",
+			method: "GET",
 		})
 			.then((response) => {
 				if (response.ok) {
@@ -114,8 +114,8 @@ export class Hire extends Component {
 					this.setState({ coords: [data[0].lat, data[0].lon] });
 				}
 			).catch((error) => {
-				alert("Error in your input; unable to find the position");
-			});;
+				alert("Error in your input; unable to find the position" , error);
+			});
 	}
 
 	render() {
@@ -184,7 +184,7 @@ export class Hire extends Component {
 							</Col>
 						</Row>
 					</Form>
-					<Map category={this.state.category} />
+					<Map category={this.state.category} coordinates={this.state.coords}/>
 					<Row className='hire-services'>
 						<h1>Available services</h1>
 						<h5>{this.props.services.services.length} services available. Refine your search.</h5>
