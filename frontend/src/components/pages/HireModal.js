@@ -212,6 +212,7 @@ const HireModal = ({ service, onHide, onSubmit }) => {
 								<Form.Label>Upload Photos (optional)</Form.Label>
 								<Form.Control
 									type="file"
+									multiple="multiple"
 									accept="image/*"
 									onChange={handlePhotoChange}
 								/>
@@ -221,7 +222,7 @@ const HireModal = ({ service, onHide, onSubmit }) => {
 							<Form.Group controlId="start_date">
 								<Form.Label>Request Start Date</Form.Label>
 								<Form.Control
-									type="date"
+									type="datetime-local"
 									onChange={handleStartDateChange}
 									required
 								/>
@@ -229,7 +230,7 @@ const HireModal = ({ service, onHide, onSubmit }) => {
 							<Form.Group controlId="end_date">
 								<Form.Label>Request End Date</Form.Label>
 								<Form.Control
-									type="date"
+									type="datetime-local"
 									onChange={handleEndDateChange}
 									required
 								/>
