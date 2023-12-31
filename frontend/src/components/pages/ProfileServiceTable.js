@@ -22,19 +22,19 @@ const ProfileServiceTable = ({ services }) => {
 		// TODO: Handle comments
 		console.log('Deleting service with ID: ', service);
 		setModalVisibility(prevState => ({
-			...prevState,
+			...prevState.modalVisibility,
 			[service.id]: true, // Set modal visibility for the clicked row's service ID to true
 		}));
 	};
 
-	const onDelete = (service) => {
+	const onDelete = (serviceId) => {
 		// TODO: Handle comments
-		console.log('Deleting service with ID: ', service);
+		console.log('Deleting service with ID: ', serviceId);
 		setLoading(true);
-		dispatch(deleteService(service.id));
+		dispatch(deleteService(serviceId));
 		setModalVisibility(prevState => ({
-			...prevState,
-			[service.id]: false, // Set modal visibility for the clicked row's service ID to true
+			...prevState.modalVisibility,
+			[serviceId]: false, // Set modal visibility for the clicked row's service ID to true
 		}));
 		setTimeout(() => { setLoading(false) }, 500); // Loading timeout
 	};
@@ -64,7 +64,7 @@ const ProfileServiceTable = ({ services }) => {
 									<DeleteConfirmationModal
 										show={modalVisibility[service.id] || false}
 										onHide={() => setModalVisibility(prevState => ({
-											...prevState,
+											...prevState.modalVisibility,
 											[service.id]: false,
 										}))}
 										onDelete={() => onDelete(service.id)}
@@ -79,7 +79,7 @@ const ProfileServiceTable = ({ services }) => {
 						))
 					) : (
 						<tr>
-							<td>No hay servicios contratados.</td>
+							<td>No hay servicios publicados.</td>
 						</tr>
 					)}
 				</tbody>
