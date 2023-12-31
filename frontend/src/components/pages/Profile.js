@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 // Layout
 import Nav from '../layout/Nav';
-import Footer from '../layout/Footer';
-import ServisSpinner from '../utils/ServisSpinner';
 // Bootstrap
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -49,27 +47,20 @@ export class Profile extends Component {
 							<p>Apellido: {this.props.auth.user.last_name}</p>
 							<p>Correo: {this.props.auth.user.email}</p>
 							<p>Telefono: {this.props.auth.user.phone}</p>
-							<div>
-								<Button size="lg" variant="outline-secondary">Ofrecer Servicio</Button>
-								<Button size="lg" variant="outline-secondary">Contratar Servicio</Button>
-							</div>
+
 						</Col>
 						<Col xs={4} md={6} lg={9} className='profile-services'>
 							<Row >
-								<h2>Servicios contratados</h2>
-								<ProfileContractTable contracts={this.props.contracts.contracts} />
-							</Row>
-							<Row >
-								<h2>Servicios ofrecidos</h2>
+								<h2>Mis servicios</h2>
 								<ProfileServiceTable services={this.props.services.services} />
 							</Row>
 							<Row >
-								<h2>Pedidos</h2>
+								<h2>Contratados</h2>
+								<ProfileContractTable contracts={this.props.contracts.contracts} />
 							</Row>
 						</Col>
 					</Row>
 				</Container>
-				{/* <Footer /> */}
 			</div >
 		)
 	}

@@ -1,30 +1,102 @@
-import React from 'react';
+import React, { useState } from 'react';
 // Bootstrap
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+// Icons
+import { MdOutlineDeleteForever } from "react-icons/md";
+// Actions
+import { deleteService } from '../../redux/actions/services';
 // Redux
-import { connect } from 'react-redux';
+import { connect, useSelector, useDispatch } from 'react-redux';
+// Components
+import DeleteConfirmationModal from '../utils/DeleteConfirmationModal';
 
 const ProfileServiceTable = ({ services }) => {
+	const { auth } = useSelector(state => state);
+	const [modalVisibility, setModalVisibility] = useState({});
+	const [loading, setLoading] = useState(false);
+	const dispatch = useDispatch();
+
+	const handleDeleteClick = (service) => {
+		// TODO: Handle comments
+		console.log('Deleting service with ID: ', service);
+		setModalVisibility(prevState => ({
+			...prevState,
+			[service.id]: true, // Set modal visibility for the clicked row's service ID to true
+		}));
+	};
+
+	const onDelete = (service) => {
+		// TODO: Handle comments
+		console.log('Deleting service with ID: ', service);
+		setLoading(true);
+		dispatch(deleteService(service.id));
+		setModalVisibility(prevState => ({
+			...prevState,
+			[service.id]: false, // Set modal visibility for the clicked row's service ID to true
+		}));
+		setTimeout(() => { setLoading(false) }, 500); // Loading timeout
+	};
+
 	return (
-		<Table responsive>
-			{services.length > 0 ? (
+		<Container>
+			<Table responsive>
 				<thead>
 					<tr>
-						<th>Servicio</th>
 						<th>Categoría</th>
-						<th>Creado</th>
+						<th>Detalle</th>
+						<th>Precio</th>
+						<th>Acciones</th>
 					</tr>
 				</thead>
-			) : (
-				<thead>
-					<tr>
-						<th>No hay servicios ofrecidos.</th>
-					</tr>
-				</thead>
-			)}
-		</Table>
+				<tbody>
+					{services.length > 0 ? (
+						services.filter(service => service.provider === auth.user.id).map((service, id) => (
+							<tr key={service.id}>
+								<td>{service.subcategory.name} ({service.subcategory.category})</td>
+								<td>{service.description}</td>
+								<td>${service.hourly_price} / ${service.full_day_price}</td>
+								<td>
+									<Button size="sm" variant="outline-danger" onClick={() => handleDeleteClick(service)}>
+										<MdOutlineDeleteForever />
+									</Button>
+									<DeleteConfirmationModal
+										show={modalVisibility[service.id] || false}
+										onHide={() => setModalVisibility(prevState => ({
+											...prevState,
+											[service.id]: false,
+										}))}
+										onDelete={() => onDelete(service.id)}
+										toBeDeleted={[
+											{ name: 'Service ID', value: service.id },
+											{ name: 'Type', value: service.subcategory['name'] + ' (' + service.subcategory['category'] + ')' },
+											{ name: 'Description', value: service.description },
+										]}
+									/>
+								</td>
+							</tr>
+						))
+					) : (
+						<tr>
+							<td>No hay servicios contratados.</td>
+						</tr>
+					)}
+				</tbody>
+				<tfoot>
+					<div>
+						<Button size="sm" variant="outline-secondary">Nuevo Servicio</Button>
+					</div>
+				</tfoot>
+			</Table>
+		</Container>
 	);
+}
+
+const mapStateToProps = state => {
+	return {
+		auth: state.auth
+	};
 };
 
-export default connect()(ProfileServiceTable);
+export default connect(mapStateToProps, null)(ProfileServiceTable);
