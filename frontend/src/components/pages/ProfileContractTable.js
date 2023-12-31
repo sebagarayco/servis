@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 // Bootstrap
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
@@ -13,6 +14,7 @@ const ProfileContractTable = ({ contracts }) => {
 	const { auth } = useSelector(state => state);
 	const [showModal, setShowModal] = useState(false);
 	const [selectedContract, setSelectedContract] = useState(null);
+	const navigate = useNavigate();
 
 	const handleEdit = (contract) => {
 		// Muestra el modal cuando se hace clic en "Editar"
@@ -23,6 +25,11 @@ const ProfileContractTable = ({ contracts }) => {
 	const handleCloseModal = () => {
 		// Cierra el modal
 		setShowModal(false);
+	};
+
+	const handleNewServiceClick = () => {
+		// Redirect to "/hire" when the button is clicked
+		navigate('/hire');
 	};
 
 	return (
@@ -67,13 +74,15 @@ const ProfileContractTable = ({ contracts }) => {
 						))
 					) : (
 						<tr>
-							<td>No hay servicios contratados.</td>
+							<td colSpan="4" className="center-content">No hay servicios contratados.</td>
 						</tr>
 					)}
 				</tbody>
 				<tfoot>
 					<div>
-						<Button size="sm" variant="outline-secondary">Contratar Servicio</Button>
+						<Button size="sm" variant="outline-secondary" onClick={handleNewServiceClick}>
+							Contratar Servicio
+						</Button>
 					</div>
 				</tfoot>
 			</Table>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 // Bootstrap
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
@@ -16,7 +17,9 @@ const ProfileServiceTable = ({ services }) => {
 	const { auth } = useSelector(state => state);
 	const [modalVisibility, setModalVisibility] = useState({});
 	const [loading, setLoading] = useState(false);
+
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const handleDeleteClick = (service) => {
 		// TODO: Handle comments
@@ -37,6 +40,11 @@ const ProfileServiceTable = ({ services }) => {
 			[serviceId]: false, // Set modal visibility for the clicked row's service ID to true
 		}));
 		setTimeout(() => { setLoading(false) }, 500); // Loading timeout
+	};
+
+	const handleNewServiceClick = () => {
+		// Redirect to "/offer" when the button is clicked
+		navigate('/offer');
 	};
 
 	return (
@@ -79,13 +87,15 @@ const ProfileServiceTable = ({ services }) => {
 						))
 					) : (
 						<tr>
-							<td>No hay servicios publicados.</td>
+							<td colSpan="4" className="center-content">No hay servicios publicados.</td>
 						</tr>
 					)}
 				</tbody>
 				<tfoot>
 					<div>
-						<Button size="sm" variant="outline-secondary">Nuevo Servicio</Button>
+						<Button size="sm" variant="outline-secondary" onClick={handleNewServiceClick}>
+							Nuevo Servicio
+						</Button>
 					</div>
 				</tfoot>
 			</Table>
