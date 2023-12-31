@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { returnErrors } from './messages';
 import { tokenConfig } from './auth';
+import { toast } from "react-toastify";
 import { GET_CONTRACTS, CREATE_CONTRACT, DELETE_CONTRACT} from './types';
 
 // GET CONTRACTS
@@ -19,9 +20,9 @@ export const getContracts = () => (dispatch, getState) => {
 };
 
 // CREATE CONTRACT
-export const createContract = () => (dispatch, getState) => {
+export const createContract = (payload) => (dispatch) => {
 	axios
-		.post('/api/contracts/', tokenConfig(getState))
+		.post('/api/contracts/', payload)
 		.then((res) => {
 			// TODO: Handle comments
 			console.log('Pase por createContracts.js', res.data)
@@ -29,6 +30,7 @@ export const createContract = () => (dispatch, getState) => {
 				type: CREATE_CONTRACT,
 				payload: res.data,
 			});
+			toast.success("Contract sent!", { autoClose: 2000 });
 		})
 		.catch((err) => dispatch(returnErrors(err.response.data, err.response.status)));
 };

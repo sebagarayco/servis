@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // Redux
-import { useSelector } from 'react-redux';
+import { connect, useSelector, useDispatch } from 'react-redux'
 import { createContract } from '../../redux/actions/contracts';
 // Bootstrap
 import { Row, Col, Button, Form } from "react-bootstrap";
@@ -15,6 +15,7 @@ const HireServiceList = ({ services }) => {
 	const { auth } = useSelector(state => state);
 	const [selectedService, setSelectedService] = useState(null);
 	const [showModal, setShowModal] = useState(false);
+	const dispatch = useDispatch();
 
 	const handleOpenModal = (service) => {
 		setSelectedService(service);
@@ -27,7 +28,19 @@ const HireServiceList = ({ services }) => {
 	};
 
 	const handleHireSubmit = (hireData) => {
-		// Perform the hiring logic here, using the selectedService and hire data
+		// Assuming hireData contains amount, start date, and end date
+		const { budget, startDate, endDate, consumer, comments, provider } = hireData;
+
+		// Dispatch the createContract action with the necessary parameters
+		dispatch(createContract({
+			amount: budget,
+			comments: comments,
+			consumer: consumer.id,
+			start_date: startDate,
+			end_date: endDate,
+			provider: provider.id,
+			service: selectedService.id,
+		}));
 		console.log('Hiring:', selectedService, 'Hire Data:', hireData);
 		handleCloseModal();
 	};
@@ -84,4 +97,5 @@ const HireServiceList = ({ services }) => {
 	);
 };
 
-export default HireServiceList;
+//export default HireServiceList;
+export default connect()(HireServiceList);

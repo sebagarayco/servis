@@ -6,9 +6,6 @@ import { connect } from 'react-redux';
 // Pages
 import Map from './Map';
 import HireServiceList from './HireServiceList';
-// Utils
-import TimestampConverter from '../utils/TimestampConverter';
-import DeleteConfirmationModal from '../utils/DeleteConfirmationModal';
 // Actions
 import { getCategories } from '../../redux/actions/categories';
 import { getServices } from '../../redux/actions/services';
@@ -18,7 +15,6 @@ import { Container, Row, Col, Form, InputGroup, Button, Table } from 'react-boot
 import { MdHomeRepairService } from "react-icons/md";
 import { MdOutlineCleaningServices } from "react-icons/md";
 import { MdLocationPin } from "react-icons/md";
-import { FaPencilAlt } from "react-icons/fa";
 
 export class Hire extends Component {
 	constructor(props) {

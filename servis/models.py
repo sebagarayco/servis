@@ -69,7 +69,7 @@ class Contract(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
     status = models.CharField(
-        choices=status, default='In-Progress', max_length=25)
+        choices=status, default='On-hold', max_length=25)
     consumer = models.ForeignKey(
         ServisUser, default=None, on_delete=models.CASCADE, related_name='hire_consumer')
     provider = models.ForeignKey(
