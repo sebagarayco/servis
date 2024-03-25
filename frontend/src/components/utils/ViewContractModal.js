@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
-const EditContractModal = ({ contract, show, handleClose, saveEditedContract }) => {
+const ViewContractModal = ({ contract, show, handleClose, saveEditedContract }) => {
 	const [editedData, setEditedData] = useState({
 		status: contract.status,
 		comments: contract.comments,
@@ -34,7 +34,7 @@ const EditContractModal = ({ contract, show, handleClose, saveEditedContract }) 
 	return (
 		<Modal show={show} onHide={handleClose}>
 			<Modal.Header closeButton>
-				<Modal.Title>Editar Contrato - ID: #{contract.id}</Modal.Title>
+				<Modal.Title>Servicio - ID Contrato: #{editedData.id}</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
 				<Form>
@@ -53,7 +53,44 @@ const EditContractModal = ({ contract, show, handleClose, saveEditedContract }) 
 							Completed: El proveedor finalizó el trabajo<br />
 						</Form.Text>
 					</Form.Group>
+					<br />
+					<Form.Group>
+						<Form.Label>Detalle:</Form.Label>
+						<Form.Control
+							type="text"
+							disabled
+							isInvalid={!!errors.comments}
+							value={editedData.comments}
+							onChange={(e) => setEditedData({ ...editedData, comments: e.target.value })}
+						/>
+						<Form.Control.Feedback type="invalid">
+							{errors.comments}
+						</Form.Control.Feedback>
+					</Form.Group>
+					<br />
+					<Form.Group>
+						<Form.Label>Precio Acordado:</Form.Label>
+						<Form.Control
+							type="text"
+							disabled
+							isInvalid={!!errors.amount}
+							value={editedData.amount}
+							onChange={(e) => setEditedData({ ...editedData, amount: e.target.value })}
+						/>
+						<Form.Control.Feedback type="invalid">
+							{errors.amount}
+						</Form.Control.Feedback>
+					</Form.Group>
 				</Form>
+				<hr />
+				<h4>Comentarios</h4>
+				<Form.Group>
+					<Form.Control
+						as="textarea"
+						rows={3}
+						onChange={(e) => setEditedData({ ...editedData, comments: e.target.value })}
+					/>
+				</Form.Group>
 			</Modal.Body>
 			<Modal.Footer>
 				<Button variant="secondary" onClick={handleClose}>
@@ -67,4 +104,4 @@ const EditContractModal = ({ contract, show, handleClose, saveEditedContract }) 
 	);
 };
 
-export default EditContractModal;
+export default ViewContractModal;

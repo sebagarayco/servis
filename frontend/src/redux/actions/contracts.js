@@ -36,7 +36,7 @@ export const createContract = (payload) => (dispatch) => {
 };
 
 // DELETE CONTRACT
-export const getSubcategories = (id) => (dispatch, getState) => {
+export const deleteContract = (id) => (dispatch, getState) => {
 	axios
 		.delete(`/api/contract/${id}`, tokenConfig(getState))
 		.then((res) => {
@@ -49,3 +49,5 @@ export const getSubcategories = (id) => (dispatch, getState) => {
 		})
 		.catch((err) => dispatch(returnErrors(err.response.data, err.response.status)));
 };
+
+// UPDATE CONTRACT
