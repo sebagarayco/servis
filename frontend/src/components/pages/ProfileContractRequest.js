@@ -4,26 +4,37 @@ import { useNavigate } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import { FaPencilAlt } from "react-icons/fa";
 import { HiOutlineInformationCircle } from "react-icons/hi";
 // Redux
 import { connect, useSelector } from 'react-redux';
+import ViewContractModal from '../utils/ViewContractModal';
 import EditContractModal from '../utils/EditContractModal';
 
-const ProfileContractTable = ({ contracts }) => {
+const ProfileContractRequest = ({ contracts }) => {
 	const { auth } = useSelector(state => state);
-	const [showModal, setShowModal] = useState(false);
+	const [showViewModal, setShowViewModal] = useState(false);
+	const [showEditModal, setShowEditModal] = useState(false);
+	const [selectedContract, setSelectedContract] = useState(null);
 	const [selectedEditContract, setSelectedEditContract] = useState(null);
 	const navigate = useNavigate();
 
 	const handleEdit = (contract) => {
 		// Muestra el modal cuando se hace clic en "Editar"
 		setSelectedEditContract(contract);
-		setShowModal(true);
+		setShowEditModal(true);
+	};
+
+	const handleInfo = (contract) => {
+		// Muestra el modal cuando se hace clic en "Info"
+		setSelectedContract(contract);
+		setShowViewModal(true);
 	};
 
 	const handleCloseModal = () => {
 		// Cierra el modal
-		setShowModal(false);
+		setShowEditModal(false);
+		setShowViewModal(false);
 	};
 
 	const handleNewServiceClick = () => {
@@ -38,13 +49,14 @@ const ProfileContractTable = ({ contracts }) => {
 					<tr>
 						<th>Estado</th>
 						<th>Detalle</th>
-						<th>Precio Acordado</th>
+						<th>Servicio</th>
+						<th>Precio</th>
 						<th>Acciones</th>
 					</tr>
 				</thead>
 				<tbody>
 					{contracts.length > 0 ? (
-						contracts.filter(contract => contract.consumer === auth.user.id).map((contract, id) => (
+						contracts.filter(contract => contract.provider === auth.user.id).map((contract, id) => (
 							<tr key={contract.id}>
 								<td>
 									<Button
@@ -63,9 +75,13 @@ const ProfileContractTable = ({ contracts }) => {
 									</Button>
 								</td>
 								<td>{contract.comments}</td>
-								<td>${contract.amount}</td>
+								<td>{contract.service.description}</td>
+								<td>$ {contract.amount}</td>
 								<td>
-									<Button size="sm" variant="outline-info" onClick={() => handleEdit(contract)}>
+									<Button size="sm" variant="outline-secondary" onClick={() => handleEdit(contract)}>
+										<FaPencilAlt />
+									</Button>
+									<Button size="sm" variant="outline-info" onClick={() => handleInfo(contract)}>
 										<HiOutlineInformationCircle />
 									</Button>
 								</td>
@@ -77,20 +93,20 @@ const ProfileContractTable = ({ contracts }) => {
 						</tr>
 					)}
 				</tbody>
-				<tfoot>
-					<div>
-						<Button size="sm" variant="outline-secondary" onClick={handleNewServiceClick}>
-							Contratar Servicio
-						</Button>
-					</div>
-				</tfoot>
 			</Table>
 
 			{/* Renderiza el componente Modal */}
+			{selectedContract && (
+				<ViewContractModal
+					contract={selectedContract}
+					show={showViewModal}
+					handleClose={handleCloseModal}
+				/>
+			)}
 			{selectedEditContract && (
 				<EditContractModal
 					contract={selectedEditContract}
-					show={showModal}
+					show={showEditModal}
 					handleClose={handleCloseModal}
 				/>
 			)}
@@ -98,4 +114,4 @@ const ProfileContractTable = ({ contracts }) => {
 	);
 };
 
-export default connect()(ProfileContractTable);
+export default connect()(ProfileContractRequest);
