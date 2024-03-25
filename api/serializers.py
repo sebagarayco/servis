@@ -5,7 +5,7 @@ from rest_framework_gis.serializers import GeoFeatureModelSerializer, GeometrySe
 from django.contrib.gis.geos import Point
 from django.contrib.auth import authenticate
 # Models
-from servis.models import Category, Subcategory, Service, Contract
+from servis.models import Category, Subcategory, Service, Contract, ContractComments
 from users.models import ServisUser, Location
 
 
@@ -161,13 +161,26 @@ class ServiceSerializer(ModelSerializer):
         return UserSerializer(user).data
 
 
+class ContractCommentsSerializer(ModelSerializer):
+    """Contract Comments Serializer
+
+    Args:
+        ModelSerializer (_type_): Contract Comments Serializer
+    """
+
+    class Meta:
+        model = ContractComments
+        fields = ('comment', 'created', 'user')
+
 class ContractSerializer(ModelSerializer):
     """Contract Serializer
 
     Args:
         ModelSerializer (_type_): Contract Serializer
     """
+    contract_comments = ContractCommentsSerializer(many=True, read_only=True)
 
     class Meta:
         model = Contract
-        fields = '__all__'
+        fields = ('id', 'status', 'is_active', 'description',
+                  'amount', 'service', 'contract_comments', 'created', 'updated')

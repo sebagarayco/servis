@@ -65,7 +65,7 @@ class Contract(models.Model):
         ('Rejected', 'Rejected'),
     ]
     is_active = models.BooleanField(default=True)
-    comments = models.CharField(max_length=500, default=None)
+    description = models.CharField(max_length=500, default=None)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
     status = models.CharField(
@@ -81,7 +81,21 @@ class Contract(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.consumer} - {self.provider} Contract"
+        return f"{self.consumer} -> {self.provider} || {self.description}"
+
+
+class ContractComments(models.Model):
+    contract = models.ForeignKey(
+        Contract, on_delete=models.CASCADE, related_name='contract_comments')
+    user = models.ForeignKey(ServisUser, on_delete=models.CASCADE)
+    comment = models.CharField(max_length=500)
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = "Contract Comments"
+
+    def __str__(self):
+        return f"{self.user} - {self.contract} Comment"
 
 class Transaction(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
