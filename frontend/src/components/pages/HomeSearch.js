@@ -19,16 +19,18 @@ import { MdHomeRepairService } from "react-icons/md";
 import { MdOutlineCleaningServices } from "react-icons/md";
 import { MdLocationPin } from "react-icons/md";
 import HomeStats from './HomeStats';
+import ServisSpinner from '../utils/ServisSpinner';
 
 export class HomeSearch extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			loading: false,
 			showModal: false,
-			category: '',
+			category: 'showAll',
 			subcategory: '',
 			name: "",
-			coords: [-41.13, -71.3],
+			coords: [],
 			address: {
 				street: "",
 				city: "",
@@ -43,6 +45,7 @@ export class HomeSearch extends Component {
 		this.setState({
 			[e.target.name]: e.target.value,
 		});
+		// TODO: Handle comments
 		console.log('Selected ' + e.target.name + ' value: ' + e.target.value);
 	}
 
@@ -54,12 +57,15 @@ export class HomeSearch extends Component {
 	onChange = (e) => {
 		const { address } = this.state;
 		address[e.target.name] = e.target.value;
+		// TODO: Handle comments
 		console.log(address)
 		this.setState({ address });
 	};
 
 	submitHandler(e) {
 		e.preventDefault();
+		// TODO: Handle comments
+		this.setState({ loading: true }); // Start loading
 		console.log('SUBMIT HANDLER: ', e);
 
 		let url = `https://nominatim.openstreetmap.org/search?
@@ -70,7 +76,7 @@ export class HomeSearch extends Component {
 		&postalcode=${this.state.address.postalcode}&format=json`;
 
 		fetch(url, {
-			method: "POST",
+			method: "GET",
 		})
 			.then((response) => {
 				if (response.ok) {
@@ -82,9 +88,11 @@ export class HomeSearch extends Component {
 				(data) => {
 					this.setState({ name: data[0].display_name });
 					this.setState({ coords: [data[0].lat, data[0].lon] });
+					this.setState({ loading: false }); // Stop loading
 				}
 			).catch((error) => {
 				alert("Error in your input; unable to find the position");
+				this.setState({ loading: false }); // Stop loading
 			});;
 	}
 
@@ -112,8 +120,8 @@ export class HomeSearch extends Component {
 							<Form.Label htmlFor="basic-url">Category</Form.Label>
 							<InputGroup size="lg" className="mb-3">
 								<InputGroup.Text id="basic-addon1"><MdHomeRepairService /></InputGroup.Text>
-								<Form.Select name='category' defaultValue={'default'} onChange={this.handleInputChange}>
-									<option value="default" disabled>--- Select category ---</option>
+								<Form.Select name='category' defaultValue={'showAll'} onChange={this.handleInputChange}>
+									<option value="showAll">All categories</option>
 									{this.props.categories.categories.map((category, id) => (
 										<option
 											key={id}
@@ -166,7 +174,11 @@ export class HomeSearch extends Component {
 						</Col>
 					</Row>
 				</Form>
-				<Map coords={this.state.coords} category={this.state.category} />
+				{this.state.loading ?
+					<ServisSpinner />
+					:
+					<Map category={this.state.category} coordinates={this.state.coords} />
+				}
 			</Container >
 		)
 	}

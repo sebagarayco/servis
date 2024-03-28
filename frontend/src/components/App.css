@@ -1,6 +1,18 @@
 /* DEBUG */
-* {
+/* * {
 	outline: 1px solid red;
+} */
+
+/* Utils */
+.loading-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+
+.loading-container h4 {
+	color: black
 }
 
 .Toastify {
@@ -78,6 +90,7 @@
 
 .home-container .btn-search {
 	width: 8rem;
+	font-size: 1.25rem;
 }
 
 .home-container img {
@@ -109,6 +122,34 @@
 	padding: 30px;
 	border: 2px solid #f2f2f2;
 	border-radius: 20px;
+}
+
+.homeservices-subcontainer .g-4 {
+	margin-top: 1.25rem;
+}
+
+.homeservices-image-container {
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	border-radius: 20px;
+	box-shadow: 0px 7px 20px rgba(203, 200, 200, 0.656);
+}
+
+.homeservices-link {
+	text-decoration: none;
+	color: inherit;
+}
+
+.homeservices-link:hover {
+	text-decoration: none;
+}
+
+.homeservices-image-container:hover {
+	background-color: #ffc107;
 }
 
 .home-carousel {
@@ -149,11 +190,12 @@
 }
 
 .leaflet-popup-content .btn {
-	border-radius: 20px;
+	border-radius: 15px;
 	width: 100%;
+	font-size: 1.25rem;
 	border-color: #ffc107;
 	background-color: #ffc107;
-	height: 2.5rem;
+	height: 3rem;
 	color: #000;
 }
 
@@ -170,6 +212,8 @@
 
 .offer-form .btn {
 	margin-top: 2rem;
+	height: 4rem;
+	font-size: 1.5rem;
 }
 
 .offer-services {
@@ -191,6 +235,39 @@
 
 .offer-services-table {
 	font-size: 1.25rem;
+}
+
+
+table {
+	border-collapse: separate;
+	border-spacing: 0 10px;
+	border: 1px solid #ddd;
+	border-radius: 20px;
+	padding: 10px;
+	width: 100%;
+}
+
+th,
+td {
+	padding: 10px;
+	text-align: center;
+}
+
+
+tbody tr {
+	border: 5px solid lightgrey;
+}
+
+tbody tr th:first-child,
+tbody tr td:first-child {
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+
+tbody tr th:last-child,
+tbody tr td:last-child {
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
 }
 
 /* Hire */
@@ -252,6 +329,24 @@
 	box-shadow: 0px 7px 20px rgba(203, 200, 200, 0.656);
 }
 
+.hire-row .btn {
+	height: 5rem;
+	width: 100%;
+	border-radius: 20px;
+	font-size: 1.25rem;
+}
+
+.hire-row .mb-3 {
+	height: 4rem;
+}
+
+.hire-modal .form-label {
+	font-size: 1.25rem;
+}
+
+.hire-modal .form-control {
+	font-size: 1.25rem;
+}
 
 /* Login & Register*/
 .auth-main {
@@ -264,8 +359,9 @@
 	background-size: cover;
 }
 
-.auth-sub-main {
-	width: 420px;
+.auth-register-sub-main,
+.auth-login-sub-main {
+	width: 720px;
 	padding: 60px;
 	margin: 0 auto;
 	border-radius: 40px;
@@ -273,22 +369,29 @@
 	background-color: #ffe188
 }
 
-.auth-sub-main h1 {
+.auth-login-sub-main {
+	width: 420px !important;
+}
+
+.auth-main h1 {
 	text-align: center;
 }
 
-.auth-sub-main .form-control {
+.auth-login-sub-main .form-control,
+.auth-register-sub-main .form-control {
 	border-radius: 20px;
 	height: 4rem;
 	font-size: 1.25rem;
 	padding-left: 20px;
 }
 
-.auth-sub-main .form-group {
+.auth-login-sub-main .form-group,
+.auth-register-sub-main .form-group {
 	margin-top: 2rem;
 }
 
-.auth-sub-main .form-group .btn {
+.auth-login-sub-main .form-group .btn,
+.auth-register-sub-main .form-group .btn {
 	border-radius: 20px;
 	height: 4rem;
 	width: 100%;
@@ -303,9 +406,29 @@
 	margin-bottom: 2rem;
 }
 
+.auth-form {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+
+.auth-sub-main-right,
+.auth-sub-main-left {
+	flex: 1;
+	width: 100%;
+	margin-bottom: 15px;
+}
+
+.auth-separator {
+	width: 2px;
+	background-color: #29282829;
+	margin: 20px;
+	align-self: stretch;
+}
+
 /* Profile */
 .profile div {
-	margin-bottom: 3rem;
+	margin-bottom: 1rem;
 }
 
 .profile-image img {

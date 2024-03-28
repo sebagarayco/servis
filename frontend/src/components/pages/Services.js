@@ -1,13 +1,19 @@
 import React, { Component } from 'react'
 import Nav from '../layout/Nav';
-import { Footer } from '../layout/Footer';
+import ServisSpinner from '../utils/ServisSpinner';
+import { Row, Col, Container } from 'react-bootstrap';
+
 
 export class Services extends Component {
 	render() {
 		return (
 			<div>
 				<Nav />
-				<h1>Services</h1>
+				<Row>
+					<Col>
+
+					</Col>
+				</Row>
 			</div>
 		)
 	}

@@ -30,14 +30,14 @@ export class Login extends Component {
 		const { username, password } = this.state;
 		return (
 			<div className='auth-main'>
-				<div className='auth-sub-main' >
+				<div className='auth-login-sub-main' >
 					<div>
 						<img className='auth-logo' src="static/handshake.png" />
 					</div>
 					<h1>Welcome to Servis!</h1>
 					<form onSubmit={this.onSubmit}>
 						<div className="form-group">
-							<input type="text" className="form-control" name="username" onChange={this.onChange} value={username} placeholder='Username' />
+							<input type="text" className="form-control" name="username" onChange={this.onChange} value={username} placeholder='Username' autoFocus />
 						</div>
 						<div className="form-group">
 							<input type="password" className="form-control" name="password" onChange={this.onChange} value={password} placeholder='Password' />

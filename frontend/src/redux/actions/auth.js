@@ -15,6 +15,7 @@ import {
 
 // TOKEN VALIDATION AND USER LOAD
 export const loadUser = () => (dispatch, getState) => {
+	// TODO: Handle comments
 	console.log('Pase por ACTION loadUser')
 	dispatch({ type: USER_LOADING });
 
@@ -37,6 +38,7 @@ export const loadUser = () => (dispatch, getState) => {
 
 // USER LOGIN
 export const login = (username, password) => (dispatch) => {
+	// TODO: Handle comments
 	console.log('Pase por ACTION login')
 
 	const config = {
@@ -54,6 +56,7 @@ export const login = (username, password) => (dispatch) => {
 				type: LOGIN_SUCCESS,
 				payload: res.data,
 			});
+			// TODO: Handle comments
 			console.log('Pase por ACTION login SUCCESS', res.data)
 			toast.success("Succesfully logged in. Welcome " + username + "!");
 		})
@@ -67,7 +70,7 @@ export const login = (username, password) => (dispatch) => {
 };
 
 // USER REGISTRATION
-export const register = ({ username, password, email, first_name, last_name, government_id }) => (dispatch) => {
+export const register = ({ username, password, email, first_name, last_name, government_id, location }) => (dispatch) => {
 	// Headers
 	const config = {
 		headers: {
@@ -75,7 +78,7 @@ export const register = ({ username, password, email, first_name, last_name, gov
 		},
 	};
 
-	const body = JSON.stringify({ username, email, password, first_name, last_name, government_id });
+	const body = JSON.stringify({ username, email, password, first_name, last_name, government_id, location });
 
 	axios
 		.post('/api/auth/register', body, config)
@@ -91,7 +94,7 @@ export const register = ({ username, password, email, first_name, last_name, gov
 			dispatch({
 				type: REGISTER_FAIL,
 			});
-			toast.error("Register error. Contact support.");
+			toast.error("Register error. Contact support." + JSON.stringify(err.response.data));
 		});
 };
 
@@ -113,6 +116,7 @@ export const logout = () => (dispatch, getState) => {
 export const tokenConfig = (getState) => {
 	// OBTENER TOKEN DE STATE
 	const token = getState().auth.token;
+	// TODO: Handle comments
 	console.log('Pase por ACTION tokenConfig', token)
 
 	// Headers

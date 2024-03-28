@@ -4,6 +4,7 @@ import Row from 'react-bootstrap/Row';
 
 export class HomeStats extends Component {
 	render() {
+		// TODO: Handle comments
 		console.log('Pase por HomeStats: ', this.props)
 		return (
 			<Row>

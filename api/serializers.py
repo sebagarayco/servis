@@ -1,10 +1,12 @@
+from .utils import get_latitude_longitude
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 from rest_framework_gis.serializers import GeoFeatureModelSerializer, GeometrySerializerMethodField
-
+from django.contrib.gis.geos import Point
 from django.contrib.auth import authenticate
-from servis.models import Category, Subcategory, Service
-from users.models import ServisUser
+# Models
+from servis.models import Category, Subcategory, Service, Contract, ContractComments
+from users.models import ServisUser, Location
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -16,22 +18,25 @@ class RegisterSerializer(serializers.ModelSerializer):
     Returns:
         _type_: _description_
     """
+
     class Meta:
         model = ServisUser
-        fields = ('id', 'username', 'email',
+        fields = ('id', 'username', 'email', 'location', 'phone',
                   'password', 'first_name', 'last_name', 'government_id')
         extra_kwargs = {
             'password': {'write_only': True}
         }
 
     def create(self, validated_data):
-        print('Register serializer: ', validated_data)
+        # TODO: Handle comments
+        print('RegisterSerializer: ', validated_data)
         user = ServisUser.objects.create_user(username=validated_data['username'],
-                                        email=validated_data['email'],
-                                        password=validated_data['password'],
-                                        first_name=validated_data['first_name'],
-                                        last_name=validated_data['last_name'],
-                                        government_id=validated_data['government_id'])
+                                              email=validated_data['email'],
+                                              password=validated_data['password'],
+                                              first_name=validated_data['first_name'],
+                                              last_name=validated_data['last_name'],
+                                              government_id=validated_data['government_id'],
+                                              location=validated_data['location'])
         return user
 
 
@@ -56,6 +61,7 @@ class LoginSerializer(serializers.Serializer):
             return user
         raise serializers.ValidationError('Incorrect user and password')
 
+
 class UserProfileSerializer(serializers.ModelSerializer):
     """ User Profile Serializer
 
@@ -66,17 +72,26 @@ class UserProfileSerializer(serializers.ModelSerializer):
         _type_: _description_
     """
     services = SerializerMethodField()
-    
+
     class Meta:
         model = ServisUser
-        fields = ('id', 'username', 'email', 'first_name', 'last_name', 
-                'location', 'image', 'role', 'date_joined', 'last_login',
-                'is_active', 'is_staff', 'is_superuser', 'government_id', 'services')
-    
+        fields = ('id', 'username', 'email', 'first_name', 'last_name',
+                  'location', 'image', 'role', 'date_joined', 'last_login',
+                  'is_active', 'is_staff', 'is_superuser', 'government_id', 'services')
+
     def get_services(self, obj):
         services = Service.objects.filter(provider=obj)
         return ServiceSerializer(services, many=True).data
-    
+
+
+class LocationSerializer(GeoFeatureModelSerializer):
+
+    class Meta:
+        model = Location
+        geo_field = 'coordinates'
+        fields = ('id', 'address', 'coordinates', 'created', 'updated',
+                  'city', 'province', 'country', 'zip_code')
+
 
 class UserSerializer(serializers.ModelSerializer):
     """ User Serializer
@@ -87,11 +102,17 @@ class UserSerializer(serializers.ModelSerializer):
     Returns:
         _type_: _description_
     """
+    location = serializers.SerializerMethodField()
 
     class Meta:
         model = ServisUser
         fields = ('id', 'username', 'email', 'location', 'phone',
-                'first_name', 'last_name', 'government_id', 'image', 'role')
+                  'first_name', 'last_name', 'government_id', 'image', 'role')
+
+    def get_location(self, obj):
+        location = Location.objects.get(id=obj.location.id)
+        return LocationSerializer(location).data
+
 
 class SubCategorySerializer(ModelSerializer):
     """ Subcategory Serializer
@@ -129,12 +150,45 @@ class ServiceSerializer(ModelSerializer):
     """
     subcategory = SubCategorySerializer(read_only=True)
     user = SerializerMethodField()
-    
+
     class Meta:
         model = Service
         fields = ('id', 'description', 'provider', 'user', 'subcategory',
-                'hourly_price', 'full_day_price', 'created', 'updated')
-        
+                  'hourly_price', 'full_day_price', 'created', 'updated')
+
     def get_user(self, obj):
         user = ServisUser.objects.get(id=obj.provider.id)
         return UserSerializer(user).data
+
+
+class ContractCommentsSerializer(ModelSerializer):
+    """Contract Comments Serializer
+
+    Args:
+        ModelSerializer (_type_): Contract Comments Serializer
+    """
+
+    class Meta:
+        model = ContractComments
+        fields = ('comment', 'created', 'user')
+
+class ContractSerializer(ModelSerializer):
+    """Contract Serializer
+
+    Args:
+        ModelSerializer (_type_): Contract Serializer
+    """
+    contract_comments = ContractCommentsSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Contract
+        fields = ('id', 'status', 'is_active', 'description', 'consumer', 'provider',
+                  'amount', 'service', 'contract_comments', 'created', 'updated')
+
+    # See obj on GET request and create, update with ID
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        ret['service'] = ServiceSerializer(instance.service).data
+        ret['consumer'] = UserSerializer(instance.consumer).data
+        ret['provider'] = UserSerializer(instance.provider).data
+        return ret

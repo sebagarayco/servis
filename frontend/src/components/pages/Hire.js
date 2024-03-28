@@ -6,9 +6,6 @@ import { connect } from 'react-redux';
 // Pages
 import Map from './Map';
 import HireServiceList from './HireServiceList';
-// Utils
-import TimestampConverter from '../utils/TimestampConverter';
-import DeleteConfirmationModal from '../utils/DeleteConfirmationModal';
 // Actions
 import { getCategories } from '../../redux/actions/categories';
 import { getServices } from '../../redux/actions/services';
@@ -18,7 +15,6 @@ import { Container, Row, Col, Form, InputGroup, Button, Table } from 'react-boot
 import { MdHomeRepairService } from "react-icons/md";
 import { MdOutlineCleaningServices } from "react-icons/md";
 import { MdLocationPin } from "react-icons/md";
-import { FaPencilAlt } from "react-icons/fa";
 
 export class Hire extends Component {
 	constructor(props) {
@@ -26,10 +22,9 @@ export class Hire extends Component {
 		this.state = {
 			showModal: false,
 			showAll: true,
-			category: '',
+			category: 'showAll',
 			subcategory: '',
 			name: "",
-			coords: [-41.13, -71.3],
 			address: {
 				street: "",
 				city: "",
@@ -38,6 +33,15 @@ export class Hire extends Component {
 				postalcode: ""
 			}
 		};
+	};
+
+	handleInputChange = (e) => {
+		if (e.target.value === "showAll") {
+			this.setState({ showAll: true, category: "showAll" });
+		} else {
+			this.setState({ showAll: false, [e.target.name]: e.target.value });
+		}
+		console.log("Selected " + e.target.name + " value: " + e.target.value);
 	};
 
 	handleInputChange = (e) => {
@@ -50,6 +54,7 @@ export class Hire extends Component {
 			this.setState({ showAll: false });
 			this.setState({ [e.target.name]: e.target.value, });
 		}
+		// TODO: Handle comments
 		console.log('Selected ' + e.target.name + ' value: ' + e.target.value);
 	}
 
@@ -60,6 +65,7 @@ export class Hire extends Component {
 	onChange = (e) => {
 		const { address } = this.state;
 		address[e.target.name] = e.target.value;
+		// TODO: Handle comments
 		console.log(address)
 		this.setState({ address });
 	};
@@ -79,6 +85,7 @@ export class Hire extends Component {
 
 	submitHandler(e) {
 		e.preventDefault();
+		// TODO: Handle comments
 		console.log('SUBMIT HANDLER: ', e);
 
 		let url = `https://nominatim.openstreetmap.org/search?
@@ -89,7 +96,7 @@ export class Hire extends Component {
 		&postalcode=${this.state.address.postalcode}&format=json`;
 
 		fetch(url, {
-			method: "POST",
+			method: "GET",
 		})
 			.then((response) => {
 				if (response.ok) {
@@ -103,8 +110,8 @@ export class Hire extends Component {
 					this.setState({ coords: [data[0].lat, data[0].lon] });
 				}
 			).catch((error) => {
-				alert("Error in your input; unable to find the position");
-			});;
+				alert("Error in your input; unable to find the position" , error);
+			});
 	}
 
 	render() {
@@ -119,9 +126,8 @@ export class Hire extends Component {
 								<Form.Label htmlFor="basic-url">Category</Form.Label>
 								<InputGroup size="lg" className="mb-3">
 									<InputGroup.Text id="basic-addon1"><MdHomeRepairService /></InputGroup.Text>
-									<Form.Select name='category' defaultValue={'default'} onChange={this.handleInputChange}>
-										<option value="default" disabled>--- Select category ---</option>
-										<option value="showAll">Show all</option>
+									<Form.Select name='category' defaultValue={'showAll'} onChange={this.handleInputChange}>
+										<option value="showAll">All categories</option>
 										{this.props.categories.categories.map((category, id) => (
 											<option
 												key={id}
@@ -174,7 +180,7 @@ export class Hire extends Component {
 							</Col>
 						</Row>
 					</Form>
-					<Map coords={this.state.coords} category={this.state.category} />
+					<Map category={this.state.category} coordinates={this.state.coords}/>
 					<Row className='hire-services'>
 						<h1>Available services</h1>
 						<h5>{this.props.services.services.length} services available. Refine your search.</h5>

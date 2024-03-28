@@ -22,6 +22,7 @@ export default function (state = initialState, action) {
 				...action.payload,
 			};
 		case DELETE_SERVICE:
+			// TODO: Handle comments
 			console.log('Pase por deleteService.js', action.payload)
 			return {
 				...state,

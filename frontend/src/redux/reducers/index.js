@@ -5,6 +5,7 @@ import messages from "./messages";
 import userdata from "./userdata";
 import categories from "./categories";
 import services from "./services";
+import contracts from "./contracts";
 
 export default combineReducers({
 	auth,
@@ -12,5 +13,6 @@ export default combineReducers({
 	errors,
 	userdata,
 	categories,
-	services
+	services,
+	contracts
 });

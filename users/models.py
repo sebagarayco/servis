@@ -10,9 +10,37 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from multiselectfield import MultiSelectField
 from creditcards.models import CardNumberField, CardExpiryField, SecurityCodeField
-
 from .managers import CustomUserManager
+from api.utils import get_latitude_longitude
 
+class Location(models.Model):
+    """
+    A model which holds information about a particular location
+    """
+    address = models.CharField(max_length=255, default=None, null=True, blank=True)
+    city = models.CharField(max_length=100, default=None, null=True, blank=True)
+    province = models.CharField(max_length=100, default=None, null=True, blank=True)
+    country = models.CharField(max_length=100, default=None, null=True, blank=True)
+    zip_code = models.CharField(max_length=5, default=None, null=True, blank=True)
+    coordinates = models.PointField(geography=True, null=True, blank=True)
+
+    updated = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True) 
+
+    def __str__(self):
+        return "%s, %s" % (self.address, self.city)
+    
+    def save(self, *args, **kwargs):
+        # Check if address-related fields have changed
+        if any([self.address, self.city, self.province, self.zip_code, self.country]):
+            geolocation = get_latitude_longitude(self.address, self.city, self.province, self.zip_code, self.country)
+
+            if geolocation:
+                print('Geolocation: ', geolocation)
+                self.coordinates = f'POINT({geolocation[0]} {geolocation[1]})'
+
+        super(Location, self).save(*args, **kwargs)
+    
 class ServisUser(AbstractBaseUser, PermissionsMixin):
     roles = [ ('Provider', 'Provider'), ('Consumer', 'Consumer'), ]
     
@@ -28,7 +56,7 @@ class ServisUser(AbstractBaseUser, PermissionsMixin):
                             max_choices=2, max_length=15)
     image = models.ImageField(
         default='images/default.jpg', upload_to='images')
-    location = models.PointField(geography=True, null=True, blank=True)
+    location = models.ForeignKey(Location, on_delete=models.RESTRICT, related_name='user_location', default=None, null=True, blank=True)
     phone = models.CharField(max_length=15, default=None, null=True, blank=True)
     cc_number = CardNumberField(default=None, blank=True, null=True)
     cc_expiry = CardExpiryField(default=None, blank=True, null=True)
@@ -55,8 +83,8 @@ def populate_user(sender, instance, created, **kwargs):
         created (_type_): _description_
     """
     if created:
-        if not instance.location:
-            instance.location = Point(random.uniform(-71, -71.5), random.uniform(-41, -42.5))
+        #if not instance.location:
+        #    instance.location = Point(random.uniform(-71, -71.5), random.uniform(-41, -42.5))
         if not instance.phone:
             instance.phone = "+54-11-%s" % (random.randint(1, 9999999))
         if not instance.cc_number:
