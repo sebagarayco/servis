@@ -9,11 +9,15 @@ import { getContracts } from '../../redux/actions/contracts';
 
 export class Nav extends Component {
 
+	componentDidMount() {
+		this.props.getContracts();
+	}
+
 	render() {
 		console.log('Pase por Nav.js');
 		const { isAuthenticated, user } = this.props.auth;
-		// Asumiendo que los contratos están almacenados en state.contracts.contracts
-		const contractsCount = this.props.contracts ? this.props.contracts.length : 0;
+		const contractsCount = this.props.contracts ?
+			this.props.contracts.filter(contract => contract.consumer.id === user.id).length : 0;
 
 		if (!isAuthenticated) {
 			return <Navigate to="/login" />;
@@ -34,8 +38,15 @@ export class Nav extends Component {
 						  </button>
 					  </li>
 				  }
-				  <li className='logged'><Link to="/profile">Profile</Link></li>
-				  <li className='logged'>Welcome, <strong>{user.username}</strong>! {contractsCount > 0 && `(${contractsCount} solicitudes)`}</li>
+					<li className='logged'>
+						<div className="nav-profile">
+							<Link to="/profile">Profile</Link>
+							{contractsCount > 0 && (
+								<span className="nav-badge">{contractsCount}</span>
+							)}
+						</div>
+					</li>
+					<li className='logged'>Welcome, <strong>{user.username}</strong>!</li>
 			  </ul>
 		  </div>
 		);
@@ -50,4 +61,4 @@ const mapStateToProps = (state) => ({
 	contracts: state.contracts.contracts, // Asegúrate de que esto refleje cómo se almacenan tus contratos
 });
 
-export default connect(mapStateToProps, { logout })(Nav);
+export default connect(mapStateToProps, { logout, getContracts })(Nav);

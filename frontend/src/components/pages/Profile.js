@@ -39,16 +39,15 @@ export class Profile extends Component {
 				<Nav />
 				<Container className='profile'>
 					<Row>
-						<Col>
+						<Col className='profile-info'>
 							<div className='profile-image'>
 								<img src={this.props.auth.user.image} />
 							</div>
-							<h3>Información de usuario</h3>
-							<p>Nombre: {this.props.auth.user.first_name}</p>
-							<p>Apellido: {this.props.auth.user.last_name}</p>
-							<p>Correo: {this.props.auth.user.email}</p>
-							<p>Telefono: {this.props.auth.user.phone}</p>
-
+							<hr style={{ width: '90%' }} />
+							<h3>{this.props.auth.user.first_name} {this.props.auth.user.last_name}</h3>
+							<h4>{this.props.auth.user.role}</h4>
+							<h4>📧 {this.props.auth.user.email}</h4>
+							<h4>📞 {this.props.auth.user.phone}</h4>
 						</Col>
 						<Col xs={4} md={6} lg={9} className='profile-services'>
 							<Row >
