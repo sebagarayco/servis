@@ -2,8 +2,14 @@ import React, { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+// Redux
+import { connect, useDispatch } from 'react-redux';
+// Actions
+import { updateContract } from '../../redux/actions/contracts';
 
-const EditContractModal = ({ contract, show, handleClose, saveEditedContract }) => {
+const EditContractModal = ({ contract, show, handleClose }) => {
+	const dispatch = useDispatch();
+
 	const [editedData, setEditedData] = useState({
 		status: contract.status,
 		comments: contract.comments,
@@ -11,25 +17,30 @@ const EditContractModal = ({ contract, show, handleClose, saveEditedContract }) 
 		id: contract.id,
 	});
 
-	const [errors, setErrors] = useState({}); // Nuevo estado para manejar errores
+	const [errors, setErrors] = useState({}); 
 
 	const validateForm = () => {
 		let tempErrors = {};
-		// Aquí puedes añadir todas las validaciones que necesites
 		tempErrors.comments = editedData.comments ? "" : "Este campo es obligatorio.";
 		tempErrors.amount = editedData.amount ? "" : "Este campo es obligatorio.";
-		// Aquí podrías añadir una validación más específica para el monto, por ejemplo, que sea un número
 		setErrors(tempErrors);
-		// Retorna true si el objeto tempErrors no tiene ninguna propiedad, lo que significa que no hay errores
 		return Object.keys(tempErrors).every(x => tempErrors[x] === "");
 	};
 
 	const handleSave = () => {
 		if (validateForm()) {
-			saveEditedContract(editedData); // Suponiendo que saveEditedContract es la acción de Redux para guardar los datos
+			const updatedContractData = {
+				...editedData,
+				service: contract.service.id,
+			};
+			dispatch(updateContract(editedData.id, updatedContractData)); 
 			handleClose();
 		}
 	};
+
+	const stateOptions = ["On-hold", "In-progress", "Completed", "Rejected"].filter(state => state !== contract.status).map(state => (
+		<option key={state} value={state}>{state}</option>
+	));
 
 	return (
 		<Modal show={show} onHide={handleClose}>
@@ -39,19 +50,39 @@ const EditContractModal = ({ contract, show, handleClose, saveEditedContract }) 
 			<Modal.Body>
 				<Form>
 					<Form.Group>
-						<Form.Label>Estado:</Form.Label>
+						<Form.Label>Estado actual:</Form.Label>
 						<Form.Control
-							aria-label="Estado"
 							type="text"
 							disabled
-							defaultValue={editedData.status}
-							onChange={(e) => setEditedData({ ...editedData, status: e.target.value })}>
-						</Form.Control>
+							defaultValue={contract.status}
+						/>
+					</Form.Group>
+					<hr />
+					<Form.Group>
+						<Form.Label>Nuevo estado:</Form.Label>
+						<Form.Select
+							defaultValue={'default'}
+							onChange={(e) => setEditedData({ ...editedData, status: e.target.value })}
+						>
+							<option value="default" disabled>--- Seleccionar estado ---</option>
+							{stateOptions}
+						</Form.Select>
 						<Form.Text id="passwordHelpBlock" muted>
 							On-hold: Pendiente de aprobación por el proveedor del servicio<br />
 							In-progress: El proveedor aprueba realizar el trabajo<br />
 							Completed: El proveedor finalizó el trabajo<br />
+							Rejected: El proveedor rechaza realizar el trabajo<br />
 						</Form.Text>
+					</Form.Group>
+					<Form.Group>
+						<Form.Label>Razón de cambio de estado:</Form.Label>
+						<Form.Control
+							as="textarea"
+							rows={3}
+							value={editedData.comments}
+							onChange={(e) => setEditedData({ ...editedData, comments: e.target.value })}
+						/>
+						<Form.Text className="text-danger">{errors.comments}</Form.Text>
 					</Form.Group>
 				</Form>
 			</Modal.Body>
@@ -59,12 +90,12 @@ const EditContractModal = ({ contract, show, handleClose, saveEditedContract }) 
 				<Button variant="secondary" onClick={handleClose}>
 					Cerrar
 				</Button>
-				<Button variant="primary" onClick={handleSave}>
-					Guardar Cambios
+				<Button variant="warning" onClick={handleSave}>
+					Actualizar Estado
 				</Button>
 			</Modal.Footer>
 		</Modal>
 	);
 };
 
-export default EditContractModal;
+export default connect(null, { updateContract })(EditContractModal);

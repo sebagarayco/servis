@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import { HiOutlineInformationCircle } from "react-icons/hi";
+import { IoEyeOutline } from "react-icons/io5";
 // Redux
 import { connect, useSelector } from 'react-redux';
 import EditContractModal from '../utils/EditContractModal';
@@ -38,7 +38,7 @@ const ProfileContractTable = ({ contracts }) => {
 					<tr>
 						<th>Estado</th>
 						<th>Detalle</th>
-						<th>Precio Acordado</th>
+						<th>Categoría</th>
 						<th>Acciones</th>
 					</tr>
 				</thead>
@@ -48,7 +48,7 @@ const ProfileContractTable = ({ contracts }) => {
 							<tr key={contract.id}>
 								<td>
 									<Button
-										size="sm"
+										size="md"
 										variant={
 											contract.status === 'On-hold'
 												? 'warning'
@@ -62,11 +62,11 @@ const ProfileContractTable = ({ contracts }) => {
 										{contract.status}
 									</Button>
 								</td>
-								<td>{contract.comments}</td>
-								<td>${contract.amount}</td>
+								<td>{contract.description}</td>
+								<td>{contract.service.subcategory.name} ({contract.service.subcategory.category})</td>
 								<td>
-									<Button size="sm" variant="outline-info" onClick={() => handleEdit(contract)}>
-										<HiOutlineInformationCircle />
+									<Button size="md" variant="outline-info" onClick={() => handleEdit(contract)}>
+										<IoEyeOutline />
 									</Button>
 								</td>
 							</tr>

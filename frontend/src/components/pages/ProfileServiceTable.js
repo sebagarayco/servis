@@ -66,7 +66,7 @@ const ProfileServiceTable = ({ services }) => {
 								<td>{service.description}</td>
 								<td>${service.hourly_price} / ${service.full_day_price}</td>
 								<td>
-									<Button size="sm" variant="outline-danger" onClick={() => handleDeleteClick(service)}>
+									<Button size="md" variant="outline-danger" onClick={() => handleDeleteClick(service)}>
 										<MdOutlineDeleteForever />
 									</Button>
 									<DeleteConfirmationModal
@@ -93,7 +93,7 @@ const ProfileServiceTable = ({ services }) => {
 				</tbody>
 			</Table>
 			<Button size="lg" variant="outline-warning" onClick={handleNewServiceClick}>
-				Nuevo Servicio
+				Publicar Servicio
 			</Button>
 		</Container>
 	);

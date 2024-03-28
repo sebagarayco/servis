@@ -5,11 +5,17 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { FaPencilAlt } from "react-icons/fa";
-import { HiOutlineInformationCircle } from "react-icons/hi";
+import { IoEyeOutline } from "react-icons/io5";
+// Icons
+import { MdOutlineDeleteForever } from "react-icons/md";
 // Redux
-import { connect, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import ViewContractModal from '../utils/ViewContractModal';
 import EditContractModal from '../utils/EditContractModal';
+// Actions
+import { deleteContract } from '../../redux/actions/contracts';
+// Components
+import DeleteConfirmationModal from '../utils/DeleteConfirmationModal';
 
 const ProfileContractRequest = ({ contracts }) => {
 	const auth = useSelector(state => state.auth);
@@ -17,7 +23,10 @@ const ProfileContractRequest = ({ contracts }) => {
 	const [showEditModal, setShowEditModal] = useState(false);
 	const [selectedContract, setSelectedContract] = useState(null);
 	const [selectedEditContract, setSelectedEditContract] = useState(null);
+	const [modalVisibility, setModalVisibility] = useState({});
+	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const handleEdit = (contract) => {
 		// Muestra el modal cuando se hace clic en "Editar"
@@ -42,6 +51,27 @@ const ProfileContractRequest = ({ contracts }) => {
 		navigate('/hire');
 	};
 
+	const handleDeleteClick = (contract) => {
+		// TODO: Handle comments
+		console.log('Deleting contract with ID: ', contract);
+		setModalVisibility(prevState => ({
+			...prevState.modalVisibility,
+			[contract.id]: true,
+		}));
+	};
+
+	const onDelete = (contractId) => {
+		// TODO: Handle comments
+		console.log('Deleting contract with ID: ', contractId);
+		setLoading(true);
+		dispatch(deleteContract(contractId));
+		setModalVisibility(prevState => ({
+			...prevState.modalVisibility,
+			[contractId]: false,
+		}));
+		setTimeout(() => { setLoading(false) }, 500); // Loading timeout
+	};
+
 	return (
 		<Container>
 			<Table responsive>
@@ -60,7 +90,7 @@ const ProfileContractRequest = ({ contracts }) => {
 							<tr key={contract.id}>
 								<td>
 									<Button
-										size="sm"
+										size="md"
 										variant={
 											contract.status === 'On-hold'
 												? 'warning'
@@ -68,7 +98,9 @@ const ProfileContractRequest = ({ contracts }) => {
 													? 'success'
 													: contract.status === 'Completed'
 														? 'primary'
-														: 'default'
+														: contract.status === 'Rejected'
+															? 'danger'
+															: 'default'
 										}
 									>
 										{contract.status}
@@ -78,12 +110,37 @@ const ProfileContractRequest = ({ contracts }) => {
 								<td>{contract.service.description}</td>
 								<td>$ {contract.amount}</td>
 								<td>
-									<Button size="sm" variant="outline-secondary" onClick={() => handleEdit(contract)}>
+									<Button size="md" variant="outline-secondary" onClick={() => handleEdit(contract)}>
 										<FaPencilAlt />
 									</Button>
-									<Button size="sm" variant="outline-info" onClick={() => handleInfo(contract)}>
-										<HiOutlineInformationCircle />
+									<Button size="md" style={{ marginLeft: '2px' }} variant="outline-info" onClick={() => handleInfo(contract)}>
+										<IoEyeOutline />
 									</Button>
+									{contract.status === 'Rejected' ? (
+										<>
+											<Button
+												size="md"
+												variant="outline-danger"
+												onClick={() => handleDeleteClick(contract)}
+												style={{ marginLeft: '2px' }}
+											>
+												<MdOutlineDeleteForever />
+											</Button>
+											<DeleteConfirmationModal
+												show={modalVisibility[contract.id] || false}
+												onHide={() => setModalVisibility(prevState => ({
+													...prevState.modalVisibility,
+													[contract.id]: false,
+												}))}
+												onDelete={() => onDelete(contract.id)}
+												toBeDeleted={[
+													{ name: 'Contract ID', value: contract.id },
+													{ name: 'Type', value: contract.service.subcategory['name'] + ' (' + contract.service.subcategory['category'] + ')' },
+													{ name: 'Description', value: contract.description },
+												]}
+											/>
+										</>
+									) : null}
 								</td>
 							</tr>
 						))

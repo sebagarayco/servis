@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logout } from '../../redux/actions/auth';
 import { getUserData } from '../../redux/actions/userdata';
-// Asume que tienes una acción llamada getContracts o similar
 import { getContracts } from '../../redux/actions/contracts';
+// Icons
+import { VscAccount } from "react-icons/vsc";
 
 export class Nav extends Component {
 
@@ -17,7 +18,7 @@ export class Nav extends Component {
 		console.log('Pase por Nav.js');
 		const { isAuthenticated, user } = this.props.auth;
 		const contractsCount = this.props.contracts ?
-			this.props.contracts.filter(contract => contract.consumer.id === user.id).length : 0;
+			this.props.contracts.filter(contract => contract.provider.id === user.id).length : 0;
 
 		if (!isAuthenticated) {
 			return <Navigate to="/login" />;
@@ -40,13 +41,13 @@ export class Nav extends Component {
 				  }
 					<li className='logged'>
 						<div className="nav-profile">
-							<Link to="/profile">Profile</Link>
+							<Link to="/profile"><VscAccount /> Profile</Link>
 							{contractsCount > 0 && (
 								<span className="nav-badge">{contractsCount}</span>
 							)}
 						</div>
 					</li>
-					<li className='logged'>Welcome, <strong>{user.username}</strong>!</li>
+					<li className='logged'>Hola, <strong>{user.username}</strong>! 👋🏼</li>
 			  </ul>
 		  </div>
 		);

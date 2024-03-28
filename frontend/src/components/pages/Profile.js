@@ -6,6 +6,10 @@ import Alert from 'react-bootstrap/Alert';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
+// Icons
+import { RiToolsFill } from "react-icons/ri";
+import { MdOutlineCallReceived } from "react-icons/md";
+import { GrContract } from "react-icons/gr";
 // Redux
 import { connect } from 'react-redux';
 import ProfileContractTable from './ProfileContractTable';
@@ -51,19 +55,19 @@ export class Profile extends Component {
 						</Col>
 						<Col xs={4} md={6} lg={9} className='profile-services'>
 							<Row >
-								<h3>Mis servicios</h3>
+								<h2><RiToolsFill /> Mis servicios</h2>
 								<p>Mantené actualizado tu porfolio de servicios.</p>
 								<ProfileServiceTable services={this.props.services.services} />
 							</Row>
 							<hr />
 							<Row >
-								<h3>Solicitudes recibidas</h3>
+								<h2><MdOutlineCallReceived /> Solicitudes recibidas</h2>
 								<p>Estos son los pedidos de contratación que recibiste.</p>
 								<ProfileContractRequest contracts={this.props.contracts.contracts} />
 							</Row>
 							<hr />
 							<Row >
-								<h3>Servicios contratados</h3>
+								<h2><GrContract /> Servicios contratados</h2>
 								<p>Servicios contratados a otros proveedores.</p>
 								<ProfileContractTable contracts={this.props.contracts.contracts} />
 							</Row>
