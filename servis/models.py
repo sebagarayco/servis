@@ -75,8 +75,8 @@ class Contract(models.Model):
     provider = models.ForeignKey(
         ServisUser, default=None, on_delete=models.CASCADE, related_name='hire_provider')
 
-    start_date = models.DateTimeField()
-    end_date = models.DateTimeField()
+    start_date = models.DateTimeField(null=True, blank=True)
+    end_date = models.DateTimeField(null=True, blank=True)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 

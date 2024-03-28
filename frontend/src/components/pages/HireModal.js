@@ -12,8 +12,8 @@ import { BsTelephoneFill } from 'react-icons/bs';
 import { MdOutlineAttachMoney } from 'react-icons/md';
 
 const HireModal = ({ service, onHide, onSubmit }) => {
-	const { auth } = useSelector(state => state);
-	const [comments, setComments] = useState('');
+	const auth = useSelector(state => state.auth);
+	const [description, setDescription] = useState('');
 	const [budget, setBudget] = useState('');
 	const [startDate, setStartDate] = useState('');
 	const [endDate, setEndDate] = useState('');
@@ -21,15 +21,15 @@ const HireModal = ({ service, onHide, onSubmit }) => {
 	// Check if all required fields are filled
 	const isFormValid = () => {
 		return (
-			comments.trim() !== '' &&
+			description.trim() !== '' &&
 			budget > 0 &&
 			startDate !== '' &&
 			endDate !== ''
 		);
 	};
 
-	const handleCommentsChange = (e) => {
-		setComments(e.target.value);
+	const handleDescriptionChange = (e) => {
+		setDescription(e.target.value);
 	};
 
 	const handleBudgetChange = (e) => {
@@ -61,11 +61,12 @@ const HireModal = ({ service, onHide, onSubmit }) => {
 			consumer: auth.user,
 			provider: service.user,
 			budget,
-			comments,
+			description,
 			startDate,
 			endDate,
 		};
 		// Call the onSubmit prop and pass the hireData
+		console.log('Calling HireModel onSubnit:', hireData);
 		onSubmit(hireData);
 	};
 
@@ -243,11 +244,11 @@ const HireModal = ({ service, onHide, onSubmit }) => {
 						<Form.Control
 							as="textarea"
 							rows={4}
-							value={comments}
-							onChange={handleCommentsChange}
+							value={description}
+							onChange={handleDescriptionChange}
 							placeholder='Full description of the service you need'
 							required
-							isInvalid={!comments.trim()}
+							isInvalid={!description.trim()}
 							autoFocus
 						/>
 						<Form.Control.Feedback type="invalid">

@@ -12,7 +12,7 @@ import TimestampConverter from '../utils/TimestampConverter';
 import HireModal from './HireModal';
 
 const HireServiceList = ({ services }) => {
-	const { auth } = useSelector(state => state);
+	const auth = useSelector(state => state.auth);	
 	const [selectedService, setSelectedService] = useState(null);
 	const [showModal, setShowModal] = useState(false);
 	const dispatch = useDispatch();
@@ -29,12 +29,12 @@ const HireServiceList = ({ services }) => {
 
 	const handleHireSubmit = (hireData) => {
 		// Assuming hireData contains amount, start date, and end date
-		const { budget, startDate, endDate, consumer, comments, provider } = hireData;
+		const { budget, startDate, endDate, consumer, description, provider } = hireData;
 
 		// Dispatch the createContract action with the necessary parameters
 		dispatch(createContract({
 			amount: budget,
-			comments: comments,
+			description: description,
 			consumer: consumer.id,
 			start_date: startDate,
 			end_date: endDate,

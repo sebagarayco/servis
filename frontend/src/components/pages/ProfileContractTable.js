@@ -10,7 +10,7 @@ import { connect, useSelector } from 'react-redux';
 import EditContractModal from '../utils/EditContractModal';
 
 const ProfileContractTable = ({ contracts }) => {
-	const { auth } = useSelector(state => state);
+	const auth = useSelector(state => state.auth);
 	const [showModal, setShowModal] = useState(false);
 	const [selectedEditContract, setSelectedEditContract] = useState(null);
 	const navigate = useNavigate();
@@ -44,7 +44,7 @@ const ProfileContractTable = ({ contracts }) => {
 				</thead>
 				<tbody>
 					{contracts.length > 0 ? (
-						contracts.filter(contract => contract.consumer === auth.user.id).map((contract, id) => (
+						contracts.filter(contract => contract.consumer.id === auth.user.id).map((contract, id) => (
 							<tr key={contract.id}>
 								<td>
 									<Button
@@ -77,14 +77,10 @@ const ProfileContractTable = ({ contracts }) => {
 						</tr>
 					)}
 				</tbody>
-				<tfoot>
-					<div>
-						<Button size="sm" variant="outline-secondary" onClick={handleNewServiceClick}>
-							Contratar Servicio
-						</Button>
-					</div>
-				</tfoot>
 			</Table>
+			<Button size="lg" variant="outline-warning" onClick={handleNewServiceClick}>
+				Contratar Servicio
+			</Button>
 
 			{/* Renderiza el componente Modal */}
 			{selectedEditContract && (

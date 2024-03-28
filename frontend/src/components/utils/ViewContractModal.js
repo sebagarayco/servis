@@ -60,7 +60,7 @@ const ViewContractModal = ({ contract, show, handleClose, saveEditedContract }) 
 							type="text"
 							disabled
 							isInvalid={!!errors.comments}
-							value={editedData.comments}
+							value={editedData.description}
 							onChange={(e) => setEditedData({ ...editedData, comments: e.target.value })}
 						/>
 						<Form.Control.Feedback type="invalid">

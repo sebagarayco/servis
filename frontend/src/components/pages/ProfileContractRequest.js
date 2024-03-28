@@ -12,7 +12,7 @@ import ViewContractModal from '../utils/ViewContractModal';
 import EditContractModal from '../utils/EditContractModal';
 
 const ProfileContractRequest = ({ contracts }) => {
-	const { auth } = useSelector(state => state);
+	const auth = useSelector(state => state.auth);
 	const [showViewModal, setShowViewModal] = useState(false);
 	const [showEditModal, setShowEditModal] = useState(false);
 	const [selectedContract, setSelectedContract] = useState(null);
@@ -56,7 +56,7 @@ const ProfileContractRequest = ({ contracts }) => {
 				</thead>
 				<tbody>
 					{contracts.length > 0 ? (
-						contracts.filter(contract => contract.provider === auth.user.id).map((contract, id) => (
+						contracts.filter(contract => contract.provider.id === auth.user.id).map((contract, id) => (
 							<tr key={contract.id}>
 								<td>
 									<Button
@@ -74,7 +74,7 @@ const ProfileContractRequest = ({ contracts }) => {
 										{contract.status}
 									</Button>
 								</td>
-								<td>{contract.comments}</td>
+								<td>{contract.description}</td>
 								<td>{contract.service.description}</td>
 								<td>$ {contract.amount}</td>
 								<td>

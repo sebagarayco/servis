@@ -32,7 +32,10 @@ export const createContract = (payload) => (dispatch) => {
 			});
 			toast.success("Contract sent!", { autoClose: 2000 });
 		})
-		.catch((err) => dispatch(returnErrors(err.response.data, err.response.status)));
+		.catch((err) => dispatch(
+			returnErrors(err.response.data, err.response.status),
+			toast.error("Failed to create contract!", { autoClose: 2000 })
+		));
 };
 
 // DELETE CONTRACT

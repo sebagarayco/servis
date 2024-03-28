@@ -182,5 +182,13 @@ class ContractSerializer(ModelSerializer):
 
     class Meta:
         model = Contract
-        fields = ('id', 'status', 'is_active', 'description',
+        fields = ('id', 'status', 'is_active', 'description', 'consumer', 'provider',
                   'amount', 'service', 'contract_comments', 'created', 'updated')
+
+    # See obj on GET request and create, update with ID
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        ret['service'] = ServiceSerializer(instance.service).data
+        ret['consumer'] = UserSerializer(instance.consumer).data
+        ret['provider'] = UserSerializer(instance.provider).data
+        return ret

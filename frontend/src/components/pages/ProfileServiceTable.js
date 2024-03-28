@@ -14,7 +14,7 @@ import { connect, useSelector, useDispatch } from 'react-redux';
 import DeleteConfirmationModal from '../utils/DeleteConfirmationModal';
 
 const ProfileServiceTable = ({ services }) => {
-	const { auth } = useSelector(state => state);
+	const auth = useSelector(state => state.auth);
 	const [modalVisibility, setModalVisibility] = useState({});
 	const [loading, setLoading] = useState(false);
 
@@ -60,7 +60,7 @@ const ProfileServiceTable = ({ services }) => {
 				</thead>
 				<tbody>
 					{services.length > 0 ? (
-						services.filter(service => service.provider === auth.user.id).map((service, id) => (
+						services.filter(service => service.provider.id === auth.user.id).map((service, id) => (
 							<tr key={service.id}>
 								<td>{service.subcategory.name} ({service.subcategory.category})</td>
 								<td>{service.description}</td>
@@ -91,14 +91,10 @@ const ProfileServiceTable = ({ services }) => {
 						</tr>
 					)}
 				</tbody>
-				<tfoot>
-					<div>
-						<Button size="sm" variant="outline-secondary" onClick={handleNewServiceClick}>
-							Nuevo Servicio
-						</Button>
-					</div>
-				</tfoot>
 			</Table>
+			<Button size="lg" variant="outline-warning" onClick={handleNewServiceClick}>
+				Nuevo Servicio
+			</Button>
 		</Container>
 	);
 }

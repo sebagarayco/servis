@@ -11,7 +11,10 @@ import { Button } from 'react-bootstrap';
 import { FaFileContract } from "react-icons/fa";
 
 export function Map({ category, coordinates }) {
-	const { auth, userdata, services } = useSelector(state => state);
+	//const { auth, userdata, services } = useSelector(state => state);
+	const auth = useSelector(state => state.auth);
+	//const userdata = useSelector(state => state.userdata);
+	const services = useSelector(state => state.services);
 	const ICON = icon({ iconUrl: 'static/location-pin.png', iconSize: [32, 32], });
 	const ICON_SELF = icon({ iconUrl: 'static/marker-icon.png' });
 

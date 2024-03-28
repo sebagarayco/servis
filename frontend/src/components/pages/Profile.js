@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 // Layout
 import Nav from '../layout/Nav';
 // Bootstrap
+import Alert from 'react-bootstrap/Alert';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
 // Redux
 import { connect } from 'react-redux';
 import ProfileContractTable from './ProfileContractTable';
