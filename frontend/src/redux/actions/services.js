@@ -61,6 +61,6 @@ export const deleteService = (service) => (dispatch) => {
 			dispatch({
 				type: DELETE_SERVICE_FAILURE,
 			});
-			toast.error("Unable to delete service: " + JSON.stringify(err.response.data), { autoClose: 2000 });
+			toast.error("Unable to delete service. Check if there are open contracts.", { autoClose: 2000 });
 		});
 };

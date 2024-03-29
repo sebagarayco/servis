@@ -60,7 +60,7 @@ const ProfileServiceTable = ({ services }) => {
 				</thead>
 				<tbody>
 					{services.length > 0 ? (
-						services.filter(service => service.provider.id === auth.user.id).map((service, id) => (
+						services.filter(service => service.provider === auth.user.id).map((service, id) => (
 							<tr key={service.id}>
 								<td>{service.subcategory.name} ({service.subcategory.category})</td>
 								<td>{service.description}</td>

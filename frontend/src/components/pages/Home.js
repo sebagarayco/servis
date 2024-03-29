@@ -20,10 +20,9 @@ export class Home extends Component {
 	}
 
 	componentDidMount() {
-		// Simulate loading for 1.5 seconds
 		setTimeout(() => {
 			this.setState({ loading: false });
-		}, 1500);
+		}, 1000);
 
 		this.props.getUserData();
 		this.props.getAllUsers();
@@ -32,11 +31,11 @@ export class Home extends Component {
 	render() {
 		return (
 			<div>
+				<Nav />
 				{this.state.loading ? (
 					<ServisSpinner />
 				) : (
-					<>
-						<Nav />
+						<>
 						<HomeSearch />
 						<HomeServices />
 						<HomeCards />

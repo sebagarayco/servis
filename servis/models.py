@@ -67,7 +67,7 @@ class Contract(models.Model):
     is_active = models.BooleanField(default=True)
     description = models.CharField(max_length=500, default=None)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    service = models.ForeignKey(Service, on_delete=models.RESTRICT)
     status = models.CharField(
         choices=status, default='On-hold', max_length=25)
     consumer = models.ForeignKey(

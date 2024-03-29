@@ -171,4 +171,10 @@ const ProfileContractRequest = ({ contracts }) => {
 	);
 };
 
-export default connect()(ProfileContractRequest);
+const mapStateToProps = state => {
+	return {
+		auth: state.auth
+	};
+};
+
+export default connect(mapStateToProps, null)(ProfileContractRequest);
