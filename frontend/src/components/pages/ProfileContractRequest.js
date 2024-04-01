@@ -9,11 +9,11 @@ import { IoEyeOutline } from "react-icons/io5";
 // Icons
 import { MdOutlineDeleteForever } from "react-icons/md";
 // Redux
-import { connect, useDispatch, useSelector } from 'react-redux';
-import ViewContractModal from '../utils/ViewContractModal';
-import EditContractModal from '../utils/EditContractModal';
+import { connect, useSelector, useDispatch } from 'react-redux';
 // Actions
 import { deleteContract } from '../../redux/actions/contracts';
+import ViewContractModal from '../utils/ViewContractModal';
+import EditContractModal from '../utils/EditContractModal';
 // Components
 import DeleteConfirmationModal from '../utils/DeleteConfirmationModal';
 
@@ -53,7 +53,6 @@ const ProfileContractRequest = ({ contracts }) => {
 
 	const handleDeleteClick = (contract) => {
 		// TODO: Handle comments
-		console.log('Deleting contract with ID: ', contract);
 		setModalVisibility(prevState => ({
 			...prevState.modalVisibility,
 			[contract.id]: true,
@@ -61,6 +60,7 @@ const ProfileContractRequest = ({ contracts }) => {
 	};
 
 	const onDelete = (contractId) => {
+		console.log('Contracts:', contracts);
 		// TODO: Handle comments
 		console.log('Deleting contract with ID: ', contractId);
 		setLoading(true);
@@ -108,7 +108,10 @@ const ProfileContractRequest = ({ contracts }) => {
 								</td>
 								<td>{contract.description}</td>
 								<td>{contract.service.description}</td>
-								<td>$ {contract.amount}</td>
+								<td><Button disabled variant='outline-dark'>
+									$ {contract.amount}
+								</Button>
+								</td>
 								<td>
 									<Button size="md" variant="outline-secondary" onClick={() => handleEdit(contract)}>
 										<FaPencilAlt />

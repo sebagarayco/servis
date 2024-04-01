@@ -64,7 +64,13 @@ const ProfileServiceTable = ({ services }) => {
 							<tr key={service.id}>
 								<td>{service.subcategory.name} ({service.subcategory.category})</td>
 								<td>{service.description}</td>
-								<td>${service.hourly_price} / ${service.full_day_price}</td>
+								<td>
+									<Button disabled variant='outline-dark'>
+										$ {service.hourly_price}
+									</Button> / <Button disabled variant='outline-dark'>
+										${service.full_day_price}
+									</Button>
+								</td>
 								<td>
 									<Button size="md" variant="outline-danger" onClick={() => handleDeleteClick(service)}>
 										<MdOutlineDeleteForever />

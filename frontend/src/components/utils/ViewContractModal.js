@@ -1,103 +1,132 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+// Bootstrap
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import ListGroup from 'react-bootstrap/ListGroup';
+// Redux
+import { useSelector, useDispatch } from 'react-redux';
+// Actions
+import { addContractComment } from '../../redux/actions/contracts';
+import { FaTelegramPlane } from "react-icons/fa";
 
-const ViewContractModal = ({ contract, show, handleClose, saveEditedContract }) => {
-	const [editedData, setEditedData] = useState({
-		status: contract.status,
-		comments: contract.comments,
-		amount: contract.amount,
-		id: contract.id,
-	});
-
-	const [errors, setErrors] = useState({}); // Nuevo estado para manejar errores
-
-	const validateForm = () => {
-		let tempErrors = {};
-		// Aquí puedes añadir todas las validaciones que necesites
-		tempErrors.comments = editedData.comments ? "" : "Este campo es obligatorio.";
-		tempErrors.amount = editedData.amount ? "" : "Este campo es obligatorio.";
-		// Aquí podrías añadir una validación más específica para el monto, por ejemplo, que sea un número
-		setErrors(tempErrors);
-		// Retorna true si el objeto tempErrors no tiene ninguna propiedad, lo que significa que no hay errores
-		return Object.keys(tempErrors).every(x => tempErrors[x] === "");
-	};
+const ViewContractModal = ({ contract, show, handleClose }) => {
+	const auth = useSelector(state => state.auth);
+	const [newComment, setNewComment] = useState('');
+	const dispatch = useDispatch();
+	const chatContainerRef = useRef(null);
 
 	const handleSave = () => {
-		if (validateForm()) {
-			saveEditedContract(editedData); // Suponiendo que saveEditedContract es la acción de Redux para guardar los datos
-			handleClose();
+		if (newComment.trim() !== '') {
+			const commentData = {
+				amount: contract.amount,
+				service: contract.service.id,
+				contract: contract.id,
+				contract_comments: [{
+					comment: newComment,
+					user: auth.user.id
+				}],
+			};
+			dispatch(addContractComment(contract.id, commentData));
+			setNewComment('');
 		}
 	};
 
+	// Update chat scroll when contract or comments change
+	useEffect(() => {
+		if (chatContainerRef.current) {
+			chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+		}
+	}, [contract]); 
+
+	const handleCommentChange = (e) => {
+		setNewComment(e.target.value);
+	};
+
+	const handleCommentSubmit = (e) => {
+		e.preventDefault();
+		handleSave();
+	};
+
 	return (
-		<Modal show={show} onHide={handleClose}>
+		<Modal show={show} onHide={handleClose} size="lg">
 			<Modal.Header closeButton>
-				<Modal.Title>Servicio - ID Contrato: #{editedData.id}</Modal.Title>
+				<Modal.Title>Detalles del contrato - ID: #{contract.id}</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
-				<Form>
+				<Form onSubmit={handleCommentSubmit}>
 					<Form.Group>
 						<Form.Label>Estado:</Form.Label>
 						<Form.Control
-							aria-label="Estado"
 							type="text"
 							disabled
-							defaultValue={editedData.status}
-							onChange={(e) => setEditedData({ ...editedData, status: e.target.value })}>
-						</Form.Control>
-						<Form.Text id="passwordHelpBlock" muted>
-							On-hold: Pendiente de aprobación por el proveedor del servicio<br />
-							In-progress: El proveedor aprueba realizar el trabajo<br />
-							Completed: El proveedor finalizó el trabajo<br />
+							defaultValue={contract.status}
+						/>
+						<Form.Text muted>
+							On-hold: Pending approval from the service provider<br />
+							In-progress: The provider agrees to perform the work<br />
+							Completed: The provider has finished the work<br />
 						</Form.Text>
 					</Form.Group>
 					<br />
 					<Form.Group>
-						<Form.Label>Detalle:</Form.Label>
+						<Form.Label>Descripción:</Form.Label>
 						<Form.Control
 							type="text"
 							disabled
-							isInvalid={!!errors.comments}
-							value={editedData.description}
-							onChange={(e) => setEditedData({ ...editedData, comments: e.target.value })}
+							defaultValue={contract.description}
 						/>
-						<Form.Control.Feedback type="invalid">
-							{errors.comments}
-						</Form.Control.Feedback>
 					</Form.Group>
 					<br />
 					<Form.Group>
-						<Form.Label>Precio Acordado:</Form.Label>
+						<Form.Label>Precio acordado:</Form.Label>
 						<Form.Control
 							type="text"
 							disabled
-							isInvalid={!!errors.amount}
-							value={editedData.amount}
-							onChange={(e) => setEditedData({ ...editedData, amount: e.target.value })}
+							defaultValue={`$ ${contract.amount}`}
 						/>
-						<Form.Control.Feedback type="invalid">
-							{errors.amount}
-						</Form.Control.Feedback>
+					</Form.Group>
+
+					<hr />
+					<h2>Mensajes</h2>
+					<ListGroup className="chat-container" ref={chatContainerRef}>
+						{contract.contract_comments && contract.contract_comments.length > 0 ? (
+							contract.contract_comments.map((comment, index) => (
+								<ListGroup.Item
+									key={index}
+									className={`chat-message ${comment.user.id === auth.user.id ? 'chat-message-sender' : 'chat-message-receiver'}`}
+								>
+									<img src={comment.user.image} alt={comment.user.username} />
+									<div>
+										<span>{comment.comment}</span>
+										<span className="chat-timestamp">
+											<strong>{comment.user.id === auth.user.id ? 'Yo' : comment.user.username}</strong> el {new Date(comment.created).toLocaleString(('es-ES'))}hs.
+										</span>
+									</div>
+								</ListGroup.Item>
+							))
+						) : (
+							<p>No comments yet.</p>
+						)}
+					</ListGroup>
+
+					<Form.Group className="chat-input-container">
+						<Form.Control
+							type="text"
+							placeholder="Escribir comentario ..."
+							value={newComment}
+							onChange={handleCommentChange}
+							className="chat-input"
+						/>
+						<Button type="submit" size='lg' variant="warning" className="chat-send-btn">
+							Enviar <FaTelegramPlane />
+						</Button>
 					</Form.Group>
 				</Form>
-				<hr />
-				<h4>Comentarios</h4>
-				<Form.Group>
-					<Form.Control
-						as="textarea"
-						rows={3}
-						onChange={(e) => setEditedData({ ...editedData, comments: e.target.value })}
-					/>
-				</Form.Group>
 			</Modal.Body>
 			<Modal.Footer>
 				<Button variant="secondary" onClick={handleClose}>
 					Cerrar
-				</Button>
-				<Button variant="primary" onClick={handleSave}>
-					Guardar Cambios
 				</Button>
 			</Modal.Footer>
 		</Modal>

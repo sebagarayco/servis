@@ -1,7 +1,7 @@
 from django.urls import include, path
 from rest_framework import routers
 from knox import views as knox_views
-from .api import RegisterAPI, LoginAPI, UserAPI, UserProfileView, CategoryView, ContractView, ServiceView, LocationCreateView
+from .api import RegisterAPI, LoginAPI, UserAPI, UserProfileView, CategoryView, ContractView, ServiceView, LocationCreateView, ContractCommentView
 
 router = routers.DefaultRouter()
 router.register('categories', CategoryView, 'categories')

@@ -1,4 +1,4 @@
-import { GET_CONTRACTS, CREATE_CONTRACT, DELETE_CONTRACT, UPDATE_CONTRACT } from '../actions/types.js';
+import { GET_CONTRACTS, CREATE_CONTRACT, DELETE_CONTRACT, UPDATE_CONTRACT, ADD_CONTRACT_COMMENT } from '../actions/types.js';
 
 const initialState = {
 	contracts: []
@@ -19,6 +19,12 @@ export default function (state = initialState, action) {
 		case UPDATE_CONTRACT:
 			// TODO: Handle comments
 			console.log('Pase por updateContract.js', action.payload)
+			return {
+				...state,
+				contracts: state.contracts.map((contract) => (contract.id === action.payload.id ? action.payload : contract)),
+			};
+		case ADD_CONTRACT_COMMENT:
+			console.log('Pasé por ADD_CONTRACT_COMMENT, mostrando payload: ', action.payload);
 			return {
 				...state,
 				contracts: state.contracts.map((contract) => (contract.id === action.payload.id ? action.payload : contract)),

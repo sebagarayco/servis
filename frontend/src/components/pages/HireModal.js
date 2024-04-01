@@ -22,9 +22,9 @@ const HireModal = ({ service, onHide, onSubmit }) => {
 	const isFormValid = () => {
 		return (
 			description.trim() !== '' &&
-			budget > 0 &&
-			startDate !== '' &&
-			endDate !== ''
+			budget > 0
+			//startDate !== '' &&
+			//endDate !== ''
 		);
 	};
 
@@ -225,7 +225,7 @@ const HireModal = ({ service, onHide, onSubmit }) => {
 								<Form.Control
 									type="datetime-local"
 									onChange={handleStartDateChange}
-									required
+									//required
 								/>
 							</Form.Group>
 							<Form.Group controlId="end_date">
@@ -233,7 +233,7 @@ const HireModal = ({ service, onHide, onSubmit }) => {
 								<Form.Control
 									type="datetime-local"
 									onChange={handleEndDateChange}
-									required
+									//required
 								/>
 							</Form.Group>
 						</Col>

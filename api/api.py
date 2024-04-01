@@ -6,9 +6,9 @@ from rest_framework import status
 from knox.models import AuthToken
 # Models
 from users.models import ServisUser
-from servis.models import Category, Subcategory, Service, Contract
+from servis.models import Category, Subcategory, Service, Contract, ContractComments
 # Serializers
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, CategorySerializer, SubCategorySerializer, ServiceSerializer, UserProfileSerializer, LocationSerializer, ContractSerializer
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, CategorySerializer, SubCategorySerializer, ServiceSerializer, UserProfileSerializer, LocationSerializer, ContractSerializer, ContractCommentsSerializer
 
 
 class RegisterAPI(generics.GenericAPIView):
@@ -108,7 +108,12 @@ class ServiceView(viewsets.ModelViewSet):
         subcategory = Subcategory.objects.get(category__name=request.data['category'],name=request.data['subcategory'])
         serializer.save(subcategory=subcategory)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    
+
+
+class ContractCommentView(viewsets.ModelViewSet):
+    serializer_class = ContractCommentsSerializer
+    queryset = ContractComments.objects.all()
+
 class ContractView(viewsets.ModelViewSet):
     serializer_class = ContractSerializer
     queryset = Contract.objects.all()

@@ -33,6 +33,8 @@ const EditContractModal = ({ contract, show, handleClose }) => {
 				...editedData,
 				service: contract.service.id,
 			};
+			console.log('Contract: ', contract)
+			console.log('Updated Contract Data:', editedData.id, updatedContractData);
 			dispatch(updateContract(editedData.id, updatedContractData)); 
 			handleClose();
 		}
@@ -79,7 +81,6 @@ const EditContractModal = ({ contract, show, handleClose }) => {
 						<Form.Control
 							as="textarea"
 							rows={3}
-							value={editedData.comments}
 							onChange={(e) => setEditedData({ ...editedData, comments: e.target.value })}
 						/>
 						<Form.Text className="text-danger">{errors.comments}</Form.Text>

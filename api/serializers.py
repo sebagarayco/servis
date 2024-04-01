@@ -167,10 +167,16 @@ class ContractCommentsSerializer(ModelSerializer):
     Args:
         ModelSerializer (_type_): Contract Comments Serializer
     """
+    # user = UserSerializer(read_only=True)
 
     class Meta:
         model = ContractComments
-        fields = ('comment', 'created', 'user')
+        fields = ('id', 'comment', 'created', 'user')
+
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        ret['user'] = UserSerializer(instance.user).data
+        return ret
 
 class ContractSerializer(ModelSerializer):
     """Contract Serializer
@@ -178,7 +184,7 @@ class ContractSerializer(ModelSerializer):
     Args:
         ModelSerializer (_type_): Contract Serializer
     """
-    contract_comments = ContractCommentsSerializer(many=True, read_only=True)
+    contract_comments = ContractCommentsSerializer(many=True, required=False)
 
     class Meta:
         model = Contract
@@ -192,3 +198,26 @@ class ContractSerializer(ModelSerializer):
         ret['consumer'] = UserSerializer(instance.consumer).data
         ret['provider'] = UserSerializer(instance.provider).data
         return ret
+
+    def update(self, instance, validated_data):
+        contract_comments_data = validated_data.pop('contract_comments', [])
+
+        # Update Contract fields if provided
+        instance.status = validated_data.get('status', instance.status)
+        instance.is_active = validated_data.get(
+            'is_active', instance.is_active)
+        instance.description = validated_data.get(
+            'description', instance.description)
+        instance.consumer = validated_data.get('consumer', instance.consumer)
+        instance.provider = validated_data.get('provider', instance.provider)
+        instance.amount = validated_data.get('amount', instance.amount)
+        instance.service = validated_data.get('service', instance.service)
+
+        # Save updated Contract
+        instance.save()
+
+        # Create new ContractComments for the updated Contract
+        for comment_data in contract_comments_data:
+            ContractComments.objects.create(**comment_data, contract=instance)
+
+        return instance
