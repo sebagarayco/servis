@@ -1,0 +1,37 @@
+[
+{
+  "model": "servis.contractstatus",
+  "pk": 1,
+  "fields": {
+    "name": "En espera"
+  }
+},
+{
+  "model": "servis.contractstatus",
+  "pk": 2,
+  "fields": {
+    "name": "En progreso"
+  }
+},
+{
+  "model": "servis.contractstatus",
+  "pk": 3,
+  "fields": {
+    "name": "Completado"
+  }
+},
+{
+  "model": "servis.contractstatus",
+  "pk": 4,
+  "fields": {
+    "name": "Rechazado"
+  }
+},
+{
+  "model": "servis.contractstatus",
+  "pk": 5,
+  "fields": {
+    "name": "Cancelado"
+  }
+}
+]
