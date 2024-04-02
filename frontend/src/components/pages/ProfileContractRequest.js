@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 // Bootstrap
 import Table from 'react-bootstrap/Table';
@@ -27,6 +27,22 @@ const ProfileContractRequest = ({ contracts }) => {
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+
+	// New state to hold the current comments for the selected contract
+	const [currentComments, setCurrentComments] = useState([]);
+
+	// When the selected contract changes (for example, when a new comment is added),
+	// this effect updates the currentComments state with the latest comments.
+	// It also ensures the selectedContract state is updated based on the latest contracts list.
+	useEffect(() => {
+		if (selectedContract) {
+			const updatedContract = contracts.find(c => c.id === selectedContract.id);
+			if (updatedContract) {
+				setSelectedContract(updatedContract); // Update selectedContract with the latest info
+				setCurrentComments(updatedContract.contract_comments || []); // Update comments
+			}
+		}
+	}, [contracts, selectedContract]);
 
 	const handleEdit = (contract) => {
 		// Muestra el modal cuando se hace clic en "Editar"
@@ -155,10 +171,10 @@ const ProfileContractRequest = ({ contracts }) => {
 				</tbody>
 			</Table>
 
-			{/* Renderiza el componente Modal */}
 			{selectedContract && (
 				<ViewContractModal
 					contract={selectedContract}
+					comments={currentComments} // Pass the currentComments as a prop to the modal
 					show={showViewModal}
 					handleClose={handleCloseModal}
 				/>

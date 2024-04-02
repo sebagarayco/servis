@@ -10,11 +10,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addContractComment } from '../../redux/actions/contracts';
 import { FaTelegramPlane } from "react-icons/fa";
 
-const ViewContractModal = ({ contract, show, handleClose }) => {
+const ViewContractModal = ({ contract, comments, show, handleClose }) => {
 	const auth = useSelector(state => state.auth);
 	const [newComment, setNewComment] = useState('');
 	const dispatch = useDispatch();
 	const chatContainerRef = useRef(null);
+	const [renderTrigger, setRenderTrigger] = useState(false); // Add this line
 
 	const handleSave = () => {
 		if (newComment.trim() !== '') {
@@ -32,12 +33,17 @@ const ViewContractModal = ({ contract, show, handleClose }) => {
 		}
 	};
 
-	// Update chat scroll when contract or comments change
+	// Use useEffect to track comments changes and set the render trigger
+	useEffect(() => {
+		setRenderTrigger(prev => !prev);
+	}, [comments]);
+
+	// Adjust this useEffect to scroll based on the renderTrigger
 	useEffect(() => {
 		if (chatContainerRef.current) {
 			chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
 		}
-	}, [contract]); 
+	}, [renderTrigger]); // Now it reacts to renderTrigger changes
 
 	const handleCommentChange = (e) => {
 		setNewComment(e.target.value);
@@ -47,7 +53,6 @@ const ViewContractModal = ({ contract, show, handleClose }) => {
 		e.preventDefault();
 		handleSave();
 	};
-
 	return (
 		<Modal show={show} onHide={handleClose} size="lg">
 			<Modal.Header closeButton>
@@ -90,8 +95,8 @@ const ViewContractModal = ({ contract, show, handleClose }) => {
 					<hr />
 					<h2>Mensajes</h2>
 					<ListGroup className="chat-container" ref={chatContainerRef}>
-						{contract.contract_comments && contract.contract_comments.length > 0 ? (
-							contract.contract_comments.map((comment, index) => (
+						{comments && comments.length > 0 ? (
+							comments.map((comment, index) => (
 								<ListGroup.Item
 									key={index}
 									className={`chat-message ${comment.user.id === auth.user.id ? 'chat-message-sender' : 'chat-message-receiver'}`}

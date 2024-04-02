@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 // Bootstrap
 import Table from 'react-bootstrap/Table';
@@ -8,22 +8,38 @@ import { IoEyeOutline } from "react-icons/io5";
 // Redux
 import { connect, useSelector } from 'react-redux';
 import EditContractModal from '../utils/EditContractModal';
+import ViewContractModal from '../utils/ViewContractModal';
 
 const ProfileContractTable = ({ contracts }) => {
 	const auth = useSelector(state => state.auth);
-	const [showModal, setShowModal] = useState(false);
-	const [selectedEditContract, setSelectedEditContract] = useState(null);
+	const [showViewModal, setShowViewModal] = useState(false);
+	const [selectedContract, setSelectedContract] = useState(null);
 	const navigate = useNavigate();
+	// New state to hold the current comments for the selected contract
+	const [currentComments, setCurrentComments] = useState([]);
+
+	// When the selected contract changes (for example, when a new comment is added),
+	// this effect updates the currentComments state with the latest comments.
+	// It also ensures the selectedContract state is updated based on the latest contracts list.
+	useEffect(() => {
+		if (selectedContract) {
+			const updatedContract = contracts.find(c => c.id === selectedContract.id);
+			if (updatedContract) {
+				setSelectedContract(updatedContract); // Update selectedContract with the latest info
+				setCurrentComments(updatedContract.contract_comments || []); // Update comments
+			}
+		}
+	}, [contracts, selectedContract]);
 
 	const handleEdit = (contract) => {
 		// Muestra el modal cuando se hace clic en "Editar"
-		setSelectedEditContract(contract);
-		setShowModal(true);
+		setSelectedContract(contract);
+		setShowViewModal(true);
 	};
 
 	const handleCloseModal = () => {
 		// Cierra el modal
-		setShowModal(false);
+		setShowViewModal(false);
 	};
 
 	const handleNewServiceClick = () => {
@@ -82,11 +98,11 @@ const ProfileContractTable = ({ contracts }) => {
 				Contratar Servicio
 			</Button>
 
-			{/* Renderiza el componente Modal */}
-			{selectedEditContract && (
-				<EditContractModal
-					contract={selectedEditContract}
-					show={showModal}
+			{selectedContract && (
+				<ViewContractModal
+					contract={selectedContract}
+					comments={currentComments} // Pass the currentComments as a prop to the modal
+					show={showViewModal}
 					handleClose={handleCloseModal}
 				/>
 			)}
