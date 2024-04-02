@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Link, Navigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
+// Redux
 import { connect } from 'react-redux';
-import { logout } from '../../redux/actions/auth';
+// Actions
 import { getUserData } from '../../redux/actions/userdata';
 import { getContracts } from '../../redux/actions/contracts';
+import { logout } from '../../redux/actions/auth';
 // Icons
 import { VscAccount } from "react-icons/vsc";
 
@@ -41,7 +42,8 @@ export class Nav extends Component {
 				  }
 					<li className='logged'>
 						<div className="nav-profile">
-							<Link to="/profile"><VscAccount /> Profile</Link>
+							<img src={this.props.auth.user.image} className="nav-profile-img" alt="profile" />
+							<Link to="/profile"> Profile</Link>
 							{contractsCount > 0 && (
 								<span className="nav-badge">{contractsCount}</span>
 							)}

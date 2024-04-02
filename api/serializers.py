@@ -184,6 +184,7 @@ class ContractSerializer(ModelSerializer):
     Args:
         ModelSerializer (_type_): Contract Serializer
     """
+    status = serializers.CharField(source='status.name', required=False)
     contract_comments = ContractCommentsSerializer(many=True, required=False)
 
     class Meta:

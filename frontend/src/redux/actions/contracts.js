@@ -79,6 +79,7 @@ export const addContractComment = (id, payload) => (dispatch) => {
 				type: ADD_CONTRACT_COMMENT,
 				payload: res.data,
 			});
+			toast.info("Comentario entregado 📨", { autoClose: 1000 });
 		})
 		.catch((err) => dispatch(returnErrors(err.response.data, err.response.status)));
 };

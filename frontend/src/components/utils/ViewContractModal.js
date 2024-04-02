@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 // Bootstrap
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import ListGroup from 'react-bootstrap/ListGroup';
+import { Modal, Button, Form, ListGroup, Tabs, Tab } from 'react-bootstrap';
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 // Actions
@@ -15,7 +12,7 @@ const ViewContractModal = ({ contract, comments, show, handleClose }) => {
 	const [newComment, setNewComment] = useState('');
 	const dispatch = useDispatch();
 	const chatContainerRef = useRef(null);
-	const [renderTrigger, setRenderTrigger] = useState(false); // Add this line
+	const [renderTrigger, setRenderTrigger] = useState(true); // Add this line
 
 	const handleSave = () => {
 		if (newComment.trim() !== '') {
@@ -53,13 +50,25 @@ const ViewContractModal = ({ contract, comments, show, handleClose }) => {
 		e.preventDefault();
 		handleSave();
 	};
+
+	const handleTabSelect = (key) => {
+		if (key === "messages" && chatContainerRef.current) {
+			// Wait for the tab content to be shown before scrolling
+			setTimeout(() => {
+				chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+			}, 100); // Adjust timeout as necessary
+		}
+	};
+
 	return (
 		<Modal show={show} onHide={handleClose} size="lg">
 			<Modal.Header closeButton>
 				<Modal.Title>Detalles del contrato - ID: #{contract.id}</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
-				<Form onSubmit={handleCommentSubmit}>
+				<Tabs defaultActiveKey="details" id="contract-tabs" className="lg-3" onSelect={handleTabSelect}>
+					<Tab eventKey="details" title="Detalles">
+						<Form >
 					<Form.Group>
 						<Form.Label>Estado:</Form.Label>
 						<Form.Control
@@ -91,9 +100,11 @@ const ViewContractModal = ({ contract, comments, show, handleClose }) => {
 							defaultValue={`$ ${contract.amount}`}
 						/>
 					</Form.Group>
-
-					<hr />
+						</Form>
+					</Tab>
+					<Tab eventKey="messages" title="Mensajes">
 					<h2>Mensajes</h2>
+						<Form onSubmit={handleCommentSubmit}>
 					<ListGroup className="chat-container" ref={chatContainerRef}>
 						{comments && comments.length > 0 ? (
 							comments.map((comment, index) => (
@@ -111,7 +122,7 @@ const ViewContractModal = ({ contract, comments, show, handleClose }) => {
 								</ListGroup.Item>
 							))
 						) : (
-							<p>No comments yet.</p>
+										<p>Sin comentarios aún ... haz el primero!</p>
 						)}
 					</ListGroup>
 
@@ -123,11 +134,13 @@ const ViewContractModal = ({ contract, comments, show, handleClose }) => {
 							onChange={handleCommentChange}
 							className="chat-input"
 						/>
-						<Button type="submit" size='lg' variant="warning" className="chat-send-btn">
+								<Button type="submit" size='lg' variant="warning" className="chat-send-btn" >
 							Enviar <FaTelegramPlane />
 						</Button>
 					</Form.Group>
-				</Form>
+						</Form>
+					</Tab>
+				</Tabs>
 			</Modal.Body>
 			<Modal.Footer>
 				<Button variant="secondary" onClick={handleClose}>

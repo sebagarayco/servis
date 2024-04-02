@@ -165,3 +165,4 @@ yarn-error.log*
 servis/images/*
 !servis/images/default.jpg
 !servis/images/*.gif
+!servis/images/admin*

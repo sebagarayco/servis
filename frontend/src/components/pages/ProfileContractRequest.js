@@ -108,15 +108,17 @@ const ProfileContractRequest = ({ contracts }) => {
 									<Button
 										size="md"
 										variant={
-											contract.status === 'On-hold'
+											contract.status === 'En espera'
 												? 'warning'
-												: contract.status === 'In-progress'
+												: contract.status === 'En progreso'
 													? 'success'
-													: contract.status === 'Completed'
+													: contract.status === 'Completado'
 														? 'primary'
-														: contract.status === 'Rejected'
-															? 'danger'
-															: 'default'
+														: contract.status === 'Cancelado'
+															? 'secondary'
+															: contract.status === 'Rechazado'
+																? 'danger'
+																: 'default'
 										}
 									>
 										{contract.status}

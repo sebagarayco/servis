@@ -57,19 +57,31 @@ class ServiceReview(models.Model):
     def __str__(self):
         return self.name
 
-class Contract(models.Model):
+
+class ContractStatus(models.Model):
     status = [
-        ('In-progress', 'In-progress'),
-        ('On-hold', 'On-hold'),
-        ('Completed', 'Completed'),
-        ('Rejected', 'Rejected'),
+        ('En espera', 'En espera'),
+        ('En progreso', 'En progreso'),
+        ('Completado', 'Completado'),
+        ('Rechazado', 'Rechazado'),
+        ('Cancelado', 'Cancelado')
     ]
+    name = models.CharField(choices=status, default='En espera', max_length=20)
+
+    class Meta:
+        verbose_name_plural = "Contract Status"
+
+    def __str__(self):
+        return self.name
+
+
+class Contract(models.Model):
     is_active = models.BooleanField(default=True)
     description = models.CharField(max_length=500, default=None)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     service = models.ForeignKey(Service, on_delete=models.RESTRICT)
-    status = models.CharField(
-        choices=status, default='On-hold', max_length=25)
+    status = models.ForeignKey(
+        ContractStatus, on_delete=models.RESTRICT, related_name='contract_status', default='1')
     consumer = models.ForeignKey(
         ServisUser, default=None, on_delete=models.CASCADE, related_name='hire_consumer')
     provider = models.ForeignKey(
@@ -82,7 +94,6 @@ class Contract(models.Model):
 
     def __str__(self):
         return f"{self.consumer} -> {self.provider} || {self.description}"
-
 
 class ContractComments(models.Model):
     contract = models.ForeignKey(
