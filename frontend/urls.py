@@ -10,4 +10,5 @@ urlpatterns = [
     path('services', views.index),
     path('offer', views.index),
     path('hire', views.index),
+    path('profile/<int:id>/', views.profile, name='profile'),
 ]

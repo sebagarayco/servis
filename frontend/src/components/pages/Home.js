@@ -24,7 +24,7 @@ export class Home extends Component {
 			this.setState({ loading: false });
 		}, 1000);
 
-		this.props.getUserData();
+		//this.props.getUserData(); // TODO: Creo que no se usa
 		this.props.getAllUsers();
 	}
 
@@ -54,4 +54,4 @@ const mapStateToProps = state => {
 	};
 };
 
-export default connect(mapStateToProps, { getUserData, getAllUsers })(Home);
+export default connect(mapStateToProps, { getAllUsers })(Home);

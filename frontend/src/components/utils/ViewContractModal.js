@@ -67,7 +67,7 @@ const ViewContractModal = ({ contract, comments, show, handleClose }) => {
 			</Modal.Header>
 			<Modal.Body>
 				<Tabs defaultActiveKey="details" id="contract-tabs" className="lg-3" onSelect={handleTabSelect}>
-					<Tab eventKey="details" title="Detalles">
+					<Tab eventKey="details" title="Detalles" className="contract-modal-tab">
 						<Form >
 					<Form.Group>
 						<Form.Label>Estado:</Form.Label>
@@ -102,8 +102,8 @@ const ViewContractModal = ({ contract, comments, show, handleClose }) => {
 					</Form.Group>
 						</Form>
 					</Tab>
-					<Tab eventKey="messages" title="Mensajes">
-					<h2>Mensajes</h2>
+					<Tab eventKey="messages" title="Mensajes" className="contract-modal-tab">
+						<br />
 						<Form onSubmit={handleCommentSubmit}>
 					<ListGroup className="chat-container" ref={chatContainerRef}>
 						{comments && comments.length > 0 ? (

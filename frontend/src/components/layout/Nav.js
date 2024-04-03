@@ -3,11 +3,8 @@ import { Link, Navigate } from 'react-router-dom';
 // Redux
 import { connect } from 'react-redux';
 // Actions
-import { getUserData } from '../../redux/actions/userdata';
 import { getContracts } from '../../redux/actions/contracts';
 import { logout } from '../../redux/actions/auth';
-// Icons
-import { VscAccount } from "react-icons/vsc";
 
 export class Nav extends Component {
 
@@ -27,7 +24,7 @@ export class Nav extends Component {
 
 		return (
 			<div>
-				<img className='logo' src="static/handshake56.png" />
+				<img className='logo' src="/static/handshake56.png" />
 				<ul className='nav-ul'>
 					<li><Link to="/">Home</Link></li>
 					<li><Link to="/offer">Ofrecer</Link></li>

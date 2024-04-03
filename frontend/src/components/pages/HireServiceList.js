@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from 'react-router-dom';
 // Redux
 import { connect, useSelector, useDispatch } from 'react-redux'
 import { createContract } from '../../redux/actions/contracts';
@@ -52,9 +53,11 @@ const HireServiceList = ({ services }) => {
 				{services.filter(service => service.provider !== auth.user.id).map((service, id) => (
 					<Row key={service.id} className='service-row'>
 						<Col md={2}>
+							<Link to={`/profile/${service.user.id}`}>
 							<div className="service-card-img">
 								<img src={service.user.image} alt={`Service ${service.id}`} className="service-user-photo" />
 							</div>
+							</Link>
 						</Col>
 						<Col md={5}>
 							<div className="service-card">
@@ -71,7 +74,11 @@ const HireServiceList = ({ services }) => {
 							<div className="service-card">
 								<h3>Provider</h3>
 								<hr />
-								<h5>{service.user.first_name} {service.user.last_name}</h5>
+								<h3>
+									<Link to={`/profile/${service.user.id}`}>
+										{service.user.first_name} {service.user.last_name}
+									</Link>
+								</h3>
 								<p>{service.user.email}</p>
 								<p>{service.user.phone}</p>
 								<p>{service.user.location.properties.city + ', ' + service.user.location.properties.province}</p>

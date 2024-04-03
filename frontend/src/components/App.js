@@ -14,6 +14,7 @@ import Hire from './pages/Hire';
 import Services from './pages/Services';
 import Profile from './pages/Profile';
 import Login from './auth/Login';
+import ProfilePublic from './pages/ProfilePublic';
 import Register from './auth/Register';
 import { ToastContainer } from "react-toastify";
 
@@ -34,6 +35,7 @@ class App extends Component {
 								<Route path='/services' element={<Services />} />
 								<Route path='/offer' element={<Offer />} />
 								<Route path='/hire' element={<Hire />} />
+								<Route path='/profile/:user_id' element={<ProfilePublic />} />
 								<Route path='/profile' element={<Profile />} />
 							</Route>
 							<Route path="/logout" element={<Login />} />
