@@ -38,6 +38,8 @@ class Service(models.Model):
         max_digits=10, decimal_places=2, default=None)
     full_day_price = models.DecimalField(
         max_digits=10, decimal_places=2, default=None)
+    image = models.ImageField(
+        upload_to='images/', default='images/admindefaultservice.jpg', null=True, blank=True)
     subcategory = models.ForeignKey(
         Subcategory, on_delete=models.CASCADE, related_name='service_subcategory')
     provider = models.ForeignKey(

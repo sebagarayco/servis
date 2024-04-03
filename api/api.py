@@ -3,6 +3,7 @@ from django.contrib.gis.geos import Point
 from rest_framework import viewsets, generics, permissions, mixins
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.parsers import MultiPartParser, FormParser
 from knox.models import AuthToken
 # Models
 from users.models import ServisUser
@@ -99,6 +100,7 @@ class SubcategoryView(viewsets.ModelViewSet):
 class ServiceView(viewsets.ModelViewSet):
     serializer_class = ServiceSerializer
     queryset = Service.objects.all()
+    parser_classes = (MultiPartParser, FormParser)
     
     def create(self, request, *args, **kwargs):
         # TODO: Handle comments

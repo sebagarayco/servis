@@ -149,12 +149,13 @@ class ServiceSerializer(ModelSerializer):
         ModelSerializer (_type_): Service serializer
     """
     subcategory = SubCategorySerializer(read_only=True)
+    image = serializers.ImageField(required=False)
     user = SerializerMethodField()
 
     class Meta:
         model = Service
         fields = ('id', 'description', 'provider', 'user', 'subcategory',
-                  'hourly_price', 'full_day_price', 'created', 'updated')
+                  'hourly_price', 'full_day_price', 'created', 'updated', 'image')
 
     def get_user(self, obj):
         user = ServisUser.objects.get(id=obj.provider.id)

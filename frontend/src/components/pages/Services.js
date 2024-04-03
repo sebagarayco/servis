@@ -34,7 +34,7 @@ export class Services extends Component {
 							this.props.services.map(service => (
 								<Col key={service.id}>
 									<Card>
-										<Card.Img variant="top" src={service.user.image} />
+										<Card.Img variant="top" src={service.image} />
 										<Card.Body>
 											<Card.Title>{service.description}</Card.Title>
 											<Card.Text>{service.subcategory.name}</Card.Text>

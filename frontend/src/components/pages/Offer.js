@@ -70,7 +70,13 @@ export class Offer extends Component {
 		console.log('Selected ' + e.target.name + ' value: ' + e.target.value);
 	}
 
-	onSubmit = (e) => {
+	handleImageChange = (e) => {
+		this.setState({
+			image: e.target.files[0]
+		});
+	}
+
+/* 	onSubmit = (e) => {
 		e.preventDefault();
 		this.setState({ loading: true });
 		const { category, subcategory, description, hourly_price, full_day_price } = this.state;
@@ -80,7 +86,27 @@ export class Offer extends Component {
 		console.log('Service to be created: ', service)
 		this.props.createService(service);
 		setTimeout(() => { this.setState({ loading: false }) }, 1500); // Loading timeout
-	};
+	}; */
+
+	onSubmit = (e) => {
+		e.preventDefault();
+		this.setState({ loading: true });
+
+		const formData = new FormData();
+		formData.append('category', this.state.category);
+		formData.append('subcategory', this.state.subcategory);
+		formData.append('description', this.state.description);
+		formData.append('hourly_price', this.state.hourly_price.toString()); // Ensure numeric values are converted to strings
+		formData.append('full_day_price', this.state.full_day_price.toString()); // Ensure numeric values are converted to strings
+		formData.append('provider', this.props.auth.user.id);
+		if (this.state.image) {
+			formData.append('image', this.state.image, this.state.image.name);
+		}
+		console.log('Service to be created: ', formData)
+		this.props.createService(formData);
+		setTimeout(() => { this.setState({ loading: false }) }, 1500);
+	}
+
 
 	render() {
 		const tooltip = (
@@ -153,7 +179,7 @@ export class Offer extends Component {
 								<Form.Label htmlFor="basic-url">Description (required)</Form.Label>
 								<InputGroup size="lg" >
 									<InputGroup.Text id="basic-addon1" >< MdOutlineDescription /></InputGroup.Text>
-									<Form.Control as="textarea" name='description' required='required' rows={7} placeholder="Describe the services you offer, including key features and benefits." onChange={this.handleInputChange} />
+									<Form.Control as="textarea" name='description' required='required' rows={8} placeholder="Describe the services you offer, including key features and benefits." onChange={this.handleInputChange} />
 								</InputGroup>
 							</Col>
 							<Col xs lg={4}>
@@ -164,6 +190,7 @@ export class Offer extends Component {
 										<Form.Control type='text' disabled value={this.props.auth ? location : 'N/A'} />
 									</InputGroup>
 								</OverlayTrigger>
+								<hr />
 								<Form.Group controlId="metodoPago">
 									<Form.Label>Payment Method</Form.Label>
 									<Form.Control as="select" >
@@ -172,13 +199,11 @@ export class Offer extends Component {
 										<option value="transfer">Wire transfer</option>
 									</Form.Control>
 								</Form.Group>
-								<Form.Label htmlFor="basic-url">Availability</Form.Label>
-								<InputGroup size="lg" className='offer-checks'>
-									<Form.Check type="switch" id="weekdays" label="Weekdays (8AM/6PM)" defaultChecked="true" />
-									<Form.Check type="switch" id="weekends" label="Weekends (8AM/6PM)" />
-									<Form.Check type="switch" id="holidays" label="Public Holidays" />
-									<Form.Check type="switch" id="materials" label="Buy of materials" />
-								</InputGroup>
+								<hr />
+								<Form.Group>
+									<Form.Label>Service Image</Form.Label>
+									<Form.Control className='form-control-lg' type="file" onChange={this.handleImageChange} />
+								</Form.Group>
 							</Col>
 						</Row>
 						<Row>
@@ -211,7 +236,7 @@ export class Offer extends Component {
 												<td>$ {service.full_day_price}</td>
 												<td><TimestampConverter timestamp={service.updated} /></td>
 												<td>
-													<Button variant='outline-secondary'><FaPencilAlt /></Button>
+													{/* <Button variant='outline-secondary'><FaPencilAlt /></Button> */}
 													<Button variant='outline-danger' onClick={() => this.handleDeleteClick(service)}>X</Button>
 													<DeleteConfirmationModal
 														show={this.state.modalVisibility[service.id] || false}
