@@ -3,14 +3,13 @@ from django.contrib.gis.geos import Point
 from rest_framework import viewsets, generics, permissions, mixins
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from knox.models import AuthToken
 # Models
 from users.models import ServisUser
-from servis.models import Category, Subcategory, Service, Contract, ContractComments
+from servis.models import Category, Subcategory, Service, Contract, ContractComments, ServiceReview
 # Serializers
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, CategorySerializer, SubCategorySerializer, ServiceSerializer, UserProfileSerializer, LocationSerializer, ContractSerializer, ContractCommentsSerializer
-
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, CategorySerializer, SubCategorySerializer, ServiceSerializer, UserProfileSerializer, LocationSerializer, ContractSerializer, ContractCommentsSerializer, ServiceReviewSerializer
 
 class RegisterAPI(generics.GenericAPIView):
     serializer_class = RegisterSerializer
@@ -100,7 +99,7 @@ class SubcategoryView(viewsets.ModelViewSet):
 class ServiceView(viewsets.ModelViewSet):
     serializer_class = ServiceSerializer
     queryset = Service.objects.order_by('-created')
-    parser_classes = (MultiPartParser, FormParser)
+    parser_classes = (MultiPartParser, FormParser, JSONParser)
     
     def create(self, request, *args, **kwargs):
         # TODO: Handle comments
@@ -111,6 +110,10 @@ class ServiceView(viewsets.ModelViewSet):
         serializer.save(subcategory=subcategory)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+
+class ServiceReviewView(viewsets.ModelViewSet):
+    serializer_class = ServiceReviewSerializer
+    queryset = ServiceReview.objects.all()
 
 class ContractCommentView(viewsets.ModelViewSet):
     serializer_class = ContractCommentsSerializer

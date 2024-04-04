@@ -1,11 +1,12 @@
 from .utils import get_latitude_longitude
 from rest_framework import serializers
-from rest_framework.serializers import ModelSerializer, SerializerMethodField
+from rest_framework.serializers import ModelSerializer, SerializerMethodField, ChoiceField
 from rest_framework_gis.serializers import GeoFeatureModelSerializer, GeometrySerializerMethodField
 from django.contrib.gis.geos import Point
+from django.db.models import Avg
 from django.contrib.auth import authenticate
 # Models
-from servis.models import Category, Subcategory, Service, Contract, ContractComments
+from servis.models import Category, Subcategory, Service, Contract, ContractComments, ServiceReview
 from users.models import ServisUser, Location
 
 
@@ -142,25 +143,59 @@ class CategorySerializer(ModelSerializer):
         read_only_fields = ('subcategories',)
 
 
+class ServiceReviewSerializer(ModelSerializer):
+    """ Service Review Serializer
+
+    Args:
+        ModelSerializer (_type_): Service Review serializer
+    """
+
+    class Meta:
+        model = ServiceReview
+        fields = ('id', 'review', 'rating', 'user', 'created')
+
 class ServiceSerializer(ModelSerializer):
     """ Service Serializer
 
     Args:
         ModelSerializer (_type_): Service serializer
     """
-    subcategory = SubCategorySerializer(read_only=True)
-    image = serializers.ImageField(required=False)
     user = SerializerMethodField()
+    subcategory = SubCategorySerializer(read_only=True)
+    description = serializers.CharField(required=False)
+    image = serializers.ImageField(required=False)
+    service_reviews = ServiceReviewSerializer(many=True, required=False)
+    average_rating = serializers.SerializerMethodField()
 
     class Meta:
         model = Service
         fields = ('id', 'description', 'provider', 'user', 'subcategory',
-                  'hourly_price', 'full_day_price', 'created', 'updated', 'image')
+                  'hourly_price', 'full_day_price', 'created', 'updated', 'image', 'service_reviews', 'average_rating')
+
+    def get_average_rating(self, obj):
+        return obj.average_rating
 
     def get_user(self, obj):
         user = ServisUser.objects.get(id=obj.provider.id)
         return UserSerializer(user).data
 
+    def update(self, instance, validated_data):
+        reviews_data = validated_data.pop('service_reviews', [])
+
+        instance.description = validated_data.get(
+            'description', instance.description)
+        instance.image = validated_data.get('image', instance.image)
+        instance.hourly_price = validated_data.get(
+            'hourly_price', instance.hourly_price)
+        instance.full_day_price = validated_data.get(
+            'full_day_price', instance.full_day_price)
+        instance.save()
+
+        print('Pase por ServiceSerializer UPDATE - reviews_data: ', reviews_data)
+        for review_data in reviews_data:
+            ServiceReview.objects.create(**review_data, service=instance)
+
+        return instance
 
 class ContractCommentsSerializer(ModelSerializer):
     """Contract Comments Serializer
@@ -168,7 +203,6 @@ class ContractCommentsSerializer(ModelSerializer):
     Args:
         ModelSerializer (_type_): Contract Comments Serializer
     """
-    # user = UserSerializer(read_only=True)
 
     class Meta:
         model = ContractComments
@@ -179,13 +213,9 @@ class ContractCommentsSerializer(ModelSerializer):
         ret['user'] = UserSerializer(instance.user).data
         return ret
 
-class ContractSerializer(ModelSerializer):
-    """Contract Serializer
 
-    Args:
-        ModelSerializer (_type_): Contract Serializer
-    """
-    status = serializers.CharField(source='status.name', required=False)
+class ContractSerializer(serializers.ModelSerializer):
+    """Contract Serializer"""
     contract_comments = ContractCommentsSerializer(many=True, required=False)
 
     class Meta:
@@ -193,7 +223,6 @@ class ContractSerializer(ModelSerializer):
         fields = ('id', 'status', 'is_active', 'description', 'consumer', 'provider',
                   'amount', 'service', 'contract_comments', 'created', 'updated')
 
-    # See obj on GET request and create, update with ID
     def to_representation(self, instance):
         ret = super().to_representation(instance)
         ret['service'] = ServiceSerializer(instance.service).data

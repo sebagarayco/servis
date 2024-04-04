@@ -1,4 +1,4 @@
-import { GET_SERVICES, CREATE_SERVICE, DELETE_SERVICE, UPDATE_SERVICE } from '../actions/types.js';
+import { GET_SERVICES, CREATE_SERVICE, DELETE_SERVICE, UPDATE_SERVICE, ADD_SERVICE_REVIEW } from '../actions/types.js';
 
 const initialState = {
 	services: []
@@ -20,6 +20,13 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				...action.payload,
+			};
+		case ADD_SERVICE_REVIEW:
+			// TODO: Handle comments
+			console.log('Pase por REDUCER addServiceReview.js', action.payload)
+			return {
+				...state,
+				services: state.services.map((service) => (service.id === action.payload.id ? action.payload : service)),
 			};
 		case DELETE_SERVICE:
 			// TODO: Handle comments

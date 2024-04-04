@@ -2,7 +2,7 @@ import axios from 'axios';
 import { returnErrors } from './messages';
 import { tokenConfig } from './auth';
 import { toast } from "react-toastify";
-import { GET_SERVICES, CREATE_SERVICE, CREATE_SERVICE_FAILURE, DELETE_SERVICE, UPDATE_SERVICE, DELETE_SERVICE_FAILURE } from './types';
+import { GET_SERVICES, CREATE_SERVICE, CREATE_SERVICE_FAILURE, DELETE_SERVICE, DELETE_SERVICE_FAILURE, ADD_SERVICE_REVIEW } from './types';
 
 // GET SERVICES
 export const getServices = () => (dispatch, getState) => {
@@ -63,4 +63,19 @@ export const deleteService = (service) => (dispatch) => {
 			});
 			toast.error("Unable to delete service. Check if there are open contracts.", { autoClose: 2000 });
 		});
+};
+
+// ADD SERVICE REVIEW
+export const addServiceReview = (id, payload) => (dispatch) => {
+	axios
+		.put(`/api/services/${id}/`, payload)
+		.then((res) => {
+			console.log('Pase por addServiceReview.js', res.data, payload)
+			dispatch({
+				type: ADD_SERVICE_REVIEW,
+				payload: res.data,
+			});
+			toast.info("Review sent! 💫 💫", { autoClose: 2000 });
+		})
+		.catch((err) => dispatch(returnErrors(err.response.data, err.response.status)));
 };

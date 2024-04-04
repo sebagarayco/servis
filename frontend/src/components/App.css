@@ -26,7 +26,6 @@
 	font-size: 1.5rem;
 }
 
-
 /* Nav */
 .logo {
 	float: left;
@@ -411,6 +410,15 @@ tbody tr td:last-child {
 	font-size: 1.25rem;
 }
 
+/* Contracts */
+.contract-table-link {
+	color: black;
+}
+
+.contract-table-link:hover {
+	text-decoration: none;
+	color: black;
+}
 /* Login & Register*/
 .auth-main {
 	display: flex;

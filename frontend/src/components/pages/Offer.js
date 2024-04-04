@@ -77,18 +77,6 @@ export class Offer extends Component {
 		});
 	}
 
-/* 	onSubmit = (e) => {
-		e.preventDefault();
-		this.setState({ loading: true });
-		const { category, subcategory, description, hourly_price, full_day_price } = this.state;
-		const provider = this.props.auth.user.id;
-		const service = { category, subcategory, description, hourly_price, full_day_price, provider };
-		// TODO: Handle comments
-		console.log('Service to be created: ', service)
-		this.props.createService(service);
-		setTimeout(() => { this.setState({ loading: false }) }, 1500); // Loading timeout
-	}; */
-
 	onSubmit = (e) => {
 		e.preventDefault();
 		this.setState({ loading: true });
@@ -224,7 +212,6 @@ export class Offer extends Component {
 											<th>Description</th>
 											<th>Price per hour ($)</th>
 											<th>Full Day ($)</th>
-											<th>Last update</th>
 											<th>Actions</th>
 										</tr>
 									</thead>
@@ -235,7 +222,6 @@ export class Offer extends Component {
 												<td>{service.description}</td>
 												<td>$ {service.hourly_price}</td>
 												<td>$ {service.full_day_price}</td>
-												<td><TimestampConverter timestamp={service.updated} /></td>
 												<td>
 													{/* <Button variant='outline-secondary'><FaPencilAlt /></Button> */}
 													<Button variant='outline-danger' onClick={() => this.handleDeleteClick(service)}><MdOutlineDeleteForever /></Button>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+
 // Bootstrap
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
@@ -9,10 +10,12 @@ import { IoEyeOutline } from "react-icons/io5";
 import { connect, useSelector } from 'react-redux';
 import EditContractModal from '../utils/EditContractModal';
 import ViewContractModal from '../utils/ViewContractModal';
+import ReviewContractModal from '../utils/ReviewContractModal'; 
 
 const ProfileContractTable = ({ contracts }) => {
 	const auth = useSelector(state => state.auth);
 	const [showViewModal, setShowViewModal] = useState(false);
+	const [showReviewModal, setShowReviewModal] = useState(false); 
 	const [selectedContract, setSelectedContract] = useState(null);
 	const navigate = useNavigate();
 	// New state to hold the current comments for the selected contract
@@ -42,6 +45,17 @@ const ProfileContractTable = ({ contracts }) => {
 		setShowViewModal(false);
 	};
 
+	const handleReview = (contract) => {
+		// Show review modal when "Review" button is clicked
+		setSelectedContract(contract);
+		setShowReviewModal(true);
+	};
+
+	const handleCloseReviewModal = () => {
+		// Close review modal
+		setShowReviewModal(false);
+	};
+
 	const handleNewServiceClick = () => {
 		// Redirect to "/hire" when the button is clicked
 		navigate('/hire');
@@ -55,6 +69,7 @@ const ProfileContractTable = ({ contracts }) => {
 						<th>Estado</th>
 						<th>Detalle</th>
 						<th>Categoría</th>
+						<th>Proveedor</th>
 						<th>Acciones</th>
 					</tr>
 				</thead>
@@ -71,7 +86,7 @@ const ProfileContractTable = ({ contracts }) => {
 												: contract.status === 'En progreso'
 													? 'success'
 													: contract.status === 'Completado'
-														? 'primary'
+														? 'info'
 														: contract.status === 'Cancelado'
 															? 'secondary'
 															: contract.status === 'Rechazado'
@@ -85,9 +100,19 @@ const ProfileContractTable = ({ contracts }) => {
 								<td>{contract.description}</td>
 								<td>{contract.service.subcategory.name} ({contract.service.subcategory.category})</td>
 								<td>
+									<Link className='contract-table-link' to={`/profile/${contract.provider.id}`}>
+										<strong>{contract.provider.first_name} {contract.provider.last_name}</strong>
+									</Link>
+								</td>
+								<td>
 									<Button size="md" variant="outline-info" onClick={() => handleEdit(contract)}>
 										<IoEyeOutline />
 									</Button>
+									{contract.status === 'Completado' && (
+										<Button size="md" variant="light" style={{ marginLeft: '5px', borderColor: '#ffc107' }} onClick={() => handleReview(contract)}>
+											⭐️
+										</Button>
+									)}
 								</td>
 							</tr>
 						))
@@ -105,9 +130,17 @@ const ProfileContractTable = ({ contracts }) => {
 			{selectedContract && (
 				<ViewContractModal
 					contract={selectedContract}
-					comments={currentComments} // Pass the currentComments as a prop to the modal
+					comments={currentComments} 
 					show={showViewModal}
 					handleClose={handleCloseModal}
+				/>
+			)}
+
+			{selectedContract && (
+				<ReviewContractModal
+					contract={selectedContract}
+					show={showReviewModal}
+					handleClose={handleCloseReviewModal}
 				/>
 			)}
 		</Container>

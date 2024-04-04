@@ -62,7 +62,7 @@ class Profile extends Component {
 								<Col xs={4} md={6} lg={9} className="profile-services">
 									<Row>
 										<h2>
-											<RiToolsFill /> Mis servicios
+											<RiToolsFill /> Mis servicios ofrecidos
 										</h2>
 										<p>Mantené actualizado tu porfolio de servicios.</p>
 										<ProfileServiceTable services={this.props.services.services} />
@@ -70,7 +70,7 @@ class Profile extends Component {
 									<hr />
 									<Row>
 										<h2>
-											<MdOutlineCallReceived /> Solicitudes recibidas
+											<MdOutlineCallReceived /> Mis trabajos realizados
 										</h2>
 										<p>Estos son los pedidos de contratación que recibiste.</p>
 										<ProfileContractRequest contracts={this.props.contracts.contracts} />

@@ -113,7 +113,7 @@ const ProfileContractRequest = ({ contracts }) => {
 												: contract.status === 'En progreso'
 													? 'success'
 													: contract.status === 'Completado'
-														? 'primary'
+														? 'info'
 														: contract.status === 'Cancelado'
 															? 'secondary'
 															: contract.status === 'Rechazado'

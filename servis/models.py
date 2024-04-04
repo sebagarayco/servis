@@ -1,5 +1,6 @@
 import ccard
 import random
+from django.db.models import Avg
 from django.conf import settings
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
@@ -44,46 +45,41 @@ class Service(models.Model):
         Subcategory, on_delete=models.CASCADE, related_name='service_subcategory')
     provider = models.ForeignKey(
         ServisUser, default=None, on_delete=models.CASCADE, related_name='offer_provider')
-
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def average_rating(self) -> float:
+        return ServiceReview.objects.filter(service=self).aggregate(Avg("rating"))["rating__avg"] or 0
 
     def __str__(self):
         return "%s - %s (%s)" % (self.description, self.subcategory, self.provider)
 
 class ServiceReview(models.Model):
-    description = models.CharField(max_length=1000)
-    rating = models.DecimalField(max_digits=2, decimal_places=0)
-    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    service = models.ForeignKey(
+        Service, on_delete=models.CASCADE, related_name='service_reviews')
+    review = models.CharField(max_length=500, null=True, blank=True)
+    user = models.ForeignKey(ServisUser, default=None,
+                             on_delete=models.CASCADE)
+    rating = models.IntegerField(default=0)
+    created = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.name
 
-
-class ContractStatus(models.Model):
-    status = [
+class Contract(models.Model):
+    STATUS = [
         ('En espera', 'En espera'),
         ('En progreso', 'En progreso'),
         ('Completado', 'Completado'),
         ('Rechazado', 'Rechazado'),
         ('Cancelado', 'Cancelado')
     ]
-    name = models.CharField(choices=status, default='En espera', max_length=20)
 
-    class Meta:
-        verbose_name_plural = "Contract Status"
-
-    def __str__(self):
-        return self.name
-
-
-class Contract(models.Model):
     is_active = models.BooleanField(default=True)
     description = models.CharField(max_length=500, default=None)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     service = models.ForeignKey(Service, on_delete=models.RESTRICT)
-    status = models.ForeignKey(
-        ContractStatus, on_delete=models.RESTRICT, related_name='contract_status', default='1')
+    status = models.CharField(
+        choices=STATUS, default=STATUS[0][0], max_length=20)
     consumer = models.ForeignKey(
         ServisUser, default=None, on_delete=models.CASCADE, related_name='hire_consumer')
     provider = models.ForeignKey(

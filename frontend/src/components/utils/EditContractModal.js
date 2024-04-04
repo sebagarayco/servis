@@ -40,7 +40,7 @@ const EditContractModal = ({ contract, show, handleClose }) => {
 		}
 	};
 
-	const stateOptions = ["On-hold", "In-progress", "Completed", "Rejected"].filter(state => state !== contract.status).map(state => (
+	const stateOptions = ["En espera", "En progreso", "Completado", "Rechazado", "Cancelado"].filter(state => state !== contract.status.name).map(state => (
 		<option key={state} value={state}>{state}</option>
 	));
 
@@ -70,12 +70,14 @@ const EditContractModal = ({ contract, show, handleClose }) => {
 							{stateOptions}
 						</Form.Select>
 						<Form.Text id="passwordHelpBlock" muted>
-							On-hold: Pendiente de aprobación por el proveedor del servicio<br />
-							In-progress: El proveedor aprueba realizar el trabajo<br />
-							Completed: El proveedor finalizó el trabajo<br />
-							Rejected: El proveedor rechaza realizar el trabajo<br />
+							En Espera: Pendiente de aprobación por el proveedor del servicio<br />
+							En Progreso: El proveedor aprueba realizar el trabajo<br />
+							Completado: El proveedor finalizó el trabajo<br />
+							Rechazado: El proveedor rechaza realizar el trabajo<br />
+							Cancelado: El proveedor cancela el trabajo<br />
 						</Form.Text>
 					</Form.Group>
+					<hr />
 					<Form.Group>
 						<Form.Label>Razón de cambio de estado:</Form.Label>
 						<Form.Control

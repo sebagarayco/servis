@@ -40,43 +40,40 @@ export class Services extends Component {
 						<h1>Servicios</h1>
 					</Row>
 					<hr />
+					{this.state.loading && <ServisSpinner />}
 					<Row xs={1} md={2} lg={3}>
-						{this.state.loading ? (
-							<ServisSpinner />
-						) : (
-								slicedServices.map(service => (
-									<Col key={service.id} xs={12} sm={6} md={4} className='services-col'>
-										<Link to={`/hire`} className="services-link">
-										<Card className="services-card">
-											<Card.Img
-												variant="top"
-												src={service.image || 'https://via.placeholder.com/300'}
-												className="card-image"
-											/>
-											<Card.Body className="d-flex flex-column justify-content-between">
-												<div>
-													<Card.Title>{service.description}</Card.Title>
-													<Card.Text>
-														<h4>
-																<Badge pill bg='warning' text='dark'>{service.subcategory.name}</Badge> <Badge pill bg='info' >{service.subcategory.category}</Badge>
-														</h4>
-													</Card.Text>
-													<Card.Text>
-														<strong>Precio por hora:</strong> ${service.hourly_price}
-													</Card.Text>
-													<Card.Text>
-														<strong>Precio por día completo:</strong> ${service.full_day_price}
-													</Card.Text>
-													<Card.Text>
-														<strong>Publicado el:</strong> {new Date(service.created).toLocaleString(('es-ES'))}
-													</Card.Text>
-												</div>
-												</Card.Body>
-											</Card>
-										</Link>
-								</Col>
-							))
-						)}
+						{slicedServices.map(service => (
+							<Col key={service.id} xs={12} sm={6} md={4} className='services-col'>
+								<Link to={`/hire`} className="services-link">
+									<Card className="services-card">
+										<Card.Img
+											variant="top"
+											src={service.image || 'https://via.placeholder.com/300'}
+											className="card-image"
+										/>
+										<Card.Body className="d-flex flex-column justify-content-between">
+											<div>
+												<Card.Title>{service.description}</Card.Title>
+												<Card.Text>
+													<h4>
+														<Badge pill bg='warning' text='dark'>{service.subcategory.name}</Badge> <Badge pill bg='info' >{service.subcategory.category}</Badge>
+													</h4>
+												</Card.Text>
+												<Card.Text>
+													<strong>Precio por hora:</strong> ${service.hourly_price}
+												</Card.Text>
+												<Card.Text>
+													<strong>Precio por día completo:</strong> ${service.full_day_price}
+												</Card.Text>
+												<Card.Text>
+													<strong>Publicado el:</strong> {new Date(service.created).toLocaleString(('es-ES'))}
+												</Card.Text>
+											</div>
+										</Card.Body>
+									</Card>
+								</Link>
+							</Col>
+						))}
 					</Row>
 				</Container>
 			</div>
