@@ -315,8 +315,20 @@ tbody tr td:last-child {
 	box-shadow: 0px 7px 20px rgba(203, 200, 200, 0.656);
 }
 
+.services-card:hover {
+	background-color: #f7e2a3
+}
 .services-col {
 	margin-bottom: 25px;
+}
+.services-link {
+	text-decoration: none;
+	color: black;
+}
+
+.services-link:hover {
+	text-decoration: none;
+	color: black;
 }
 /* Hire */
 .service-list {

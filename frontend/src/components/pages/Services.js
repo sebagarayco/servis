@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import Nav from '../layout/Nav';
 import ServisSpinner from '../utils/ServisSpinner';
 import { Row, Col, Container, Card, Badge } from 'react-bootstrap';
 // Actions
 import { getServices } from '../../redux/actions/services';
+import { getAllUsers } from '../../redux/actions/userdata';
 // Redux
 import { connect } from 'react-redux';
 
@@ -21,11 +23,14 @@ export class Services extends Component {
 		}, 1000);
 
 		this.props.getServices();
+		this.props.getAllUsers();
 	}
 
 	render() {
-		const { services } = this.props;
-		const slicedServices = services.slice(0, 12); 
+		const { services, auth } = this.props;
+		const slicedServices = services
+			.filter(service => service.provider !== auth.user.id)
+			.slice(0, 12);
 
 		return (
 			<div>
@@ -35,12 +40,13 @@ export class Services extends Component {
 						<h1>Servicios</h1>
 					</Row>
 					<hr />
-					<Row xs={1} md={2} lg={3} >
+					<Row xs={1} md={2} lg={3}>
 						{this.state.loading ? (
 							<ServisSpinner />
 						) : (
 								slicedServices.map(service => (
 									<Col key={service.id} xs={12} sm={6} md={4} className='services-col'>
+										<Link to={`/hire`} className="services-link">
 										<Card className="services-card">
 											<Card.Img
 												variant="top"
@@ -52,7 +58,7 @@ export class Services extends Component {
 													<Card.Title>{service.description}</Card.Title>
 													<Card.Text>
 														<h4>
-															<Badge pill bg='secondary'>{service.subcategory.name}</Badge>
+																<Badge pill bg='warning' text='dark'>{service.subcategory.name}</Badge> <Badge pill bg='info' >{service.subcategory.category}</Badge>
 														</h4>
 													</Card.Text>
 													<Card.Text>
@@ -65,8 +71,9 @@ export class Services extends Component {
 														<strong>Publicado el:</strong> {new Date(service.created).toLocaleString(('es-ES'))}
 													</Card.Text>
 												</div>
-										</Card.Body>
-									</Card>
+												</Card.Body>
+											</Card>
+										</Link>
 								</Col>
 							))
 						)}
@@ -78,7 +85,8 @@ export class Services extends Component {
 }
 
 const mapStateToProps = state => ({
+	auth: state.auth,
 	services: state.services.services,
 });
 
-export default connect(mapStateToProps, { getServices })(Services);
+export default connect(mapStateToProps, { getServices, getAllUsers })(Services);
