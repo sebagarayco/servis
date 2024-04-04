@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Nav from '../layout/Nav';
 import ServisSpinner from '../utils/ServisSpinner';
-import { Row, Col, Container, Card, Button } from 'react-bootstrap';
+import { Row, Col, Container, Card, Badge } from 'react-bootstrap';
 // Actions
 import { getServices } from '../../redux/actions/services';
 // Redux
@@ -22,29 +22,49 @@ export class Services extends Component {
 
 		this.props.getServices();
 	}
+
 	render() {
+		const { services } = this.props;
+		const slicedServices = services.slice(0, 12); 
+
 		return (
 			<div>
 				<Nav />
 				<Container>
-					<Row xs={1} md={2} lg={3} className="g-4">
+					<Row>
+						<h1>Servicios</h1>
+					</Row>
+					<hr />
+					<Row xs={1} md={2} lg={3} >
 						{this.state.loading ? (
 							<ServisSpinner />
 						) : (
-							this.props.services.map(service => (
-								<Col key={service.id}>
-									<Card>
-										<Card.Img variant="top" src={service.image} />
-										<Card.Body>
-											<Card.Title>{service.description}</Card.Title>
-											<Card.Text>{service.subcategory.name}</Card.Text>
-											<Card.Text>
-												<strong>Precio por hora:</strong> ${service.hourly_price}
-											</Card.Text>
-											<Card.Text>
-												<strong>Precio por día completo:</strong> ${service.full_day_price}
-											</Card.Text>
-											<Button variant="primary">Contratar</Button>
+								slicedServices.map(service => (
+									<Col key={service.id} xs={12} sm={6} md={4} className='services-col'>
+										<Card className="services-card">
+											<Card.Img
+												variant="top"
+												src={service.image || 'https://via.placeholder.com/300'}
+												className="card-image"
+											/>
+											<Card.Body className="d-flex flex-column justify-content-between">
+												<div>
+													<Card.Title>{service.description}</Card.Title>
+													<Card.Text>
+														<h4>
+															<Badge pill bg='secondary'>{service.subcategory.name}</Badge>
+														</h4>
+													</Card.Text>
+													<Card.Text>
+														<strong>Precio por hora:</strong> ${service.hourly_price}
+													</Card.Text>
+													<Card.Text>
+														<strong>Precio por día completo:</strong> ${service.full_day_price}
+													</Card.Text>
+													<Card.Text>
+														<strong>Publicado el:</strong> {new Date(service.created).toLocaleString(('es-ES'))}
+													</Card.Text>
+												</div>
 										</Card.Body>
 									</Card>
 								</Col>

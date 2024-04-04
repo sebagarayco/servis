@@ -6,6 +6,8 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 
 export class HomeCards extends Component {
+
+
 	render() {
 		return (
 			<div>

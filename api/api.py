@@ -99,7 +99,7 @@ class SubcategoryView(viewsets.ModelViewSet):
 
 class ServiceView(viewsets.ModelViewSet):
     serializer_class = ServiceSerializer
-    queryset = Service.objects.all()
+    queryset = Service.objects.order_by('-created')
     parser_classes = (MultiPartParser, FormParser)
     
     def create(self, request, *args, **kwargs):

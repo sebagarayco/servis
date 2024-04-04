@@ -12,6 +12,7 @@ import DeleteConfirmationModal from '../utils/DeleteConfirmationModal';
 // Bootstrap
 import { Container, Row, Col, Form, InputGroup, Button, Table, Tooltip, OverlayTrigger } from 'react-bootstrap';
 // Icons
+import { MdOutlineDeleteForever } from "react-icons/md";
 import { MdHomeRepairService } from "react-icons/md";
 import { MdOutlineCleaningServices } from "react-icons/md";
 import { MdOutlineDescription } from "react-icons/md";
@@ -237,7 +238,7 @@ export class Offer extends Component {
 												<td><TimestampConverter timestamp={service.updated} /></td>
 												<td>
 													{/* <Button variant='outline-secondary'><FaPencilAlt /></Button> */}
-													<Button variant='outline-danger' onClick={() => this.handleDeleteClick(service)}>X</Button>
+													<Button variant='outline-danger' onClick={() => this.handleDeleteClick(service)}><MdOutlineDeleteForever /></Button>
 													<DeleteConfirmationModal
 														show={this.state.modalVisibility[service.id] || false}
 														onHide={() => this.setState(prevState => ({
