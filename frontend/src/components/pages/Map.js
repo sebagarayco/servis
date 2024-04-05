@@ -1,5 +1,6 @@
 // React
 import React from "react";
+import { Link } from "react-router-dom";
 // Redux
 import { connect, useSelector } from 'react-redux';
 // Leaflet
@@ -55,23 +56,24 @@ export function Map({ category, coordinates }) {
 						<Marker key={service.id} icon={ICON} position={[service.user.location.geometry.coordinates[0], service.user.location.geometry.coordinates[1]]}>
 							<Tooltip >
 								<div key={id}>
-									Username: {service.user.username}<br />
-									Name: {service.user.first_name} {service.user.last_name}<br />
-									E-mail: {service.user.email}<br />
+									<p>Click para abrir 👀</p>
 								</div>
 							</Tooltip>
 							< br />
 							<strong>Click to hire!</strong>
 							<Popup >
 								<div key={service.id}>
-									Username: {service.user.username}<br />
-									Name: {service.user.first_name} {service.user.last_name}<br />
-									E-mail: {service.user.email}<br />
+									<Link to={`/profile/${service.user.id}`}>
+										{service.user.first_name} {service.user.last_name}
+									</Link>
+									<p>Total Services: { } </p>
 								</div>
 								<br />
+								<Link to={'/hire'}>
 								<Button className="btn btn-warning">
 									<FaFileContract /> Hire
 								</Button>
+								</Link>
 							</Popup>
 						</Marker>
 					))
@@ -90,15 +92,17 @@ export function Map({ category, coordinates }) {
 								<strong>Click to hire!</strong>
 							</Tooltip>
 							<Popup key={id}>
-								<div key={id}>
-									Username: {service.user.username}<br />
-									Name: {service.user.first_name} {service.user.last_name}<br />
-									E-mail: {service.user.email}<br />
+								<div key={service.id}>
+									<Link to={`/profile/${service.user.id}`}>
+										{service.user.first_name} {service.user.last_name}
+									</Link>
 								</div>
 								<br />
+								<Link to={'/hire'}>
 								<Button className="btn btn-warning">
 									<FaFileContract /> Hire
 								</Button>
+								</Link>
 							</Popup>
 						</Marker>
 					)))
