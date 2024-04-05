@@ -7,9 +7,9 @@ from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from knox.models import AuthToken
 # Models
 from users.models import ServisUser
-from servis.models import Category, Subcategory, Service, Contract, ContractComments, ServiceReview
+from servis.models import Category, Subcategory, Service, Contract, ContractComments, ContractReview
 # Serializers
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, CategorySerializer, SubCategorySerializer, ServiceSerializer, UserProfileSerializer, LocationSerializer, ContractSerializer, ContractCommentsSerializer, ServiceReviewSerializer
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, CategorySerializer, SubCategorySerializer, ServiceSerializer, UserProfileSerializer, LocationSerializer, ContractSerializer, ContractCommentsSerializer, ContractReviewSerializer
 
 class RegisterAPI(generics.GenericAPIView):
     serializer_class = RegisterSerializer
@@ -111,9 +111,9 @@ class ServiceView(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-class ServiceReviewView(viewsets.ModelViewSet):
-    serializer_class = ServiceReviewSerializer
-    queryset = ServiceReview.objects.all()
+class ContractReviewView(viewsets.ModelViewSet):
+    serializer_class = ContractReviewSerializer
+    queryset = ContractReview.objects.all()
 
 class ContractCommentView(viewsets.ModelViewSet):
     serializer_class = ContractCommentsSerializer

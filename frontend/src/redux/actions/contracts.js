@@ -2,7 +2,7 @@ import axios from 'axios';
 import { returnErrors } from './messages';
 import { tokenConfig } from './auth';
 import { toast } from "react-toastify";
-import { GET_CONTRACTS, CREATE_CONTRACT, DELETE_CONTRACT, UPDATE_CONTRACT, ADD_CONTRACT_COMMENT } from './types';
+import { GET_CONTRACTS, CREATE_CONTRACT, DELETE_CONTRACT, UPDATE_CONTRACT, ADD_CONTRACT_COMMENT, ADD_CONTRACT_REVIEW } from './types';
 
 // GET CONTRACTS
 export const getContracts = () => (dispatch, getState) => {
@@ -80,6 +80,22 @@ export const addContractComment = (id, payload) => (dispatch) => {
 				payload: res.data,
 			});
 			toast.info("Comentario entregado 📨", { autoClose: 1000 });
+		})
+		.catch((err) => dispatch(returnErrors(err.response.data, err.response.status)));
+};
+
+// ADD CONTRACT COMMENT
+export const addContractReview = (id, payload) => (dispatch) => {
+	console.log('Pase por addContractReview, payload: ', payload)
+	axios
+		.put(`/api/contracts/${id}/`, payload)
+		.then(res => {
+			console.log('Pase por addContractReview.js', res.data)
+			dispatch({
+				type: ADD_CONTRACT_REVIEW,
+				payload: res.data,
+			});
+			toast.info("Valoración agregada! ", { autoClose: 1000, icon: "⭐️" });
 		})
 		.catch((err) => dispatch(returnErrors(err.response.data, err.response.status)));
 };

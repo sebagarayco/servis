@@ -48,22 +48,8 @@ class Service(models.Model):
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 
-    @property
-    def average_rating(self) -> float:
-        return ServiceReview.objects.filter(service=self).aggregate(Avg("rating"))["rating__avg"] or 0
-
     def __str__(self):
         return "%s - %s (%s)" % (self.description, self.subcategory, self.provider)
-
-class ServiceReview(models.Model):
-    service = models.ForeignKey(
-        Service, on_delete=models.CASCADE, related_name='service_reviews')
-    review = models.CharField(max_length=500, null=True, blank=True)
-    user = models.ForeignKey(ServisUser, default=None,
-                             on_delete=models.CASCADE)
-    rating = models.IntegerField(default=0)
-    created = models.DateTimeField(auto_now_add=True)
-
 
 class Contract(models.Model):
     STATUS = [
@@ -90,8 +76,22 @@ class Contract(models.Model):
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 
+    # @property
+    # def average_rating(self) -> float:
+    #    return ContractReview.objects.filter(contract=self).aggregate(Avg("rating"))["rating__avg"] or 0
+
     def __str__(self):
         return f"{self.consumer} -> {self.provider} || {self.description}"
+
+
+class ContractReview(models.Model):
+    contract = models.ForeignKey(
+        Contract, on_delete=models.CASCADE, related_name='contract_reviews')
+    review = models.CharField(max_length=500, null=True, blank=True)
+    user = models.ForeignKey(ServisUser, default=None,
+                             on_delete=models.CASCADE)
+    rating = models.IntegerField(default=0)
+    created = models.DateTimeField(auto_now_add=True)
 
 class ContractComments(models.Model):
     contract = models.ForeignKey(

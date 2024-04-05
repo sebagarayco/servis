@@ -109,7 +109,7 @@ const ProfileContractTable = ({ contracts }) => {
 										<IoEyeOutline />
 									</Button>
 									{contract.status === 'Completado' && (
-										<Button size="md" variant="light" style={{ marginLeft: '5px', borderColor: '#ffc107' }} onClick={() => handleReview(contract)}>
+										<Button size="md" variant="light" style={{ marginLeft: '5px', borderColor: '#ffc107', backgroundColor: 'white' }} onClick={() => handleReview(contract)}>
 											⭐️
 										</Button>
 									)}

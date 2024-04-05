@@ -6,7 +6,7 @@ from django.contrib.gis.geos import Point
 from django.db.models import Avg
 from django.contrib.auth import authenticate
 # Models
-from servis.models import Category, Subcategory, Service, Contract, ContractComments, ServiceReview
+from servis.models import Category, Subcategory, Service, Contract, ContractComments, ContractReview
 from users.models import ServisUser, Location
 
 
@@ -143,15 +143,15 @@ class CategorySerializer(ModelSerializer):
         read_only_fields = ('subcategories',)
 
 
-class ServiceReviewSerializer(ModelSerializer):
-    """ Service Review Serializer
+class ContractReviewSerializer(ModelSerializer):
+    """ Contract Review Serializer
 
     Args:
-        ModelSerializer (_type_): Service Review serializer
+        ModelSerializer (_type_): Contract Review serializer
     """
 
     class Meta:
-        model = ServiceReview
+        model = ContractReview
         fields = ('id', 'review', 'rating', 'user', 'created')
 
 class ServiceSerializer(ModelSerializer):
@@ -164,38 +164,16 @@ class ServiceSerializer(ModelSerializer):
     subcategory = SubCategorySerializer(read_only=True)
     description = serializers.CharField(required=False)
     image = serializers.ImageField(required=False)
-    service_reviews = ServiceReviewSerializer(many=True, required=False)
-    average_rating = serializers.SerializerMethodField()
+    contract_reviews = ContractReviewSerializer(many=True, required=False)
 
     class Meta:
         model = Service
         fields = ('id', 'description', 'provider', 'user', 'subcategory',
-                  'hourly_price', 'full_day_price', 'created', 'updated', 'image', 'service_reviews', 'average_rating')
-
-    def get_average_rating(self, obj):
-        return obj.average_rating
+                  'hourly_price', 'full_day_price', 'created', 'updated', 'image', 'contract_reviews')
 
     def get_user(self, obj):
         user = ServisUser.objects.get(id=obj.provider.id)
         return UserSerializer(user).data
-
-    def update(self, instance, validated_data):
-        reviews_data = validated_data.pop('service_reviews', [])
-
-        instance.description = validated_data.get(
-            'description', instance.description)
-        instance.image = validated_data.get('image', instance.image)
-        instance.hourly_price = validated_data.get(
-            'hourly_price', instance.hourly_price)
-        instance.full_day_price = validated_data.get(
-            'full_day_price', instance.full_day_price)
-        instance.save()
-
-        print('Pase por ServiceSerializer UPDATE - reviews_data: ', reviews_data)
-        for review_data in reviews_data:
-            ServiceReview.objects.create(**review_data, service=instance)
-
-        return instance
 
 class ContractCommentsSerializer(ModelSerializer):
     """Contract Comments Serializer
@@ -217,11 +195,12 @@ class ContractCommentsSerializer(ModelSerializer):
 class ContractSerializer(serializers.ModelSerializer):
     """Contract Serializer"""
     contract_comments = ContractCommentsSerializer(many=True, required=False)
+    contract_reviews = ContractReviewSerializer(many=True, required=False)
 
     class Meta:
         model = Contract
         fields = ('id', 'status', 'is_active', 'description', 'consumer', 'provider',
-                  'amount', 'service', 'contract_comments', 'created', 'updated')
+                  'amount', 'service', 'contract_comments', 'contract_reviews', 'created', 'updated')
 
     def to_representation(self, instance):
         ret = super().to_representation(instance)
@@ -232,6 +211,7 @@ class ContractSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         contract_comments_data = validated_data.pop('contract_comments', [])
+        contract_reviews_data = validated_data.pop('contract_reviews', [])
 
         # Update Contract fields if provided
         instance.status = validated_data.get('status', instance.status)
@@ -250,5 +230,10 @@ class ContractSerializer(serializers.ModelSerializer):
         # Create new ContractComments for the updated Contract
         for comment_data in contract_comments_data:
             ContractComments.objects.create(**comment_data, contract=instance)
+
+        # Create new ContractReviews for the updated Contract
+        for review_data in contract_reviews_data:
+            ContractReview.objects.create(
+                **review_data, contract=instance)
 
         return instance

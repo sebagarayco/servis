@@ -64,18 +64,3 @@ export const deleteService = (service) => (dispatch) => {
 			toast.error("Unable to delete service. Check if there are open contracts.", { autoClose: 2000 });
 		});
 };
-
-// ADD SERVICE REVIEW
-export const addServiceReview = (id, payload) => (dispatch) => {
-	axios
-		.put(`/api/services/${id}/`, payload)
-		.then((res) => {
-			console.log('Pase por addServiceReview.js', res.data, payload)
-			dispatch({
-				type: ADD_SERVICE_REVIEW,
-				payload: res.data,
-			});
-			toast.info("Review sent! 💫 💫", { autoClose: 2000 });
-		})
-		.catch((err) => dispatch(returnErrors(err.response.data, err.response.status)));
-};

@@ -665,6 +665,14 @@ tbody tr td:last-child {
 	font-size: large;
 }
 
+/* Reviews */
+
+.review-image {
+	width: 300px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
 /* Additional styling for better layout */
 .profile-services-row {
 	justify-content: space-around;
