@@ -31,7 +31,8 @@ export class Hire extends Component {
 				state: "",
 				country: "",
 				postalcode: ""
-			}
+			},
+			categoriesWithCount: [], 
 		};
 	};
 
@@ -60,6 +61,32 @@ export class Hire extends Component {
 
 	componentDidMount() {
 		this.props.getCategories();
+	}
+
+	componentDidUpdate(prevProps) {
+		// This checks if categories or services have been updated
+		if (prevProps.categories !== this.props.categories || prevProps.services !== this.props.services) {
+			this.updateCategoriesWithCount();
+		}
+	}
+
+	updateCategoriesWithCount = () => {
+		// Make sure both categories and services are loaded
+		if (this.props.categories.categories && this.props.services.services) {
+			console.log("Categories:", this.props.categories.categories);
+			console.log("Services:", this.props.services.services);
+
+			const categoriesWithCount = this.props.categories.categories.map(category => {
+				const count = this.props.services.services.filter(service => {
+					console.log(`Matching: ${service.category} with ${category.name}`);
+					return service.subcategory.category === category.name;
+				}).length;
+				console.log(`Count for ${category.name}:`, count);
+				return { ...category, count };
+			});
+
+			this.setState({ categoriesWithCount });
+		}
 	}
 
 	onChange = (e) => {
@@ -128,11 +155,9 @@ export class Hire extends Component {
 									<InputGroup.Text id="basic-addon1"><MdHomeRepairService /></InputGroup.Text>
 									<Form.Select name='category' defaultValue={'showAll'} onChange={this.handleInputChange}>
 										<option value="showAll">All categories</option>
-										{this.props.categories.categories.map((category, id) => (
-											<option
-												key={id}
-												value={category.name}
-											>{category.name}
+										{this.state.categoriesWithCount.map((category, id) => (
+											<option key={id} value={category.name}>
+												{category.name} ({category.count})
 											</option>
 										))}
 									</Form.Select>

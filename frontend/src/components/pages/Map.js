@@ -66,7 +66,6 @@ export function Map({ category, coordinates }) {
 									<Link to={`/profile/${service.user.id}`}>
 										{service.user.first_name} {service.user.last_name}
 									</Link>
-									<p>Total Services: { } </p>
 								</div>
 								<br />
 								<Link to={'/hire'}>
