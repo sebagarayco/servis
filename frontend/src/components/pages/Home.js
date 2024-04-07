@@ -6,10 +6,10 @@ import { getUserData, getAllUsers } from '../../redux/actions/userdata';
 import Spinner from 'react-bootstrap/Spinner';
 // Pages
 import Nav from '../layout/Nav';
-import HomeCards from './HomeCards';
 import HomeSearch from './HomeSearch';
 import ServisSpinner from '../utils/ServisSpinner';
 import HomeServices from './HomeServices';
+import HomeReviews from './HomeReviews';
 
 export class Home extends Component {
 	constructor(props) {
@@ -24,7 +24,6 @@ export class Home extends Component {
 			this.setState({ loading: false });
 		}, 1000);
 
-		//this.props.getUserData(); // TODO: Creo que no se usa
 		this.props.getAllUsers();
 	}
 
@@ -38,7 +37,7 @@ export class Home extends Component {
 						<>
 						<HomeSearch />
 						<HomeServices />
-						<HomeCards />
+							<HomeReviews />
 					</>
 				)
 				}

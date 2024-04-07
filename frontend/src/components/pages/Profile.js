@@ -20,6 +20,7 @@ import ProfileServiceTable from './ProfileServiceTable';
 // Actions
 import { getServices } from '../../redux/actions/services';
 import { getContracts } from '../../redux/actions/contracts';
+import HomeReviews from './HomeReviews';
 
 class Profile extends Component {
 	constructor(props) {
@@ -82,6 +83,9 @@ class Profile extends Component {
 										</h2>
 										<p>Servicios contratados a otros proveedores.</p>
 										<ProfileContractTable contracts={this.props.contracts.contracts} />
+									</Row>
+									<Row>
+										<HomeReviews userId={this.props.auth.user.id} />
 									</Row>
 								</Col>
 							</Row>

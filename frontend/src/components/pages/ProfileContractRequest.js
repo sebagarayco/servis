@@ -176,7 +176,7 @@ const ProfileContractRequest = ({ contracts }) => {
 			{selectedContract && (
 				<ViewContractModal
 					contract={selectedContract}
-					comments={currentComments} // Pass the currentComments as a prop to the modal
+					comments={currentComments} 
 					show={showViewModal}
 					handleClose={handleCloseModal}
 				/>

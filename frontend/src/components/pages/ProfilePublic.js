@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 // Boostrap
 import Container from 'react-bootstrap/Container';
@@ -11,19 +11,31 @@ import { RiToolsFill } from 'react-icons/ri';
 // Components
 import Nav from '../layout/Nav';
 import ProfileServiceTable from './ProfileServiceTable';
+import HomeReviews from './HomeReviews';
 
 const ProfilePublic = () => {
   const { user_id } = useParams();
   const users = useSelector(state => state.userdata.users);
-  const services = useSelector(state => state.services.services);
+  const contracts = useSelector(state => state.contracts.contracts);
+  const authUser = useSelector(state => state.auth.user);
 
   const user = users.find(user => user.id === parseInt(user_id));
-  const userServices = services.filter(service => service.provider === parseInt(user_id));
+  const userContracts = contracts.filter(contract => contract.service.provider === parseInt(user_id));
 
-  // Placeholder data for user metrics
-  const totalServices = userServices.length; // Replace with actual data
-  const totalReviews = 25; // Placeholder
+  const totalServices = userContracts.length;
+
+  let totalReviews = 0;
+  userContracts.forEach(contract => {
+    totalReviews += contract.contract_reviews ? contract.contract_reviews.length : 0;
+  });
+
   const rating = 4.5; // Placeholder
+
+  // Check if userId is the same as logged-in user id
+  if (parseInt(user_id) === authUser.id) {
+    // Redirect to /profile
+    return <Navigate to="/profile" replace />;
+  }
 
   return (
     <div>
@@ -56,7 +68,7 @@ const ProfilePublic = () => {
                 <h1>
                   <Badge pill bg="secondary">{totalReviews}</Badge>
                 </h1>
-                <p className="user-number-label">Total Reviews 💬</p>
+                <p className="user-number-label">Total Reseñas 💬</p>
               </Col>
               <Col xs={3} className="user-number">
                 <h1>
@@ -68,7 +80,10 @@ const ProfilePublic = () => {
             <hr />
             <Row>
               <h2><RiToolsFill /> Servicios Publicados </h2>
-              <ProfileServiceTable services={userServices} userId={user.id} publishEnabled={false} />
+              <ProfileServiceTable services={userContracts} userId={user.id} publishEnabled={false} />
+            </Row>
+            <Row>
+              <HomeReviews userId={user_id} />
             </Row>
           </Col>
         </Row>
