@@ -1,25 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-
 // Bootstrap
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { IoEyeOutline } from "react-icons/io5";
+import { MdOutlineDeleteForever } from "react-icons/md";
 // Redux
-import { connect, useSelector } from 'react-redux';
-import EditContractModal from '../utils/EditContractModal';
+import { connect, useSelector, useDispatch } from 'react-redux';
 import ViewContractModal from '../utils/ViewContractModal';
 import ReviewContractModal from '../utils/ReviewContractModal'; 
+import DeleteConfirmationModal from '../utils/DeleteConfirmationModal';
+import { deleteContract } from '../../redux/actions/contracts';
+
 
 const ProfileContractTable = ({ contracts }) => {
 	const auth = useSelector(state => state.auth);
 	const [showViewModal, setShowViewModal] = useState(false);
 	const [showReviewModal, setShowReviewModal] = useState(false); 
 	const [selectedContract, setSelectedContract] = useState(null);
-	const navigate = useNavigate();
+	const [modalVisibility, setModalVisibility] = useState({});
+	const [loading, setLoading] = useState(false);
 	// New state to hold the current comments for the selected contract
 	const [currentComments, setCurrentComments] = useState([]);
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	// When the selected contract changes (for example, when a new comment is added),
 	// this effect updates the currentComments state with the latest comments.
@@ -59,6 +64,27 @@ const ProfileContractTable = ({ contracts }) => {
 	const handleNewServiceClick = () => {
 		// Redirect to "/hire" when the button is clicked
 		navigate('/hire');
+	};
+
+	const handleDeleteClick = (contract) => {
+		// TODO: Handle comments
+		setModalVisibility(prevState => ({
+			...prevState.modalVisibility,
+			[contract.id]: true,
+		}));
+	};
+
+	const onDelete = (contractId) => {
+		console.log('Contracts:', contracts);
+		// TODO: Handle comments
+		console.log('Deleting contract with ID: ', contractId);
+		setLoading(true);
+		dispatch(deleteContract(contractId));
+		setModalVisibility(prevState => ({
+			...prevState.modalVisibility,
+			[contractId]: false,
+		}));
+		setTimeout(() => { setLoading(false) }, 500); // Loading timeout
 	};
 
 	return (
@@ -113,6 +139,31 @@ const ProfileContractTable = ({ contracts }) => {
 											⭐️
 										</Button>
 									)}
+									{contract.status === 'En espera' ? (
+										<>
+											<Button
+												size="md"
+												variant="outline-danger"
+												onClick={() => handleDeleteClick(contract)}
+												style={{ marginLeft: '2px' }}
+											>
+												<MdOutlineDeleteForever />
+											</Button>
+											<DeleteConfirmationModal
+												show={modalVisibility[contract.id] || false}
+												onHide={() => setModalVisibility(prevState => ({
+													...prevState.modalVisibility,
+													[contract.id]: false,
+												}))}
+												onDelete={() => onDelete(contract.id)}
+												toBeDeleted={[
+													{ name: 'Contract ID', value: contract.id },
+													{ name: 'Type', value: contract.service.subcategory['name'] + ' (' + contract.service.subcategory['category'] + ')' },
+													{ name: 'Description', value: contract.description },
+												]}
+											/>
+										</>
+									) : null}
 								</td>
 							</tr>
 						))
