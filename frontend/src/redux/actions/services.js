@@ -41,7 +41,7 @@ export const createService = (payload) => (dispatch) => {
 			dispatch({
 				type: CREATE_SERVICE_FAILURE,
 			});
-			toast.error("Unable to create service: " + JSON.stringify(err.response.data), { autoClose: 2000 });
+			toast.error("Error al eliminar servicio: " + JSON.stringify(err.response.data), { autoClose: 2000, icon: "❌" });
 		});
 };
 
@@ -54,13 +54,13 @@ export const deleteService = (service) => (dispatch) => {
 				type: DELETE_SERVICE,
 				payload: service,
 			});
-			toast.success("Service deleted succesfully", { autoClose: 2000 });
+			toast.success("Servicio eliminado", { autoClose: 2000, icon: "🗑️" });
 		})
 		.catch((err) => {
 			dispatch(returnErrors(err.response.data, err.response.status));
 			dispatch({
 				type: DELETE_SERVICE_FAILURE,
 			});
-			toast.error("Unable to delete service. Check if there are open contracts.", { autoClose: 2000 });
+			toast.error("Error al eliminar servicio. Verificar contratos existentes.", { autoClose: 2000, icon: "❌" });
 		});
 };

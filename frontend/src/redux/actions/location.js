@@ -19,13 +19,13 @@ export const createLocation = (payload) => (dispatch) => {
 				type: CREATE_LOCATION,
 				payload: res.data,
 			});
-			toast.success("New location created");
+			toast.success("Ubicación creada", { autoClose: 2000, icon: "📍️" });
 		})
 		.catch((err) => {
 			dispatch(returnErrors(err.response.data, err.response.status));
 			dispatch({
 				type: CREATE_LOCATION_FAILURE,
 			});
-			toast.error("Unable to create location: " + JSON.stringify(err.response.data), { autoClose: 2000 });
+			toast.error("Error al crear ubicación: " + JSON.stringify(err.response.data), { autoClose: 2000 });
 		});
 };

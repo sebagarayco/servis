@@ -26,7 +26,7 @@ export const loadUser = () => (dispatch, getState) => {
 				type: USER_LOADED,
 				payload: res.data,
 			});
-			toast.info("Loading user data ...", { autoClose: 1000 });
+			toast.info("Cargando información de usuario", { autoClose: 1000, icon: "👤" });
 		})
 		.catch((err) => {
 			dispatch(returnErrors(err.response.data, err.response.status));
@@ -65,7 +65,7 @@ export const login = (username, password) => (dispatch) => {
 			dispatch({
 				type: LOGIN_FAIL,
 			});
-			toast.error("Login failed for user " + username + ". Please check your credentials and try again. If the problem persists, contact support.");
+			toast.error("Falló inicio de sesión para " + username + ". Verificar credenciales o contactar a Soporte");
 		});
 };
 
@@ -87,7 +87,7 @@ export const register = ({ username, password, email, first_name, last_name, gov
 				type: REGISTER_SUCCESS,
 				payload: res.data,
 			});
-			toast.info("Succesfully registered " + username + "!");
+			toast.info("Bienvenido/a" + username + "!", { autoClose: 2000, icon: "🤗" });
 		})
 		.catch((err) => {
 			dispatch(returnErrors(err.response.data, err.response.status));
@@ -106,7 +106,7 @@ export const logout = () => (dispatch, getState) => {
 			dispatch({
 				type: LOGOUT_SUCCESS,
 			});
-			toast.info("See you later! 👋");
+			toast.info("Hasta luego!", { autoClose: 2000, icon: "👋" });
 		})
 		.catch((err) => {
 			dispatch(returnErrors(err.response.data, err.response.status));
