@@ -137,7 +137,7 @@ const ProfileContractRequest = ({ contracts }) => {
 									<Button size="md" style={{ marginLeft: '2px' }} variant="outline-info" onClick={() => handleInfo(contract)}>
 										<IoEyeOutline />
 									</Button>
-									{contract.status === 'Rejected' ? (
+									{contract.status === 'Rechazado' ? (
 										<>
 											<Button
 												size="md"

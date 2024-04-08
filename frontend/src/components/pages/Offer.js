@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import { createService, deleteService, getServices } from '../../redux/actions/services';
 // Utils
 import ServisSpinner from '../utils/ServisSpinner';
-import TimestampConverter from '../utils/TimestampConverter';
 import DeleteConfirmationModal from '../utils/DeleteConfirmationModal';
 // Bootstrap
 import { Container, Row, Col, Form, InputGroup, Button, Table, Tooltip, OverlayTrigger } from 'react-bootstrap';
@@ -110,7 +109,7 @@ export class Offer extends Component {
 					<Form className='offer-form' onSubmit={this.onSubmit}>
 						<Row>
 							<Col sm={15}>
-								<h1>Offer service</h1>
+								<h1>Ofrecer servicios</h1>
 							</Col>
 						</Row>
 						<Row className='offer-toprow'>
@@ -197,12 +196,12 @@ export class Offer extends Component {
 						</Row>
 						<Row>
 							<Button variant="warning" size="lg" type="submit">
-								Offer service
+								Publicar servicio
 							</Button>
 						</Row>
 					</Form>
 					<Row className='offer-services'>
-						<h1>My services</h1>
+						<h1>Mis servicios</h1>
 						{this.state.loading ?
 							<ServisSpinner /> : (
 								<Table className='offer-services-table table-hover'>

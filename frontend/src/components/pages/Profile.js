@@ -4,7 +4,7 @@ import ServisSpinner from '../utils/ServisSpinner';
 // Layout
 import Nav from '../layout/Nav';
 // Bootstrap
-import Alert from 'react-bootstrap/Alert';
+import Badge from 'react-bootstrap/Badge';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -17,6 +17,7 @@ import { connect } from 'react-redux';
 import ProfileContractTable from './ProfileContractTable';
 import ProfileContractRequest from './ProfileContractRequest';
 import ProfileServiceTable from './ProfileServiceTable';
+import ProfileStatsRow from '../utils/ProfileStatsRow';
 // Actions
 import { getServices } from '../../redux/actions/services';
 import { getContracts } from '../../redux/actions/contracts';
@@ -40,6 +41,7 @@ class Profile extends Component {
 	}
 
 	render() {
+
 		return (
 			<div>
 				<Nav />
@@ -49,9 +51,11 @@ class Profile extends Component {
 					<Container className="profile">
 					<Row>
 								<Col className="profile-info">
+									<h3><Badge pill bg="info">Perfil Privado</Badge></h3>
 									<div className="profile-image">
 										<img src={this.props.auth.user.image} alt="Profile" />
 									</div>
+
 									<hr style={{ width: '90%' }} />
 									<h3>
 										{this.props.auth.user.first_name} {this.props.auth.user.last_name}
@@ -61,6 +65,11 @@ class Profile extends Component {
 									<h4>{this.props.auth.user.phone}</h4>
 								</Col>
 								<Col xs={4} md={6} lg={9} className="profile-services">
+									<ProfileStatsRow
+										services={this.props.services.services}
+										contracts={this.props.contracts.contracts}
+										userId={this.props.auth.user.id}
+									/>
 									<Row>
 										<h2>
 											<RiToolsFill /> Mis servicios ofrecidos

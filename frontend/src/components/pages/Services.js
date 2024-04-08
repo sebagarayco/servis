@@ -66,7 +66,9 @@ export class Services extends Component {
 													<strong>Precio por día completo:</strong> ${service.full_day_price}
 												</Card.Text>
 												<Card.Text>
-													<strong>Publicado el:</strong> {new Date(service.created).toLocaleString(('es-ES'))}
+													<strong>Publicado el:</strong> {new Date(service.created).toLocaleString(('es-ES'))} por <Link style={{ color: 'black' }} to={`/profile/${service.user.id}`}>
+														{service.user.first_name} {service.user.last_name}
+													</Link>
 												</Card.Text>
 											</div>
 										</Card.Body>

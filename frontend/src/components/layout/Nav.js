@@ -40,7 +40,7 @@ export class Nav extends Component {
 					<li className='logged'>
 						<div className="nav-profile">
 							<img src={this.props.auth.user.image} className="nav-profile-img" alt="profile" />
-							<Link to="/profile"> Profile</Link>
+							<Link to="/profile"> Perfil</Link>
 							{contractsCount > 0 && (
 								<span className="nav-badge">{contractsCount}</span>
 							)}

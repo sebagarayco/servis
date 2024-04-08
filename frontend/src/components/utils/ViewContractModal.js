@@ -86,8 +86,9 @@ const ViewContractModal = ({ contract, comments, show, handleClose }) => {
 					<Form.Group>
 						<Form.Label>Descripción:</Form.Label>
 						<Form.Control
-							type="text"
+									as="textarea"
 							disabled
+									readOnly
 							defaultValue={contract.description}
 						/>
 					</Form.Group>
@@ -97,6 +98,7 @@ const ViewContractModal = ({ contract, comments, show, handleClose }) => {
 						<Form.Control
 							type="text"
 							disabled
+									readOnly
 							defaultValue={`$ ${contract.amount}`}
 						/>
 					</Form.Group>

@@ -4,11 +4,9 @@ import { Link } from 'react-router-dom';
 import { connect, useSelector, useDispatch } from 'react-redux'
 import { createContract } from '../../redux/actions/contracts';
 // Bootstrap
-import { Row, Col, Button, Form } from "react-bootstrap";
+import { Row, Col, Button, Form, Badge } from "react-bootstrap";
 // Icons
 import { FaFileContract } from "react-icons/fa";
-// Utils
-import TimestampConverter from '../utils/TimestampConverter';
 // Pages
 import HireModal from './HireModal';
 
@@ -59,20 +57,20 @@ const HireServiceList = ({ services }) => {
 							</div>
 							</Link>
 						</Col>
-						<Col md={5}>
+						<Col md={4}>
 							<div className="service-card">
-								<h3>Service</h3>
+								<h3>Servicio</h3>
 								<hr />
-								<h5>{service.description}</h5>
-								<p>{service.subcategory.name} ({service.subcategory.category})</p>
+								<h5><strong>{service.description}</strong></h5>
+								<p><Badge pill bg='warning' text='dark'>{service.subcategory.name}</Badge> <Badge pill bg='info' >{service.subcategory.category}</Badge></p>
 								<p>Price per hour: $ {service.hourly_price}</p>
 								<p>Full-day price: $ {service.full_day_price}</p>
-								<TimestampConverter timestamp={service.updated} />
+								<p>Publicado el {new Date(service.created).toLocaleString('es-ES')}</p>
 							</div>
 						</Col>
 						<Col md={3}>
 							<div className="service-card">
-								<h3>Provider</h3>
+								<h3>Provee</h3>
 								<hr />
 								<h3>
 									<Link to={`/profile/${service.user.id}`}>
@@ -82,12 +80,11 @@ const HireServiceList = ({ services }) => {
 								<p>{service.user.email}</p>
 								<p>{service.user.phone}</p>
 								<p>{service.user.location.properties.city + ', ' + service.user.location.properties.province}</p>
-								<p>Rating:</p>
 							</div>
 						</Col>
-						<Col md={1}>
-							<Button className="btn btn-warning" size='lg' onClick={() => handleOpenModal(service)}>
-								<FaFileContract /> Hire
+						<Col md={2}>
+							<Button variant="outline-warning" size='lg' onClick={() => handleOpenModal(service)}>
+								<FaFileContract /> Contratar
 							</Button>
 						</Col>
 					</Row>

@@ -30,11 +30,11 @@ export const createContract = (payload) => (dispatch) => {
 				type: CREATE_CONTRACT,
 				payload: res.data,
 			});
-			toast.success("Contract sent!", { autoClose: 2000 });
+			toast.success("Solicitud de trabajo enviada", { autoClose: 2000, icon: "📝" });
 		})
 		.catch((err) => dispatch(
 			returnErrors(err.response.data, err.response.status),
-			toast.error("Failed to create contract!", { autoClose: 2000 })
+			toast.error("Error al crear contrato", { autoClose: 2000, icon: "❗️" })
 		));
 };
 
@@ -49,7 +49,7 @@ export const deleteContract = (contract) => (dispatch) => {
 				type: DELETE_CONTRACT,
 				payload: contract,
 			});
-			toast.success("Contract deleted!", { autoClose: 2000 });
+			toast.success("Contrato eliminado", { autoClose: 2000, icon: "🗑️" });
 		})
 		.catch((err) => dispatch(returnErrors(err.response.data, err.response.status)));
 };
@@ -64,6 +64,7 @@ export const updateContract = (id, payload) => (dispatch) => {
 				type: UPDATE_CONTRACT,
 				payload: res.data,
 			});
+			toast.success("Contrato actualizado", { autoClose: 2000 }) 
 		})
 		.catch((err) => dispatch(returnErrors(err.response.data, err.response.status)));
 };
@@ -79,7 +80,7 @@ export const addContractComment = (id, payload) => (dispatch) => {
 				type: ADD_CONTRACT_COMMENT,
 				payload: res.data,
 			});
-			toast.info("Comentario entregado 📨", { autoClose: 1000 });
+			toast.info("Comentario entregado", { autoClose: 1000, icon: "📨" });
 		})
 		.catch((err) => dispatch(returnErrors(err.response.data, err.response.status)));
 };
@@ -95,7 +96,7 @@ export const addContractReview = (id, payload) => (dispatch) => {
 				type: ADD_CONTRACT_REVIEW,
 				payload: res.data,
 			});
-			toast.info("Valoración agregada! ", { autoClose: 1000, icon: "⭐️" });
+			toast.info("Reseña agregada", { autoClose: 1000, icon: "⭐️" });
 		})
 		.catch((err) => dispatch(returnErrors(err.response.data, err.response.status)));
 };

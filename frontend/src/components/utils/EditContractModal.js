@@ -32,6 +32,10 @@ const EditContractModal = ({ contract, show, handleClose }) => {
 			const updatedContractData = {
 				...editedData,
 				service: contract.service.id,
+				contract_comments: [{
+					comment: `ESTADO ACTUALIZADO de "${contract.status}" a "${editedData.status}". Notas del cambio: ${editedData.comments}`,
+					user: contract.provider.id
+				}],
 			};
 			console.log('Contract: ', contract)
 			console.log('Updated Contract Data:', editedData.id, updatedContractData);

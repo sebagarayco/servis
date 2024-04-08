@@ -148,7 +148,7 @@ export class Hire extends Component {
 				<Container className='hire-container'>
 					<Form >
 						<Row className="hire-row">
-							<h1>Hire</h1>
+							<h1>Contratar servicios</h1>
 							<Col xs lg={4}>
 								<Form.Label htmlFor="basic-url">Category</Form.Label>
 								<InputGroup size="lg" className="mb-3">
@@ -207,8 +207,8 @@ export class Hire extends Component {
 					</Form>
 					<Map category={this.state.category} coordinates={this.state.coords}/>
 					<Row className='hire-services'>
-						<h1>Available services</h1>
-						<h5>{this.props.services.services.length} services available. Refine your search.</h5>
+						<h1>Servicios disponibles</h1>
+						<h5>{this.props.services.services.length} servicios disponibles en total. Ajustar la búsqueda.</h5>
 						<HireServiceList services={this.state.showAll ? this.props.services.services : this.props.services.services.filter(service => service.subcategory.category === this.state.category)} />
 					</Row>
 				</Container >
