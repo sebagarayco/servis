@@ -163,3 +163,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), '/app/servis/')
+
+
+# MAIL CONFIGURATION
+EMAIL_ENABLE = env('EMAIL_ENABLE', default=False)
+EMAIL_BACKEND = env(
+    'EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = env('EMAIL_PORT')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER', default=None)
+EMAIL_HOST_USER_SENDER = env('EMAIL_HOST_USER_SENDER', default=None)
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', default=None)
+EMAIL_USE_TLS = env('EMAIL_USE_TLS', default=None)
