@@ -37,7 +37,7 @@ const ProfilePublic = () => {
       <Container>
         <Row>
           <Col className="profile-info">
-            <h3><Badge pill text='dark' bg="primary">Perfil Público</Badge></h3>
+            <h3><Badge pill bg="primary">Perfil Público</Badge></h3>
             {user && (
               <div key={user.id}>
                 <div className="profile-image">
