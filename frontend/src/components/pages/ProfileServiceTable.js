@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 // Bootstrap
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
@@ -13,7 +13,7 @@ import { connect, useSelector, useDispatch } from 'react-redux';
 // Components
 import DeleteConfirmationModal from '../utils/DeleteConfirmationModal';
 
-const ProfileServiceTable = ({ services }) => {
+const ProfileServiceTable = ({ services, userId, publishEnabled = true }) => {
 	const auth = useSelector(state => state.auth);
 	const [modalVisibility, setModalVisibility] = useState({});
 	const [loading, setLoading] = useState(false);
@@ -22,30 +22,31 @@ const ProfileServiceTable = ({ services }) => {
 	const navigate = useNavigate();
 
 	const handleDeleteClick = (service) => {
-		// TODO: Handle comments
 		console.log('Deleting service with ID: ', service);
 		setModalVisibility(prevState => ({
 			...prevState.modalVisibility,
-			[service.id]: true, // Set modal visibility for the clicked row's service ID to true
+			[service.id]: true,
 		}));
 	};
 
 	const onDelete = (serviceId) => {
-		// TODO: Handle comments
 		console.log('Deleting service with ID: ', serviceId);
 		setLoading(true);
 		dispatch(deleteService(serviceId));
 		setModalVisibility(prevState => ({
 			...prevState.modalVisibility,
-			[serviceId]: false, // Set modal visibility for the clicked row's service ID to true
+			[serviceId]: false,
 		}));
-		setTimeout(() => { setLoading(false) }, 500); // Loading timeout
+		setTimeout(() => { setLoading(false) }, 500);
 	};
 
 	const handleNewServiceClick = () => {
-		// Redirect to "/offer" when the button is clicked
 		navigate('/offer');
 	};
+
+	const filteredServices = userId ?
+		services.filter(service => service.provider === userId)
+		: services.filter(service => service.provider === auth.user.id);
 
 	return (
 		<Container>
@@ -59,29 +60,45 @@ const ProfileServiceTable = ({ services }) => {
 					</tr>
 				</thead>
 				<tbody>
-					{services.length > 0 ? (
-						services.filter(service => service.provider.id === auth.user.id).map((service, id) => (
+					{filteredServices.length > 0 ? (
+						filteredServices.map((service, id) => (
 							<tr key={service.id}>
 								<td>{service.subcategory.name} ({service.subcategory.category})</td>
 								<td>{service.description}</td>
-								<td>${service.hourly_price} / ${service.full_day_price}</td>
 								<td>
-									<Button size="sm" variant="outline-danger" onClick={() => handleDeleteClick(service)}>
-										<MdOutlineDeleteForever />
+									<Button disabled variant='outline-dark'>
+										$ {service.hourly_price}
+									</Button> / <Button disabled variant='outline-dark'>
+										${service.full_day_price}
 									</Button>
-									<DeleteConfirmationModal
-										show={modalVisibility[service.id] || false}
-										onHide={() => setModalVisibility(prevState => ({
-											...prevState.modalVisibility,
-											[service.id]: false,
-										}))}
-										onDelete={() => onDelete(service.id)}
-										toBeDeleted={[
-											{ name: 'Service ID', value: service.id },
-											{ name: 'Type', value: service.subcategory['name'] + ' (' + service.subcategory['category'] + ')' },
-											{ name: 'Description', value: service.description },
-										]}
-									/>
+								</td>
+								<td>
+									{publishEnabled ? (
+										<>
+											<Button size="md" variant="outline-danger" onClick={() => handleDeleteClick(service)}>
+												<MdOutlineDeleteForever />
+											</Button>
+											<DeleteConfirmationModal
+												show={modalVisibility[service.id] || false}
+												onHide={() => setModalVisibility(prevState => ({
+													...prevState.modalVisibility,
+													[service.id]: false,
+												}))}
+												onDelete={() => onDelete(service.id)}
+												toBeDeleted={[
+													{ name: 'Service ID', value: service.id },
+													{ name: 'Type', value: service.subcategory['name'] + ' (' + service.subcategory['category'] + ')' },
+													{ name: 'Description', value: service.description },
+												]}
+											/>
+										</>
+									) : (
+										<>
+											<Button size="md" variant="outline-warning" className='public-profile-hire'>
+												<Link to={`/hire`}>Hire</Link>
+											</Button>
+										</>
+									)}
 								</td>
 							</tr>
 						))
@@ -92,9 +109,11 @@ const ProfileServiceTable = ({ services }) => {
 					)}
 				</tbody>
 			</Table>
-			<Button size="lg" variant="outline-warning" onClick={handleNewServiceClick}>
-				Nuevo Servicio
-			</Button>
+			{publishEnabled && (
+				<Button size="lg" variant="outline-warning" onClick={handleNewServiceClick}>
+					Publicar Servicio
+				</Button>
+			)}
 		</Container>
 	);
 }

@@ -3,13 +3,13 @@ from django.contrib.gis.geos import Point
 from rest_framework import viewsets, generics, permissions, mixins
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from knox.models import AuthToken
 # Models
 from users.models import ServisUser
-from servis.models import Category, Subcategory, Service, Contract
+from servis.models import Category, Subcategory, Service, Contract, ContractComments, ContractReview
 # Serializers
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, CategorySerializer, SubCategorySerializer, ServiceSerializer, UserProfileSerializer, LocationSerializer, ContractSerializer
-
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, CategorySerializer, SubCategorySerializer, ServiceSerializer, UserProfileSerializer, LocationSerializer, ContractSerializer, ContractCommentsSerializer, ContractReviewSerializer
 
 class RegisterAPI(generics.GenericAPIView):
     serializer_class = RegisterSerializer
@@ -98,7 +98,8 @@ class SubcategoryView(viewsets.ModelViewSet):
 
 class ServiceView(viewsets.ModelViewSet):
     serializer_class = ServiceSerializer
-    queryset = Service.objects.all()
+    queryset = Service.objects.order_by('-created')
+    parser_classes = (MultiPartParser, FormParser, JSONParser)
     
     def create(self, request, *args, **kwargs):
         # TODO: Handle comments
@@ -108,7 +109,16 @@ class ServiceView(viewsets.ModelViewSet):
         subcategory = Subcategory.objects.get(category__name=request.data['category'],name=request.data['subcategory'])
         serializer.save(subcategory=subcategory)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    
+
+
+class ContractReviewView(viewsets.ModelViewSet):
+    serializer_class = ContractReviewSerializer
+    queryset = ContractReview.objects.all()
+
+class ContractCommentView(viewsets.ModelViewSet):
+    serializer_class = ContractCommentsSerializer
+    queryset = ContractComments.objects.all()
+
 class ContractView(viewsets.ModelViewSet):
     serializer_class = ContractSerializer
     queryset = Contract.objects.all()

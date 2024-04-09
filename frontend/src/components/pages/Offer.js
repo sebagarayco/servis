@@ -7,11 +7,11 @@ import { connect } from 'react-redux';
 import { createService, deleteService, getServices } from '../../redux/actions/services';
 // Utils
 import ServisSpinner from '../utils/ServisSpinner';
-import TimestampConverter from '../utils/TimestampConverter';
 import DeleteConfirmationModal from '../utils/DeleteConfirmationModal';
 // Bootstrap
 import { Container, Row, Col, Form, InputGroup, Button, Table, Tooltip, OverlayTrigger } from 'react-bootstrap';
 // Icons
+import { MdOutlineDeleteForever } from "react-icons/md";
 import { MdHomeRepairService } from "react-icons/md";
 import { MdOutlineCleaningServices } from "react-icons/md";
 import { MdOutlineDescription } from "react-icons/md";
@@ -70,17 +70,31 @@ export class Offer extends Component {
 		console.log('Selected ' + e.target.name + ' value: ' + e.target.value);
 	}
 
+	handleImageChange = (e) => {
+		this.setState({
+			image: e.target.files[0]
+		});
+	}
+
 	onSubmit = (e) => {
 		e.preventDefault();
 		this.setState({ loading: true });
-		const { category, subcategory, description, hourly_price, full_day_price } = this.state;
-		const provider = this.props.auth.user.id;
-		const service = { category, subcategory, description, hourly_price, full_day_price, provider };
-		// TODO: Handle comments
-		console.log('Service to be created: ', service)
-		this.props.createService(service);
-		setTimeout(() => { this.setState({ loading: false }) }, 1500); // Loading timeout
-	};
+
+		const formData = new FormData();
+		formData.append('category', this.state.category);
+		formData.append('subcategory', this.state.subcategory);
+		formData.append('description', this.state.description);
+		formData.append('hourly_price', this.state.hourly_price.toString()); // Ensure numeric values are converted to strings
+		formData.append('full_day_price', this.state.full_day_price.toString()); // Ensure numeric values are converted to strings
+		formData.append('provider', this.props.auth.user.id);
+		if (this.state.image) {
+			formData.append('image', this.state.image, this.state.image.name);
+		}
+		console.log('Service to be created: ', formData)
+		this.props.createService(formData);
+		setTimeout(() => { this.setState({ loading: false }) }, 1500);
+	}
+
 
 	render() {
 		const tooltip = (
@@ -95,7 +109,7 @@ export class Offer extends Component {
 					<Form className='offer-form' onSubmit={this.onSubmit}>
 						<Row>
 							<Col sm={15}>
-								<h1>Offer service</h1>
+								<h1>Ofrecer servicios</h1>
 							</Col>
 						</Row>
 						<Row className='offer-toprow'>
@@ -153,7 +167,7 @@ export class Offer extends Component {
 								<Form.Label htmlFor="basic-url">Description (required)</Form.Label>
 								<InputGroup size="lg" >
 									<InputGroup.Text id="basic-addon1" >< MdOutlineDescription /></InputGroup.Text>
-									<Form.Control as="textarea" name='description' required='required' rows={7} placeholder="Describe the services you offer, including key features and benefits." onChange={this.handleInputChange} />
+									<Form.Control as="textarea" name='description' required='required' rows={8} placeholder="Describe the services you offer, including key features and benefits." onChange={this.handleInputChange} />
 								</InputGroup>
 							</Col>
 							<Col xs lg={4}>
@@ -164,6 +178,7 @@ export class Offer extends Component {
 										<Form.Control type='text' disabled value={this.props.auth ? location : 'N/A'} />
 									</InputGroup>
 								</OverlayTrigger>
+								<hr />
 								<Form.Group controlId="metodoPago">
 									<Form.Label>Payment Method</Form.Label>
 									<Form.Control as="select" >
@@ -172,23 +187,21 @@ export class Offer extends Component {
 										<option value="transfer">Wire transfer</option>
 									</Form.Control>
 								</Form.Group>
-								<Form.Label htmlFor="basic-url">Availability</Form.Label>
-								<InputGroup size="lg" className='offer-checks'>
-									<Form.Check type="switch" id="weekdays" label="Weekdays (8AM/6PM)" defaultChecked="true" />
-									<Form.Check type="switch" id="weekends" label="Weekends (8AM/6PM)" />
-									<Form.Check type="switch" id="holidays" label="Public Holidays" />
-									<Form.Check type="switch" id="materials" label="Buy of materials" />
-								</InputGroup>
+								<hr />
+								<Form.Group>
+									<Form.Label>Service Image</Form.Label>
+									<Form.Control className='form-control-lg' type="file" onChange={this.handleImageChange} />
+								</Form.Group>
 							</Col>
 						</Row>
 						<Row>
 							<Button variant="warning" size="lg" type="submit">
-								Offer service
+								Publicar servicio
 							</Button>
 						</Row>
 					</Form>
 					<Row className='offer-services'>
-						<h1>My services</h1>
+						<h1>Mis servicios</h1>
 						{this.state.loading ?
 							<ServisSpinner /> : (
 								<Table className='offer-services-table table-hover'>
@@ -198,7 +211,6 @@ export class Offer extends Component {
 											<th>Description</th>
 											<th>Price per hour ($)</th>
 											<th>Full Day ($)</th>
-											<th>Last update</th>
 											<th>Actions</th>
 										</tr>
 									</thead>
@@ -209,10 +221,9 @@ export class Offer extends Component {
 												<td>{service.description}</td>
 												<td>$ {service.hourly_price}</td>
 												<td>$ {service.full_day_price}</td>
-												<td><TimestampConverter timestamp={service.updated} /></td>
 												<td>
-													<Button variant='outline-secondary'><FaPencilAlt /></Button>
-													<Button variant='outline-danger' onClick={() => this.handleDeleteClick(service)}>X</Button>
+													{/* <Button variant='outline-secondary'><FaPencilAlt /></Button> */}
+													<Button variant='outline-danger' onClick={() => this.handleDeleteClick(service)}><MdOutlineDeleteForever /></Button>
 													<DeleteConfirmationModal
 														show={this.state.modalVisibility[service.id] || false}
 														onHide={() => this.setState(prevState => ({

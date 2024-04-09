@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
 import { Link, Navigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
+// Redux
 import { connect } from 'react-redux';
-import { logout } from '../../redux/actions/auth';
-import { getUserData } from '../../redux/actions/userdata';
-// Asume que tienes una acción llamada getContracts o similar
+// Actions
 import { getContracts } from '../../redux/actions/contracts';
+import { logout } from '../../redux/actions/auth';
 
 export class Nav extends Component {
+
+	componentDidMount() {
+		this.props.getContracts();
+	}
 
 	render() {
 		console.log('Pase por Nav.js');
 		const { isAuthenticated, user } = this.props.auth;
-		// Asumiendo que los contratos están almacenados en state.contracts.contracts
-		const contractsCount = this.props.contracts ? this.props.contracts.length : 0;
+		const contractsCount = this.props.contracts ?
+			this.props.contracts.filter(contract => contract.provider.id === user.id).length : 0;
 
 		if (!isAuthenticated) {
 			return <Navigate to="/login" />;
@@ -21,7 +24,7 @@ export class Nav extends Component {
 
 		return (
 			<div>
-				<img className='logo' src="static/handshake56.png" />
+				<img className='logo' src="/static/handshake56.png" />
 				<ul className='nav-ul'>
 					<li><Link to="/">Home</Link></li>
 					<li><Link to="/offer">Ofrecer</Link></li>
@@ -34,8 +37,16 @@ export class Nav extends Component {
 						  </button>
 					  </li>
 				  }
-				  <li className='logged'><Link to="/profile">Profile</Link></li>
-				  <li className='logged'>Welcome, <strong>{user.username}</strong>! {contractsCount > 0 && `(${contractsCount} solicitudes)`}</li>
+					<li className='logged'>
+						<div className="nav-profile">
+							<img src={this.props.auth.user.image} className="nav-profile-img" alt="profile" />
+							<Link to="/profile"> Perfil</Link>
+							{contractsCount > 0 && (
+								<span className="nav-badge">{contractsCount}</span>
+							)}
+						</div>
+					</li>
+					<li className='logged'>Hola, <strong>{user.username}</strong>! 👋🏼</li>
 			  </ul>
 		  </div>
 		);
@@ -50,4 +61,4 @@ const mapStateToProps = (state) => ({
 	contracts: state.contracts.contracts, // Asegúrate de que esto refleje cómo se almacenan tus contratos
 });
 
-export default connect(mapStateToProps, { logout })(Nav);
+export default connect(mapStateToProps, { logout, getContracts })(Nav);

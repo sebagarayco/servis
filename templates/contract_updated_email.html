@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contrato Actualizado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .image {
+            margin-bottom: 20px;
+        }
+        .details {
+            text-align: left;
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .details ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .details ul li {
+            margin-bottom: 10px;
+            padding-left: 20px; /* Adjust the left padding for list items */
+            position: relative;
+        }
+        .details ul li:before {
+            content: "•"; /* Use a bullet character for list items */
+            position: absolute;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image">
+            <img width="96" height="96" src="https://img.icons8.com/fluency/96/handshake.png" alt="handshake">
+        </div>
+        <h1>Contrato Actualizado - ID #{{ object_id }}</h1>
+        <p>El contrato con el ID #{{ object_id }} ha sido actualizado.</p>
+        <div class="details">
+            <h2>Detalles</h2>
+            <ul>
+                <li><strong>Nombre:</strong> {{ contract.description }}</li>
+                <li><strong>Estado:</strong> {{ contract.status }}</li>
+                <li><strong>Fecha de creación:</strong> {{ contract.created }}</li>
+                <li><strong>Categoría:</strong> {{ contract.service.subcategory.name }} ({{ contract.service.subcategory.category }})</li>
+                <li><strong>Proveedor:</strong> {{ contract.provider.first_name }} {{ contract.provider.last_name }}</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

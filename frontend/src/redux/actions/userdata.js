@@ -4,10 +4,10 @@ import { tokenConfig } from './auth';
 import { GET_USERDATA, GET_ALLUSERS } from './types';
 
 // GET USERDATA :id
-export const getUserData = () => (dispatch, getState) => {
+export const getUserData = (id) => (dispatch, getState) => {
 	//const id = getState().auth.user.id;
 	axios
-		.get('/api/auth/user/', tokenConfig(getState))
+		.get(`/api/users/${id}`, tokenConfig(getState))
 		.then((res) => {
 			// TODO: Handle comments
 			console.log('Pase por userdata.js', res.data)

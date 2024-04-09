@@ -9,10 +9,17 @@
 	justify-content: center;
 	align-items: center;
 	height: 100vh;
+	position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: rgba(255, 255, 255, 0.8);
+		z-index: 9999;
 }
 
 .loading-container h4 {
-	color: black
+	color: black;
 }
 
 .Toastify {
@@ -53,9 +60,36 @@
 	font-size: 1.5rem;
 }
 
+.nav-profile {
+	position: relative;
+	display: inline-block;
+}
+
+.nav-badge {
+	position: absolute;
+	top: -10px;
+	/* Adjust as needed */
+	right: -10px;
+	/* Adjust as needed */
+	background-color: red;
+	color: white;
+	border-radius: 60%;
+	padding: 2px 8px;
+	font-size: 0.75em;
+	vertical-align: top;
+}
+.nav-profile-img {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	object-fit: cover;
+}
 /* Home */
 @import url("react-toastify/dist/ReactToastify.css");
 
+.home-container {
+	margin-bottom: 20px;
+}
 .home-container .home-row {
 	position: relative;
 	margin-bottom: 20px;
@@ -117,11 +151,8 @@
 	justify-content: justify;
 }
 
-.home-subcontainer .g-7 {
-	margin-top: 2rem;
-	padding: 30px;
-	border: 2px solid #f2f2f2;
-	border-radius: 20px;
+.home-subcontainer {
+	margin-top: 20px;
 }
 
 .homeservices-subcontainer .g-4 {
@@ -166,6 +197,11 @@
 	width: 100%;
 }
 
+.home-review.card .card-title {
+	font-size: 1.5rem;
+	font-style: italic;
+	color: darkgrey;
+}
 /* HomeMap */
 @import url("leaflet/dist/leaflet.css");
 
@@ -270,6 +306,34 @@ tbody tr td:last-child {
 	border-bottom-right-radius: 10px;
 }
 
+/* Services */
+.card-image {
+	height: 300px;
+	object-fit: cover;
+	width: 100%;
+}
+
+.services-card {
+	border: 1px solid #f2f2f2;
+	border-radius: 20px;
+	box-shadow: 0px 7px 20px rgba(203, 200, 200, 0.656);
+}
+
+.services-card:hover {
+	background-color: #f7e2a3
+}
+.services-col {
+	margin-bottom: 25px;
+}
+.services-link {
+	text-decoration: none;
+	color: black;
+}
+
+.services-link:hover {
+	text-decoration: none;
+	color: black;
+}
 /* Hire */
 .service-list {
 	display: flex;
@@ -303,6 +367,9 @@ tbody tr td:last-child {
 	color: #666;
 }
 
+.service-card a {
+	color: black !important;
+}
 .service-card-img {
 	display: flex;
 	flex-direction: column;
@@ -310,11 +377,11 @@ tbody tr td:last-child {
 	justify-content: center;
 }
 
-
 .hire-row {
 	position: relative;
 	margin-bottom: 20px;
 	padding: 30px;
+	width: 100%;
 	border-top: 1px solid #f2f2f2;
 	border-radius: 20px;
 	box-shadow: 0px 7px 20px rgba(203, 200, 200, 0.656);
@@ -348,6 +415,15 @@ tbody tr td:last-child {
 	font-size: 1.25rem;
 }
 
+/* Contracts */
+.contract-table-link {
+	color: black;
+}
+
+.contract-table-link:hover {
+	text-decoration: none;
+	color: black;
+}
 /* Login & Register*/
 .auth-main {
 	display: flex;
@@ -432,15 +508,25 @@ tbody tr td:last-child {
 }
 
 .profile-image img {
-	padding: 1rem;
+	padding: 0.5rem;
 	width: 250px;
 	height: 250px;
 	border-radius: 50%;
 	display: flex;
 	margin: 0 auto;
+	margin-bottom: 1rem;
 	box-shadow: 10px 9px 20px rgba(203, 200, 200, 0.656);
 }
 
+.profile-info {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-bottom: 20px;
+	padding: 10px;
+	border: 2px solid #f2f2f2;
+	border-radius: 20px;
+}
 /* HomeMap */
 .homemap-container {
 	display: flex;
@@ -475,6 +561,128 @@ tbody tr td:last-child {
 	padding: 0.5rem;
 }
 
+/* Comments - Chat */
+.chat-container {
+	max-height: 400px;
+	overflow-y: auto;
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	background-color: #f9f9f9;
+}
+
+.chat-message {
+	display: flex;
+	margin-bottom: 10px;
+	padding: 10px;
+	border-radius: 20px;
+	position: relative;
+	max-width: 70%;
+}
+
+.chat-message-sender {
+	align-self: flex-start;
+	margin-left: 10px;
+	background-color: #fdd86a;
+	color: black;
+}
+
+.chat-message-receiver {
+	align-self: flex-end;
+	margin-right: 10px;
+	background-color: #e9ecef;
+}
+
+.chat-message span {
+	display: block;
+	font-size: 1.1em;
+	margin-bottom: 5px;
+}
+
+.chat-timestamp {
+	font-size: 0.8em;
+	color: #666;
+}
+
+.chat-input-container {
+	display: flex;
+	margin-top: 10px;
+}
+
+.chat-input {
+	flex: 1;
+	padding: 8px;
+	border: 1px solid #ddd;
+	margin-right: 10px;
+}
+
+.chat-message img {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	margin-right: 10px;
+	object-fit: cover;
+}
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+	color: #ffc107;
+	background-color: #fff;
+	border-color: darkgrey;
+}
+
+.nav-tabs .nav-link {
+	color: black;
+	font-size: 1.25rem;
+}
+
+.nav-tabs {
+	border-bottom: none;
+}
+
+.nav-tabs .nav-link:hover {
+	color: gray
+}
+
+/* Public Profile */
+.public-profile-hire a {
+	text-decoration: none;
+	color: black
+}
+
+.user-number {
+	border-radius: 8px;
+	padding: 15px;
+	font-size: large;
+	text-align: center;
+	font-weight: bold;
+	border-color: darkgrey;
+	box-shadow: 10px 2px 20px rgba(203, 200, 200, 0.656);
+	transition: background-color 0.3s;
+}
+
+.user-number:hover {
+	background-color: #ffc107;
+}
+
+.user-number-label {
+	text-align: center;
+	color: #666;
+	font-size: large;
+}
+
+/* Reviews */
+
+.review-image {
+	width: 300px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+/* Additional styling for better layout */
+.profile-services-row {
+	justify-content: space-around;
+	padding: 20px;
+}
 /* Footer */
 .footer {
 	background-color: #f2f2f2;
