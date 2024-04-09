@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import Badge from 'react-bootstrap/Badge';
 import { IoEyeOutline } from "react-icons/io5";
 import { MdOutlineDeleteForever } from "react-icons/md";
 // Redux
@@ -120,7 +121,9 @@ const ProfileContractTable = ({ contracts }) => {
 																: 'default'
 										}
 									>
-										{contract.status}
+										{contract.status} {contract.status === 'Completado' ? (
+											<Badge bg="danger">Pago Pendiente</Badge>
+										) : null}
 									</Button>
 								</td>
 								<td>{contract.description}</td>

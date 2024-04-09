@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 // Bootstrap
-import { Modal, Button, Form, ListGroup, Tabs, Tab } from 'react-bootstrap';
+import { Modal, Button, Form, ListGroup, Tabs, Tab, Image, Col, Row } from 'react-bootstrap';
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 // Actions
@@ -68,40 +68,137 @@ const ViewContractModal = ({ contract, comments, show, handleClose }) => {
 			<Modal.Body>
 				<Tabs defaultActiveKey="details" id="contract-tabs" className="lg-3" onSelect={handleTabSelect}>
 					<Tab eventKey="details" title="Detalles" className="contract-modal-tab">
-						<Form >
-					<Form.Group>
-						<Form.Label>Estado:</Form.Label>
-						<Form.Control
-							type="text"
-							disabled
-							defaultValue={contract.status}
-						/>
-						<Form.Text muted>
-							On-hold: Pending approval from the service provider<br />
-							In-progress: The provider agrees to perform the work<br />
-							Completed: The provider has finished the work<br />
-						</Form.Text>
-					</Form.Group>
-					<br />
-					<Form.Group>
-						<Form.Label>Descripción:</Form.Label>
-						<Form.Control
+						<Form>
+							<br />
+							<h2>Contrato</h2>
+							<Form.Group>
+								<Row>
+									<Col>
+										<Form.Label>Estado:</Form.Label>
+										<Form.Control type="text" disabled defaultValue={contract.status} />
+										<Form.Text muted>
+											On-hold: Pending approval from the service provider<br />
+											In-progress: The provider agrees to perform the work<br />
+											Completed: The provider has finished the work<br />
+										</Form.Text>
+									</Col>
+									<Col>
+										<Form.Label>Precio acordado</Form.Label>
+										<Form.Control type="text" disabled defaultValue={`$ ${contract.amount}`} />
+									</Col>
+								</Row>
+							</Form.Group>
+							<Form.Group>
+								<br />
+								<h3>Detalle de partes</h3>
+								<br />
+								<Row>
+									<Col>
+										<h4>Consumidor</h4>
+										<ListGroup>
+											<ListGroup.Item>
+												<strong>Nombre de Usuario:</strong> {contract.consumer.username}
+											</ListGroup.Item>
+											<ListGroup.Item>
+												<strong>Email:</strong> {contract.consumer.email}
+											</ListGroup.Item>
+											<ListGroup.Item>
+												<strong>Teléfono:</strong> {contract.consumer.phone}
+											</ListGroup.Item>
+											<ListGroup.Item>
+												<strong>Dirección:</strong> {contract.consumer.location.properties.address}
+											</ListGroup.Item>
+											<ListGroup.Item>
+												<strong>Ciudad:</strong> {contract.consumer.location.properties.city}
+											</ListGroup.Item>
+											<ListGroup.Item>
+												<strong>Provincia:</strong> {contract.consumer.location.properties.province}
+											</ListGroup.Item>
+											<ListGroup.Item>
+												<strong>País:</strong> {contract.consumer.location.properties.country}
+											</ListGroup.Item>
+										</ListGroup>
+									</Col>
+									<Col>
+										<ListGroup>
+											<h4>Proveedor</h4>
+											<ListGroup.Item>
+												<strong>Nombre de Usuario:</strong> {contract.provider.username}
+											</ListGroup.Item>
+											<ListGroup.Item>
+												<strong>Email:</strong> {contract.provider.email}
+											</ListGroup.Item>
+											<ListGroup.Item>
+												<strong>Teléfono:</strong> {contract.provider.phone}
+											</ListGroup.Item>
+											<ListGroup.Item>
+												<strong>Dirección:</strong> {contract.provider.location.properties.address}
+											</ListGroup.Item>
+											<ListGroup.Item>
+												<strong>Ciudad:</strong> {contract.provider.location.properties.city}
+											</ListGroup.Item>
+											<ListGroup.Item>
+												<strong>Provincia:</strong> {contract.provider.location.properties.province}
+											</ListGroup.Item>
+											<ListGroup.Item>
+												<strong>País:</strong> {contract.provider.location.properties.country}
+											</ListGroup.Item>
+										</ListGroup>
+									</Col>
+								</Row>
+
+							</Form.Group>
+							<Form.Group>
+								<hr />
+								<h2>Servicio</h2>
+								<Form.Label>Descripción:</Form.Label>
+								<Form.Control
 									as="textarea"
-							disabled
+									disabled
 									readOnly
-							defaultValue={contract.description}
-						/>
-					</Form.Group>
-					<br />
-					<Form.Group>
-						<Form.Label>Precio acordado:</Form.Label>
-						<Form.Control
-							type="text"
-							disabled
-									readOnly
-							defaultValue={`$ ${contract.amount}`}
-						/>
-					</Form.Group>
+									defaultValue={contract.service.description}
+								/>
+							</Form.Group>
+							<Form.Group>
+								<Form.Label>Categoría del Servicio:</Form.Label>
+								<Form.Control
+									type="text"
+									disabled
+									defaultValue={contract.service.subcategory.name}
+								/>
+							</Form.Group>
+							<Form.Group>
+								<Form.Label>Precio por Hora:</Form.Label>
+								<Form.Control
+									type="text"
+									disabled
+									defaultValue={`$ ${contract.service.hourly_price}`}
+								/>
+							</Form.Group>
+							<Form.Group>
+								<Form.Label>Precio por Día Completo:</Form.Label>
+								<Form.Control
+									type="text"
+									disabled
+									defaultValue={`$ ${contract.service.full_day_price}`}
+								/>
+							</Form.Group>
+							{contract.status === 'Completado' ? (
+								<Form.Group controlId="paymentMethod">
+									<hr />
+									<h2>Pago</h2>
+									<Form.Label>Nuestro único metodo de pago es Mercado Pago. Haz click en el logo para efectuar el pago</Form.Label>
+									<div className="d-flex align-items-center">
+										<a href='https://www.mercadopago.com.ar/' target="_blank" rel="noopener noreferrer" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
+											<img
+												src="/static/mercadopago.png"
+												alt="Mercado Pago"
+												style={{ width: '300px' }}
+											/>
+										</a>
+									</div>
+								</Form.Group>
+							) : null}
 						</Form>
 					</Tab>
 					<Tab eventKey="messages" title="Mensajes" className="contract-modal-tab">

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import Badge from 'react-bootstrap/Badge';
 import { FaPencilAlt } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
 // Icons
@@ -96,7 +97,6 @@ const ProfileContractRequest = ({ contracts }) => {
 						<th>Estado</th>
 						<th>Detalle</th>
 						<th>Servicio</th>
-						<th>Precio</th>
 						<th>Acciones</th>
 					</tr>
 				</thead>
@@ -121,15 +121,13 @@ const ProfileContractRequest = ({ contracts }) => {
 																: 'default'
 										}
 									>
-										{contract.status}
+										{contract.status} {contract.status === 'Completado' ? (
+											<Badge bg="danger">Pago Pendiente</Badge>
+										) : null}
 									</Button>
 								</td>
 								<td>{contract.description}</td>
 								<td>{contract.service.description}</td>
-								<td><Button disabled variant='outline-dark'>
-									$ {contract.amount}
-								</Button>
-								</td>
 								<td>
 									<Button size="md" variant="outline-secondary" onClick={() => handleEdit(contract)}>
 										<FaPencilAlt />
