@@ -87,14 +87,14 @@ export const register = ({ username, password, email, first_name, last_name, gov
 				type: REGISTER_SUCCESS,
 				payload: res.data,
 			});
-			toast.info("Bienvenido/a" + username + "!", { autoClose: 2000, icon: "🤗" });
+			toast.info("Bienvenido/a " + username + "!", { autoClose: 2000, icon: "🤗" });
 		})
 		.catch((err) => {
 			dispatch(returnErrors(err.response.data, err.response.status));
 			dispatch({
 				type: REGISTER_FAIL,
 			});
-			toast.error("Register error. Contact support." + JSON.stringify(err.response.data));
+			toast.error("Error en el registro de usuario. Soporte: " + JSON.stringify(err.response.data));
 		});
 };
 

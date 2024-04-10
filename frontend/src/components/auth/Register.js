@@ -9,6 +9,7 @@ import { createLocation } from '../../redux/actions/location';
 import { createMessage } from '../../redux/actions/messages';
 // Utils
 import ServisSpinner from '../utils/ServisSpinner';
+import { toast } from 'react-toastify';
 
 export class Register extends Component {
 	state = {
