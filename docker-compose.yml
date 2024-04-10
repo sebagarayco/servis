@@ -77,7 +77,6 @@ services:
 
 networks:
   servis:
-    driver: bridge
 
 volumes:
   postgres_data:

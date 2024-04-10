@@ -1,11 +1,13 @@
 import React from 'react';
-import { useParams, Navigate } from 'react-router-dom';
+import { useParams, Navigate, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 // Boostrap
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Badge from 'react-bootstrap/Badge';
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
 // Icons
 import { RiToolsFill } from 'react-icons/ri';
 // Components
@@ -37,17 +39,50 @@ const ProfilePublic = () => {
       <Container>
         <Row>
           <Col className="profile-info">
-            <h3><Badge pill bg="primary">Perfil Público</Badge></h3>
             {user && (
-              <div key={user.id}>
-                <div className="profile-image">
-                  <img src={user.image} alt="Profile" />
-                </div>
-                <hr style={{ width: '90%' }} />
-                <h2>{user.first_name} {user.last_name}</h2>
-                <h3>{user.username}</h3>
-                <h3>{user.email}</h3>
-              </div>
+              <Card>
+                <Card.Header>
+                  <h2><Badge pill bg="danger">Perfil Público</Badge></h2>
+                </Card.Header>
+                <Card.Img variant="top" src={user.image} alt="Profile" />
+                <Card.Body>
+                  <Card.Title>👤 Información</Card.Title>
+                  <ListGroup variant="flush">
+                    <ListGroup.Item>
+                      <strong>Nombre:</strong> {user.first_name} {user.last_name}
+                    </ListGroup.Item>
+                    <ListGroup.Item>
+                      <strong>Rol:</strong> {user.role}
+                    </ListGroup.Item>
+                    <ListGroup.Item>
+                      <strong>Email:</strong> {user.email}
+                    </ListGroup.Item>
+                    <ListGroup.Item>
+                      <strong>Teléfono:</strong> {user.phone || 'N/A'}
+                    </ListGroup.Item>
+                  </ListGroup>
+                </Card.Body>
+                <Card.Body>
+                  <Card.Title>📍 Ubicación</Card.Title>
+                  <ListGroup variant="flush">
+                    <ListGroup.Item>
+                      <strong>Dirección:</strong> <Link to='/hire'>Contratar para ver</Link>
+                    </ListGroup.Item>
+                    <ListGroup.Item>
+                      <strong>Ciudad:</strong> <Link to='/hire'>Contratar para ver</Link>
+                    </ListGroup.Item>
+                    <ListGroup.Item>
+                      <strong>Estado:</strong> <Link to='/hire'>Contratar para ver</Link>
+                    </ListGroup.Item>
+                    <ListGroup.Item>
+                      <strong>C.P:</strong> <Link to='/hire'>Contratar para ver</Link>
+                    </ListGroup.Item>
+                    <ListGroup.Item>
+                      <strong>País:</strong> <Link to='/hire'>Contratar para ver</Link>
+                    </ListGroup.Item>
+                  </ListGroup>
+                </Card.Body>
+              </Card>
             )}
           </Col>
           <Col xs={12} md={6} lg={9} className="profile-services">

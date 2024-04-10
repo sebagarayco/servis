@@ -8,6 +8,8 @@ import Badge from 'react-bootstrap/Badge';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
 // Icons
 import { RiToolsFill } from 'react-icons/ri';
 import { MdOutlineCallReceived } from 'react-icons/md';
@@ -51,18 +53,49 @@ class Profile extends Component {
 					<Container className="profile">
 					<Row>
 								<Col className="profile-info">
-									<h3><Badge pill bg="info">Perfil Privado</Badge></h3>
-									<div className="profile-image">
-										<img src={this.props.auth.user.image} alt="Profile" />
-									</div>
-
-									<hr style={{ width: '90%' }} />
-									<h3>
-										{this.props.auth.user.first_name} {this.props.auth.user.last_name}
-									</h3>
-									<h4>{this.props.auth.user.role}</h4>
-									<h4>{this.props.auth.user.email}</h4>
-									<h4>{this.props.auth.user.phone}</h4>
+									<Card>
+										<Card.Header>
+											<h2><Badge pill bg="info">Perfil Privado</Badge></h2>
+										</Card.Header>
+										<Card.Img variant="top" src={this.props.auth.user.image} alt="Profile" />
+										<Card.Body>
+											<Card.Title>👤 Información</Card.Title>
+											<ListGroup variant="flush">
+												<ListGroup.Item>
+													<strong>Nombre:</strong> {this.props.auth.user.first_name} {this.props.auth.user.last_name}
+												</ListGroup.Item>
+												<ListGroup.Item>
+													<strong>Rol:</strong> {this.props.auth.user.role}
+												</ListGroup.Item>
+												<ListGroup.Item>
+													<strong>Email:</strong> {this.props.auth.user.email}
+												</ListGroup.Item>
+												<ListGroup.Item>
+													<strong>Teléfono:</strong> {this.props.auth.user.phone || 'N/A'}
+												</ListGroup.Item>
+											</ListGroup>
+										</Card.Body>
+										<Card.Body>
+											<Card.Title>📍 Ubicación</Card.Title>
+											<ListGroup variant="flush">
+												<ListGroup.Item>
+													<strong>Dirección:</strong> {this.props.auth.user.location.properties.address || 'N/A'}
+												</ListGroup.Item>
+												<ListGroup.Item>
+													<strong>Ciudad:</strong> {this.props.auth.user.location.properties.city || 'N/A'}
+												</ListGroup.Item>
+												<ListGroup.Item>
+													<strong>Estado:</strong> {this.props.auth.user.location.properties.state || 'N/A'}
+												</ListGroup.Item>
+												<ListGroup.Item>
+													<strong>C.P:</strong> {this.props.auth.user.location.properties.zip_code || 'N/A'}
+												</ListGroup.Item>
+												<ListGroup.Item>
+													<strong>País:</strong> {this.props.auth.user.location.properties.country || 'N/A'}
+												</ListGroup.Item>
+											</ListGroup>
+										</Card.Body>
+									</Card>
 								</Col>
 								<Col xs={4} md={6} lg={9} className="profile-services">
 									<ProfileStatsRow

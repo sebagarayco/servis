@@ -503,10 +503,29 @@ tbody tr td:last-child {
 }
 
 /* Profile */
-.profile div {
-	margin-bottom: 1rem;
+.profile-info .card {
+	border: none;
+	background-color: white;
 }
 
+.profile-info .card-title {
+	font-size: 1.5rem;
+	font-weight: bold;
+}
+
+.profile-info .card-header {
+	text-align: center;
+	border-radius: 5px;
+	background-color: white;
+}
+
+.profile-info .list-group-item {
+	font-size: 1.25rem;
+}
+
+.profile-info .list-group-item a {
+	color: black;
+}
 .profile-image img {
 	padding: 0.5rem;
 	width: 250px;
