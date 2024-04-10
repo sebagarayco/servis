@@ -34,7 +34,7 @@ export const createService = (payload) => (dispatch) => {
 				type: CREATE_SERVICE,
 				payload: res.data,
 			});
-			toast.success("Service created!", { autoClose: 2000 });
+			toast.success("Servicio creado", { autoClose: 2000, icon: "🧑🏼‍🔧" });
 		})
 		.catch((err) => {
 			dispatch(returnErrors(err.response.data, err.response.status));

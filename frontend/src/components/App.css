@@ -520,20 +520,21 @@ tbody tr td:last-child {
 }
 
 .profile-info .list-group-item {
-	font-size: 1.25rem;
+	font-size: 1.15rem;
 }
 
 .profile-info .list-group-item a {
 	color: black;
 }
-.profile-image img {
-	padding: 0.5rem;
-	width: 250px;
-	height: 250px;
+.profile-info .card-img-top {
+	/* Adjust based on your needs */
+	object-fit: cover;
 	border-radius: 50%;
-	display: flex;
-	margin: 0 auto;
-	margin-bottom: 1rem;
+	/* Makes the image round */
+	width: 250px;
+	/* Define a specific width */
+	height: 250px;
+	margin: 20px auto;
 	box-shadow: 10px 9px 20px rgba(203, 200, 200, 0.656);
 }
 

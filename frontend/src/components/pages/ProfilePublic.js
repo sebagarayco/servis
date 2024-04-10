@@ -42,9 +42,11 @@ const ProfilePublic = () => {
             {user && (
               <Card>
                 <Card.Header>
-                  <h2><Badge pill bg="danger">Perfil Público</Badge></h2>
+                  <h2><Badge style={{ width: '100%' }} pill bg="warning">PUBLICO</Badge></h2>
                 </Card.Header>
+                <br />
                 <Card.Img variant="top" src={user.image} alt="Profile" />
+                <br />
                 <Card.Body>
                   <Card.Title>👤 Información</Card.Title>
                   <ListGroup variant="flush">
@@ -62,6 +64,7 @@ const ProfilePublic = () => {
                     </ListGroup.Item>
                   </ListGroup>
                 </Card.Body>
+                <br />
                 <Card.Body>
                   <Card.Title>📍 Ubicación</Card.Title>
                   <ListGroup variant="flush">

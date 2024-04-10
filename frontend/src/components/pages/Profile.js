@@ -55,9 +55,11 @@ class Profile extends Component {
 								<Col className="profile-info">
 									<Card>
 										<Card.Header>
-											<h2><Badge pill bg="info">Perfil Privado</Badge></h2>
+											<h2><Badge style={{ width: '100%' }} pill bg="danger">PRIVADO</Badge></h2>
 										</Card.Header>
+										<br />
 										<Card.Img variant="top" src={this.props.auth.user.image} alt="Profile" />
+										<br />
 										<Card.Body>
 											<Card.Title>👤 Información</Card.Title>
 											<ListGroup variant="flush">
@@ -75,6 +77,7 @@ class Profile extends Component {
 												</ListGroup.Item>
 											</ListGroup>
 										</Card.Body>
+										<br />
 										<Card.Body>
 											<Card.Title>📍 Ubicación</Card.Title>
 											<ListGroup variant="flush">
