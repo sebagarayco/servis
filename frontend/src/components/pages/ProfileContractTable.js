@@ -187,6 +187,7 @@ const ProfileContractTable = ({ contracts }) => {
 					comments={currentComments} 
 					show={showViewModal}
 					handleClose={handleCloseModal}
+					parent={'ServiciosRealizados'}
 				/>
 			)}
 

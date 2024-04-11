@@ -14,7 +14,7 @@ import { FaFileContract } from "react-icons/fa";
 export function Map({ category, coordinates }) {
 	//const { auth, userdata, services } = useSelector(state => state);
 	const auth = useSelector(state => state.auth);
-	//const userdata = useSelector(state => state.userdata);
+	const userdata = useSelector(state => state.userdata);
 	const services = useSelector(state => state.services);
 	const ICON = icon({ iconUrl: 'static/location-pin.png', iconSize: [32, 32], });
 	const ICON_SELF = icon({ iconUrl: 'static/marker-icon.png' });
@@ -117,6 +117,6 @@ const mapStateToProps = function (state) {
 		services: state.services,
 		userdata: state.userdata,
 	}
-}
+} 
 
-export default connect(mapStateToProps)(Map);
+export default Map;

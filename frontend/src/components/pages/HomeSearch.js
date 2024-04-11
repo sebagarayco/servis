@@ -204,6 +204,9 @@ export class HomeSearch extends Component {
 					:
 					<Map category={this.state.category} coordinates={this.state.coords} />
 				}
+				<div className="map-legend">
+					<p>Solo usuarios con servicios publicados se muestran en el mapa.</p>
+				</div>
 			</Container >
 		)
 	}

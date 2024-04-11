@@ -177,6 +177,7 @@ const ProfileContractRequest = ({ contracts }) => {
 					comments={currentComments} 
 					show={showViewModal}
 					handleClose={handleCloseModal}
+					parent={'ServiciosContratados'}
 				/>
 			)}
 			{selectedEditContract && (

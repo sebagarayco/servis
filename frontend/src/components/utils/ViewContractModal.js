@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addContractComment } from '../../redux/actions/contracts';
 import { FaTelegramPlane } from "react-icons/fa";
 
-const ViewContractModal = ({ contract, comments, show, handleClose }) => {
+const ViewContractModal = ({ contract, comments, show, handleClose, parent }) => {
 	const auth = useSelector(state => state.auth);
 	const [newComment, setNewComment] = useState('');
 	const dispatch = useDispatch();
@@ -183,7 +183,7 @@ const ViewContractModal = ({ contract, comments, show, handleClose }) => {
 									defaultValue={`$ ${contract.service.full_day_price}`}
 								/>
 							</Form.Group>
-							{contract.status === 'Completado' ? (
+							{contract.status === 'Completado' && parent === "ServiciosContratados" ? (
 								<Form.Group controlId="paymentMethod">
 									<hr />
 									<h2>Pago</h2>

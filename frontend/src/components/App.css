@@ -205,6 +205,10 @@
 /* HomeMap */
 @import url("leaflet/dist/leaflet.css");
 
+.map-legend {
+	text-align: center;
+	font-weight: bold;
+}
 .leaflet-container {
 	border-radius: 20px;
 	width: auto;

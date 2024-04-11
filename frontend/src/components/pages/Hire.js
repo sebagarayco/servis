@@ -206,6 +206,9 @@ export class Hire extends Component {
 						</Row>
 					</Form>
 					<Map category={this.state.category} coordinates={this.state.coords}/>
+					<div className="map-legend">
+						<p>Solo usuarios con servicios publicados se muestran en el mapa.</p>
+					</div>
 					<Row className='hire-services'>
 						<h1>Servicios disponibles</h1>
 						<h5>{this.props.services.services.length} servicios disponibles en total. Ajustar la búsqueda.</h5>
