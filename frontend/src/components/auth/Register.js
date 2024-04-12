@@ -62,6 +62,7 @@ export class Register extends Component {
 					const newUserLocation = { ...newUser, location: res.data.id }
 					this.setState({ loading: false }); // Stop loading
 					this.props.register(newUserLocation);
+					console.log('Location created: ', res.data, newUserLocation);
 				})
 				.catch(err => {
 					this.setState({ loading: false }); // Stop loading

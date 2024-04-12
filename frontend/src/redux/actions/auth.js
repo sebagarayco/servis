@@ -58,7 +58,7 @@ export const login = (username, password) => (dispatch) => {
 			});
 			// TODO: Handle comments
 			console.log('Pase por ACTION login SUCCESS', res.data)
-			toast.success("Succesfully logged in. Welcome " + username + "!");
+			toast.success("Inicio de sesión correcto. Bienvenido/a " + username + "!", { autoClose: 2000, icon: "🔑" });
 		})
 		.catch((err) => {
 			dispatch(returnErrors(err.response.data, err.response.status));
