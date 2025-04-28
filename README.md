@@ -1,21 +1,15 @@
 # SERVIS
 
-🚧 Trabajo en progreso
-
----
-
 Sistema de búsqueda y contratación de servicios para particulares.
 
 ## Funcionalidades
 
-| 🇪🇸                                                | 🇺🇸                                       |
-|-----------------------------------------------------|--------------------------------------------|
-| Registro de usuario                                 | User registration                          |
-| Autenticación y autorización                        | Authentication and authorization           |
-| Ofrecer/buscar/contratar servicios                  | Offer/search/hire services                 |
-| Búsqueda por categoría/subcategoría/geolocalización | Search by category/subcategory/geolocation |
-| Valoración y opinión de cada proveedor              | Assesment and reviews of suppliers         |
-| Proceso de pago (emulado)                           | Payment process (emulated)                 |
+- Registro de usuario 
+- Autenticación y autorización
+- Ofrecer/buscar/contratar servicios 
+- Búsqueda por categoría/subcategoría/geolocalización
+- Valoración y opinión de cada proveedor 
+- Proceso de pago (emulado)
 
 ## Stack
 
